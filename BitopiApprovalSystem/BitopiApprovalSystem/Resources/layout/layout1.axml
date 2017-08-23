@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipChildren="false">
+    <RelativeLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:id="@+id/rlApprovalView"
+        android:clipChildren="false"
+        android:background="@drawable/approvalbutton"
+        android:clickable="true"
+        android:layout_margin="50dp">
+        <TextView
+            android:id="@+id/tvMsg"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:text="Case Requisition To Approve"
+            android:textSize="14sp"
+            android:gravity="center"
+            android:textColor="#ffffff"
+            android:layout_centerInParent="true"
+            android:layout_centerHorizontal="true" />
+    <!--<ImageView
+            android:id="@+id/numberImage"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="-20dp" />-->
+        <TextView
+            android:id="@+id/numberImage"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="-15dp"
+            android:background="@drawable/number"
+            android:layout_marginRight="-10dp"
+            android:text="30"
+            android:textStyle="bold"
+            android:textColor="#ffffff"
+            android:gravity="center" />
+    </RelativeLayout>
+</RelativeLayout>

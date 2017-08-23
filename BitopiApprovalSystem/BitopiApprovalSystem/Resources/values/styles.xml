@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+  <style name="MyTheme" parent="CustomActionBarTheme">
+  </style>
+  <!-- Base theme applied no matter what API -->
+  <style name="CustomActionBarTheme" parent="Theme.AppCompat">
+    <!--<item name="android:background">#3f51b5</item>-->
+    <item name="contentInsetStart">0dp</item>
+    <item name="contentInsetEnd">0dp</item>
+    <item name="android:contentInsetStart">0dp</item>
+    <item name="android:contentInsetEnd">0dp</item>
+    
+    <item name="android:actionBarStyle">@style/MyActionBar</item>
+    <item name="actionBarStyle">@style/MyActionBar</item>
+    <item name="android:windowContentOverlay">@color/my_actionbar_shadow</item>
+    
+    <item name="android:actionOverflowButtonStyle">@style/MyActionButtonOverflow</item>
+    <item name="android:editTextColor">@android:color/white</item>
+    <item name="android:textColorHint">@android:color/white</item>
+  </style>
+  <style name="MyActionButtonOverflow" parent="Widget.AppCompat.Light.ActionButton.Overflow">
+    <item name="android:src">@drawable/menu</item>
+    <!--<item name="android:textColor">#ffffff</item>-->
+    
+  </style>
+  <style name="MyActionBar"
+           parent="Theme.AppCompat">
+    <item name="background">@color/actionbar_color</item>
+    <item name="android:background">#3f51b5</item>
+    <item name="android:textColor">#ffffff</item>
+    </style> 
+  <style name="AVLoadingIndicatorView" parent="MyTheme">
+    <item name="minWidth">48dip</item>
+    <item name="maxWidth">48dip</item>
+    <item name="minHeight">48dip</item>
+    <item name="maxHeight">48dip</item>
+    <item name="indicatorName">BallPulseIndicator</item>
+  </style>
+<style name="AVLoadingIndicatorView.Large">
+        <item name="minWidth">76dip</item>
+        <item name="maxWidth">76dip</item>
+        <item name="minHeight">76dip</item>
+        <item name="maxHeight">76dip</item>
+        <item name="indicatorName">BallPulseIndicator</item>
+    </style>
+
+    <style name="AVLoadingIndicatorView.Small">
+        <item name="minWidth">24dip</item>
+        <item name="maxWidth">24dip</item>
+        <item name="minHeight">24dip</item>
+        <item name="maxHeight">24dip</item>
+        <item name="indicatorName">BallPulseIndicator</item>
+</style>
+  <color name="my_actionbar_shadow">#1C5025</color>
+  <color name="actionbar_color">#3f51b5</color>
+</resources>
+<!-- Set theme colors from http://www.google.com/design/spec/style/color.html#color-color-palette-->

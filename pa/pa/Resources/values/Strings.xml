@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">Production Accounting</string>
+  <string name="prompt_process">Please Choose a Process</string>
+  <string name="promp_Location">Please Choose a Location</string>
+</resources>

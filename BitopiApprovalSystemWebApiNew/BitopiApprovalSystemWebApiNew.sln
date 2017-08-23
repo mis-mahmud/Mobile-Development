@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BitopiApprovalSystemWebApiNew", "BitopiApprovalSystemWebApiNew\BitopiApprovalSystemWebApiNew.csproj", "{9909FFA4-BFC2-4AA8-932B-0DCAD9328FBB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BitopiApprovalSystemWebApiModels", "BitopiApprovalSystemWebApiModels\BitopiApprovalSystemWebApiModels.csproj", "{0229D597-AA0C-4915-96DA-BA70774C2235}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BitopiDBContext", "BitopiDBContext\BitopiDBContext.csproj", "{E15C1023-6C9C-4177-922A-856F722FDCA1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DbContext", "DbContext\DbContext.csproj", "{054B30D7-66A8-437C-857A-AF9BD2048E66}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9909FFA4-BFC2-4AA8-932B-0DCAD9328FBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9909FFA4-BFC2-4AA8-932B-0DCAD9328FBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9909FFA4-BFC2-4AA8-932B-0DCAD9328FBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9909FFA4-BFC2-4AA8-932B-0DCAD9328FBB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0229D597-AA0C-4915-96DA-BA70774C2235}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0229D597-AA0C-4915-96DA-BA70774C2235}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0229D597-AA0C-4915-96DA-BA70774C2235}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0229D597-AA0C-4915-96DA-BA70774C2235}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E15C1023-6C9C-4177-922A-856F722FDCA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E15C1023-6C9C-4177-922A-856F722FDCA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E15C1023-6C9C-4177-922A-856F722FDCA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E15C1023-6C9C-4177-922A-856F722FDCA1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{054B30D7-66A8-437C-857A-AF9BD2048E66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{054B30D7-66A8-437C-857A-AF9BD2048E66}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{054B30D7-66A8-437C-857A-AF9BD2048E66}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{054B30D7-66A8-437C-857A-AF9BD2048E66}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

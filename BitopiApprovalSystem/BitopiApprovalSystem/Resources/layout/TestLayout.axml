@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipChildren="false">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:clipChildren="false"
+        android:background="#eeeeee">
+        <RelativeLayout
+            android:layout_width="145dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_textview"
+            android:gravity="center_horizontal"
+            android:clickable="true"
+            android:id="@+id/rlUnSeenTask"
+            android:layout_marginTop="50dp"
+            android:clipChildren="false"
+            android:clipToPadding="false">
+            <ImageView
+                android:src="@drawable/unseen"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:id="@+id/ivApproval"
+                android:layout_centerHorizontal="true" />
+            <TextView
+                android:text="Unseen My Task"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ivApproval"
+                android:layout_centerInParent="true"
+                android:textColor="#555"
+                android:textStyle="bold"
+                android:layout_centerHorizontal="true" />
+            <TextView
+                android:id="@+id/numberImageUnseen"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="-15dp"
+                android:background="@drawable/number"
+                android:layout_marginRight="-20dp"
+                android:text="30"
+                android:textStyle="bold"
+                android:textColor="#ffffff"
+                android:gravity="center"
+                android:textSize="12sp"
+                xmlns:tools="http://schemas.android.com/tools"
+                tools:visibility="gone" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="145dp"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/rlUnSeenTask"
+            android:background="@drawable/rounded_textview"
+            android:layout_marginTop="50dp"
+            android:layout_marginLeft="20dp"
+            android:clickable="true"
+            android:id="@+id/rlSeenTask"
+            android:clipChildren="false"
+            android:clipToPadding="false">
+            <ImageView
+                android:src="@drawable/seen"
+                android:layout_width="145dp"
+                android:layout_height="100dp"
+                android:id="@+id/ivMyTask"
+                android:layout_centerHorizontal="true" />
+            <TextView
+                android:text="Seen MyTask"
+                android:layout_width="125dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ivMyTask"
+                android:layout_centerInParent="true"
+                android:textStyle="bold"
+                android:textColor="#555"
+                android:gravity="center" />
+            <TextView
+                android:id="@+id/numberImageSeen"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="-15dp"
+                android:background="@drawable/number"
+                android:layout_marginRight="-20dp"
+                android:text="30"
+                android:textStyle="bold"
+                android:textColor="#ffffff"
+                android:gravity="center"
+                android:textSize="12sp"
+                xmlns:tools="http://schemas.android.com/tools"
+                tools:visibility="gone" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="145dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_textview"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="50dp"
+            android:clickable="true"
+            android:id="@+id/rlCompleteTask"
+            android:layout_below="@id/rlUnSeenTask"
+            android:clipChildren="false"
+            android:clipToPadding="false">
+            <ImageView
+                android:src="@drawable/completedtask"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:id="@+id/ivMyTask"
+                android:layout_centerHorizontal="true" />
+            <TextView
+                android:text="Completed My Task"
+                android:layout_width="125dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ivMyTask"
+                android:layout_centerInParent="true"
+                android:textStyle="bold"
+                android:textColor="#555"
+                android:gravity="center" />
+            <TextView
+                android:id="@+id/numberImageCompleted"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="-15dp"
+                android:background="@drawable/number"
+                android:layout_marginRight="-20dp"
+                android:text="30"
+                android:textStyle="bold"
+                android:textColor="#ffffff"
+                android:gravity="center"
+                android:textSize="12sp"
+                xmlns:tools="http://schemas.android.com/tools"
+                tools:visibility="gone" />
+        </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>

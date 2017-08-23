@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <refractored.controls.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginBottom="0dp"
+        android:id="@+id/ivUserImg"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:background="@null"
+        app:civ_border_width="2dp"
+        app:civ_border_color="#263238"
+        android:layout_centerVertical="false" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/ivUserImg">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <Button
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnCutting"
+                android:text="Cutting"
+                android:background="@drawable/rounded_button"
+                android:layout_marginTop="10dp"
+                android:tag="203"
+                android:layout_centerHorizontal="true" />
+            <Button
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnSewing"
+                android:layout_below="@id/btnCutting"
+                android:text="Sewing"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/rounded_button"
+                android:layout_marginTop="10dp"
+                android:tag="204" />
+            <Button
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnFinishing"
+                android:layout_below="@id/btnSewing"
+                android:text="Finishing"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/rounded_button"
+                android:layout_marginTop="10dp"
+                android:tag="206" />
+            <Button
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnWashing"
+                android:layout_below="@id/btnFinishing"
+                android:text="Washing"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/rounded_button"
+                android:layout_marginTop="10dp"
+                android:tag="205" />
+            <Button
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnQuality"
+                android:layout_below="@id/btnWashing"
+                android:text="Quality"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/rounded_button"
+                android:layout_marginTop="10dp" />
+            <Button
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnRejection"
+                android:layout_below="@id/btnQuality"
+                android:text="Rejection"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/rounded_button"
+                android:layout_marginTop="10dp" />
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>

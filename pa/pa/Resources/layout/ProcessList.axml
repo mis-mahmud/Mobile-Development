@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <refractored.controls.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginBottom="0dp"
+        android:id="@+id/ivUserImg"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:background="@null"
+        app:civ_border_width="2dp"
+        app:civ_border_color="#263238"
+        android:layout_centerVertical="false" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/ivUserImg">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:minWidth="25px"
+            android:minHeight="25px">
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/spProcess"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
+                android:prompt="@string/prompt_process"
+                android:background="@drawable/gradient_spinner"
+                android:layout_marginTop="10dp" />
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/spLocation"
+                android:layout_below="@+id/spProcess"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
+                android:layout_marginTop="10dp"
+                android:prompt="@string/promp_Location"
+                android:background="@drawable/gradient_spinner" />
+            <TextView
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/spLocation"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
+                android:text="Do you want to load last Three Location?"
+                android:layout_marginTop="10dp" />
+            <Switch
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/spLocation"
+                android:checked="true"
+                android:textOff="Yes"
+                android:textOn="No"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="40dp"
+                android:layout_marginTop="10dp" />
+        <!--<Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/spPr"
+                android:layout_below="@+id/spLocation"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
+                android:layout_marginTop="50dp"
+                android:background="@drawable/gradient_spinner" />-->
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnRunning"
+                android:layout_below="@+id/spLocation"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="50dp"
+                android:layout_marginTop="60dp"
+                android:background="@drawable/rounded_button"
+                android:text="Running" />
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnAll"
+                android:layout_below="@+id/spLocation"
+                android:layout_marginLeft="50dp"
+                android:layout_alignParentLeft="true"
+                android:layout_marginTop="60dp"
+                android:background="@drawable/rounded_button"
+                android:text="All" />
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:paddingTop="10dp"
+    android:paddingRight="5dp"
+    android:paddingBottom="10dp"
+    android:paddingLeft="5dp"
+    android:clickable="true"
+    android:background="#eee">
+    <CheckBox
+        android:id="@+id/chckApprove"
+        android:checked="false"
+        android:layout_height="50dp"
+        android:layout_width="50dp"
+        android:layout_marginTop="-15dp"
+        android:layout_marginLeft="-5dp"
+        android:buttonTint="#459745" />
+    <RelativeLayout
+        android:id="@+id/rlLeft"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_toRightOf="@id/chckApprove">
+        <TextView
+            android:id="@+id/lbltask"
+            android:text="Task"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="17sp"
+            android:textColor="#428BCA"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/tvTask"
+            android:text="Test"
+            android:layout_width="150dp"
+            android:layout_height="35dp"
+            android:layout_below="@id/lbltask"
+            android:textColor="#333" />
+        <TextView
+            android:id="@+id/lblRemarks"
+            android:text="Remarks"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="17sp"
+            android:layout_below="@id/tvTask"
+            android:textColor="#428BCA"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/etRemarks"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/lblRemarks"
+            android:textColor="#333"
+            android:textSize="13sp" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/rlRight"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp">
+        <TextView
+            android:id="@+id/lblShimpentDate"
+            android:text="Shipment Date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="17sp"
+            android:layout_toRightOf="@id/lbltask"
+            android:textColor="#428BCA"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/tvShimpentDate"
+            android:layout_width="100dp"
+            android:text="Shipment Date"
+            android:layout_height="35dp"
+            android:layout_below="@id/lblShimpentDate"
+            android:layout_toRightOf="@id/tvTask"
+            android:textColor="#333" />
+        <TextView
+            android:id="@+id/lblCommitedDate"
+            android:text="Commited Date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="17sp"
+            android:layout_below="@id/tvShimpentDate"
+            android:layout_toRightOf="@id/lblRemarks"
+            android:textColor="#428BCA"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/etCommitedDate"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/chckApprove"
+            android:layout_below="@id/lblCommitedDate"
+            android:textColor="#333"
+            android:textSize="13sp" />
+    </RelativeLayout>
+</RelativeLayout>

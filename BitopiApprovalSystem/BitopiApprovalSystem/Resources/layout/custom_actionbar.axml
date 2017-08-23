@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="50dp"
+    android:layout_width="match_parent">
+    <ImageButton xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:id="@+id/btnDrawermenu"
+        android:background="@drawable/drawermenu"
+        android:layout_centerVertical="true"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"
+        android:layout_marginLeft="10dp"
+        tools:visibility="invisible" />
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/rltitle"
+        android:paddingLeft="2dp"
+        android:layout_centerHorizontal="true"
+        android:gravity="center_horizontal">
+        <ImageView
+            android:id="@+id/ivLogo"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/bitopiLogo"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            android:layout_marginLeft="0dp"
+            android:gravity="center_vertical"
+            android:layout_centerVertical="true" />
+        <TextView
+            android:id="@+id/tvHeaderName"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="Bitopi on the go"
+            android:textSize="15sp"
+            android:textColor="#ffffff"
+            android:layout_marginLeft="5dp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/ivLogo" />
+    </RelativeLayout>
+</RelativeLayout>

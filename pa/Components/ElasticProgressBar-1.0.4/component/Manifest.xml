@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<component format="1" id="ElasticProgressBar">
+  <name>Elastic Progress Bar</name>
+  <publisher>Xamarin Inc</publisher>
+  <publisher-url>http://xamarin.com/</publisher-url>
+  <src-url>https://github.com/michelelacorte/ElasticProgressBar</src-url>
+  <version>1.0.4</version>
+  <summary>An elastic loading bar.</summary>
+  <packages>
+    <package id="Xamarin.Android.Support.v4" version="23.0.1.3" framework="android" />
+  </packages>
+  <samples>
+    <sample id="ElasticProgressBarSample">
+      <name>Android Sample</name>
+      <summary>Android Sample</summary>
+    </sample>
+  </samples>
+</component>

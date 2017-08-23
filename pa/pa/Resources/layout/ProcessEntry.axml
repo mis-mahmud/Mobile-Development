@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg">
+<!--<pulltorefresharp.android.views.ViewWrapper xmlns:pullToRefresharpWrapper="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/ptr_wrapper"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"               
+                pullToRefresharpWrapper:pullDownTension="0.5"
+                pullToRefresharpWrapper:snapbackDuration="300">
+    <PullToRefresharp.Android.Widget.ScrollView
+                android:id="@+id/ptr"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="85dp"
+            android:id="@+id/rlTop">
+            <RelativeLayout
+                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:id="@+id/rlLocation"
+                android:background="@drawable/rounded_textview"
+                android:layout_marginTop="5dp"
+                android:backgroundTint="#ff026292"
+                android:layout_marginLeft="10dp"
+                android:padding="5dp"
+                android:paddingBottom="0dp">
+                <TextView
+                    android:text="Location"
+                    android:layout_height="wrap_content"
+                    android:layout_width="100dp"
+                    android:id="@+id/lblLocation"
+                    android:fontFamily="sans-serif-thin"
+                    android:textColor="#FFF"
+                    android:textStyle="bold" />
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="140dp"
+                    android:id="@+id/tvLocation"
+                    android:layout_below="@id/lblLocation"
+                    android:text="None"
+                    android:fontFamily="sans-serif-thin"
+                    android:textColor="#FFF" />
+            </RelativeLayout>
+        <!--<RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:id="@+id/rlProdRef"
+            android:background="@drawable/rounded_textview"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:padding="5dp"
+            android:backgroundTint="#ff026292"
+            android:layout_toRightOf="@id/rlLocation"
+            tools:visibility="gone">
+            <TextView
+                android:text="Prod Ref"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:id="@+id/lblRef"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="sans-serif-thin"
+                android:textColor="#FFF" />
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_below="@id/lblRef"
+                android:id="@+id/tvRef"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:text="None"
+                android:fontFamily="sans-serif-thin"
+                android:textColor="#FFF" />
+        </RelativeLayout>-->
+            <RelativeLayout
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:id="@+id/rlProdQty"
+                android:background="@drawable/rounded_textview"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                android:padding="5dp"
+                android:backgroundTint="#ff026292"
+                android:layout_toRightOf="@id/rlLocation">
+                <TextView
+                    android:text="Quantity"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:id="@+id/lblQty"
+                    android:fontFamily="sans-serif-thin"
+                    android:textColor="#FFF"
+                    android:textStyle="bold" />
+                <EditText
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:id="@+id/etQty"
+                    android:layout_below="@id/lblQty"
+                    android:inputType="number"
+                    android:layout_marginRight="5dp"
+                    android:background="@drawable/rounded_textview"
+                    android:text="0"
+                    android:textColor="#fff"
+                    android:gravity="center"
+                    android:layout_marginTop="5dp" />
+                <Button
+                    android:id="@+id/btnPlus"
+                    android:layout_height="50dp"
+                    android:layout_width="30dp"
+                    android:text="+"
+                    android:textSize="25sp"
+                    android:layout_alignTop="@id/etQty"
+                    android:layout_alignBottom="@id/etQty"
+                    android:layout_alignLeft="@id/etQty"
+                    android:gravity="center"
+                    android:background="@drawable/roundshapebtn_plus"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp" />
+                <Button
+                    android:id="@+id/btnMinus"
+                    android:layout_height="10dp"
+                    android:layout_width="30dp"
+                    android:text="-"
+                    android:textSize="25sp"
+                    android:layout_alignTop="@id/etQty"
+                    android:layout_alignRight="@id/etQty"
+                    android:layout_alignBottom="@id/etQty"
+                    android:background="@drawable/roundshapebtn_minus"
+                    android:textStyle="bold"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginRight="5dp"
+                    android:gravity="center" />
+            </RelativeLayout>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:id="@+id/rlQty"
+            android:layout_below="@id/rlTop"
+            android:background="@drawable/rounded_textview"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:padding="5dp"
+            android:backgroundTint="#ff026292"
+            android:gravity="center">
+            <RelativeLayout
+                android:id="@+id/rlRef"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:background="@drawable/rounded_textview"
+                android:layout_marginRight="5dp">
+                <TextView
+                    android:text="Ref"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:id="@+id/lblRef"
+                    android:layout_marginTop="0dp"
+                    android:fontFamily="sans-serif-thin"
+                    android:textColor="#FFF"
+                    android:layout_below="@id/tvLocation"
+                    android:textStyle="bold" />
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_below="@id/lblRef"
+                    android:id="@+id/tvRef"
+                    android:text="None"
+                    android:fontFamily="sans-serif-thin"
+                    android:textColor="#FFF" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_toRightOf="@id/rlRef"
+                android:background="@drawable/rounded_textview"
+                android:id="@+id/rlOQty"
+                android:layout_marginRight="5dp">
+                <TextView
+                    android:text="Order Qty "
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:id="@+id/lblBooked"
+                    android:fontFamily="sans-serif-thin"
+                    android:textColor="#FFF"
+                    android:textStyle="bold" />
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:text="0"
+                    android:layout_below="@id/lblBooked"
+                    android:id="@+id/txtOrderQty"
+                    android:fontFamily="sans-serif-thin"
+                    android:textColor="#FFF" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:background="@drawable/rounded_textview"
+                android:id="@+id/rlProdQty"
+                android:layout_toRightOf="@+id/rlOQty"
+                android:layout_marginRight="5dp">
+                <TextView
+                    android:text="Prod Qty"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:id="@+id/lblProduce"
+                    android:layout_toRightOf="@id/lblBooked"
+                    android:fontFamily="sans-serif-thin"
+                    android:textColor="#FFF"
+                    android:textStyle="bold" />
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:text="0"
+                    android:layout_below="@id/lblProduce"
+                    android:id="@+id/txtProduceQty"
+                    android:layout_toRightOf="@id/txtOrderQty"
+                    android:layout_marginRight="10dp"
+                    android:fontFamily="sans-serif-thin"
+                    android:textColor="#FFF" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:background="@drawable/rounded_textview"
+                android:id="@+id/rlBlQty"
+                android:layout_toRightOf="@+id/rlProdQty">
+                <TextView
+                    android:text="Balance Qty"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:id="@+id/lblBalance"
+                    android:layout_toRightOf="@id/lblProduce"
+                    android:fontFamily="sans-serif-thin"
+                    android:textColor="#FFF"
+                    android:textStyle="bold" />
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_below="@id/lblBalance"
+                    android:text="0"
+                    android:id="@+id/txtBalanceQty"
+                    android:layout_toRightOf="@id/txtProduceQty"
+                    android:fontFamily="sans-serif-thin"
+                    android:textColor="#FFF" />
+            </RelativeLayout>
+        </RelativeLayout>
+        <Button
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_below="@id/rlQty"
+            android:id="@+id/btnSubmit"
+            android:text="Submit"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/rounded_button"
+            android:fontFamily="sans-serif-thin"
+            android:textColor="#fff"
+            android:textAllCaps="false"
+            android:shadowRadius="4"
+            android:shadowColor="#ffefefef" />
+        <ListView
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_below="@id/btnSubmit"
+            android:id="@+id/lvProduct"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="5dp"
+            android:dividerHeight="1dp" />
+        <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/gifview"
+            tools:visibility="gone">
+            <pa.CustomControl.CustomGifView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="50dp" />
+        </RelativeLayout>
+    </RelativeLayout>
+<!--</PullToRefresharp.Android.Widget.ScrollView>
+    </pulltorefresharp.android.views.ViewWrapper>-->
+</RelativeLayout>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg">
+    <TextView
+        android:id="@+id/tvMsg"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="#C22E2C"
+        android:text="Username or password is incorrect"
+        android:textSize="14sp"
+        android:gravity="center"
+        android:textColor="#ffffff" />
+    <refractored.controls.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_height="100dp"
+        android:layout_width="100dp"
+        android:id="@+id/ivLogo"
+        android:src="@drawable/bitopilogo"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="false"
+        android:layout_marginTop="100dp"
+        android:background="@null"
+        app:civ_border_width="0dp"
+        app:civ_border_color="#bdbdbd" />
+<!--<ImageView
+        android:layout_height="100dp"
+        android:layout_width="100dp"
+        android:layout_below="@id/ivUserImg"
+        android:id="@+id/ivLogo"
+        android:src="@drawable/bitopilogo"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="false"
+        android:layout_marginTop="100dp" />
+        android:scaleType="center"
+        android:padding="10dp"
+        -->
+    <TextView
+        android:text="Production Accounting"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_below="@id/ivLogo"
+        android:textSize="25sp"
+        android:layout_centerHorizontal="true"
+        android:textColor="#fff"
+        android:shadowRadius="4" />
+<!--<WebView
+        android:layout_height="200dp"
+        android:layout_width="match_parent"
+        android:id="@+id/wvLoader"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp" />-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/gifview">
+        <pa.CustomControl.CustomGifView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="50dp" />
+    </RelativeLayout>
+</RelativeLayout>

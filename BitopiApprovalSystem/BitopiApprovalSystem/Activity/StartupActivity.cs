@@ -20,6 +20,7 @@ using BitopiApprovalSystem.BitopiPushNotification;
 using Android.Webkit;
 using Badge.Plugin;
 using BitopiApprovalSystem.Library;
+using BitopiApprovalSystem.Model;
 
 namespace BitopiApprovalSystem
 {
@@ -122,7 +123,8 @@ namespace BitopiApprovalSystem
                     if (!String.IsNullOrEmpty(user.UserCode))
                     {
                         bitopiApplication.User = user;
-
+                        List<DDL> ddl = await new ProductionRepository().GetProductionDDL(user.UserCode);
+                        bitopiApplication.DDLList = ddl;
                         pref.Edit().PutString("UserCode", user.UserCode).Commit();
 
                         i = new Intent(this, typeof(BitopiActivity));

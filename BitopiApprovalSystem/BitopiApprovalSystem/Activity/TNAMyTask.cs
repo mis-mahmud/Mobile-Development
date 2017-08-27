@@ -26,7 +26,7 @@ using Android.Support.V4.Content;
 namespace BitopiApprovalSystem
 {
     [Activity(Label = "TNAMyTask", WindowSoftInputMode = SoftInput.AdjustNothing)]
-    public class TNAMyTaskActivity : AppCompatActivity
+    public class TNAMyTaskActivity : BaseActivity
     {
         AnimatedExpandableListView lvMyTask;
         TNAMyTaskListAdapter _TNAMyTaskListAdapter;
@@ -40,7 +40,7 @@ namespace BitopiApprovalSystem
         public RelativeLayout rlMsg;
         public RelativeLayout rlapprovalDetail;
         RelativeLayout rltitle;
-        BitopiApplication bitopiApplication;
+        //BitopiApplication bitopiApplication;
         TextView tvMsg;
         TextView tvHeaderName;
         RelativeLayout RLleft_drawer;
@@ -48,7 +48,7 @@ namespace BitopiApprovalSystem
         protected override void OnCreate(Bundle savedInstanceState)
         {
 
-            bitopiApplication = (BitopiApplication)this.ApplicationContext;
+            //bitopiApplication = (BitopiApplication)this.ApplicationContext;
             builder = new Android.App.AlertDialog.Builder(this);
             builder.SetMessage("Hello, World!");
 
@@ -106,7 +106,7 @@ namespace BitopiApprovalSystem
                 }
             };
 
-            LoadDrawerView();
+            //LoadDrawerView();
         }
         public override void OnBackPressed()
         {

@@ -25,13 +25,13 @@ using Android.Support.V4.Widget;
 namespace BitopiApprovalSystem
 {
     [Activity(Label = "ApprovalActivity")]
-    public class ApprovalActivity : AppCompatActivity
+    public class ApprovalActivity : BaseActivity
     {
         TextView tvMsg;
         RelativeLayout rlApproval;
         RelativeLayout rlApprovalList;
         List<ApprovalModel> aprovalList;
-        BitopiApplication bitopiApplication;
+       // BitopiApplication bitopiApplication;
         RelativeLayout RLleft_drawer;
         private DrawerLayout mDrawerLayout;
         protected override void OnCreate(Bundle savedInstanceState)
@@ -39,7 +39,7 @@ namespace BitopiApprovalSystem
             //BitopiSingelton.Instance.CurrentActivity = "Approval Activity";
             
             base.OnCreate(savedInstanceState);
-            bitopiApplication = (BitopiApplication)this.ApplicationContext;
+            //bitopiApplication = (BitopiApplication)this.ApplicationContext;
             bitopiApplication.CurrentActivity = "Approval Activity";
             //bitopiApplication.ReceivingMessages= new Dictionary<string, List<string>>();
             //PushNotificationSingleton.Instance.SaveNotification("");
@@ -67,7 +67,7 @@ namespace BitopiApprovalSystem
                     mDrawerLayout.OpenDrawer(RLleft_drawer);
                 }
             };
-            LoadDrawerView();
+           // base.LoadDrawerView();
 
         }
         protected async override void OnStart()

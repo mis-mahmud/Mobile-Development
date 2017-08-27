@@ -2,4 +2,6 @@
 <resources>
     <string name="Hello">Hello World, Click Me!</string>
     <string name="ApplicationName">Bitopi Approval System</string>
+  <string name="prompt_process">Please Choose a Process</string>
+  <string name="promp_Location">Please Choose a Location</string>
 </resources>

@@ -24,7 +24,7 @@
     
   </style>
   <style name="MyActionBar"
-           parent="Theme.AppCompat">
+           parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse"><!--Theme.AppCompat-->
     <item name="background">@color/actionbar_color</item>
     <item name="android:background">#3f51b5</item>
     <item name="android:textColor">#ffffff</item>
@@ -51,6 +51,20 @@
         <item name="maxHeight">24dip</item>
         <item name="indicatorName">BallPulseIndicator</item>
 </style>
+  <style name="CustomActionBarTheme.NoActionBar">
+    <!-- Both of these are needed -->
+    <item name="windowActionBar">false</item>
+    <item name="windowNoTitle">true</item>
+  </style>
+  <style name="TextLabel" parent="ThemeOverlay.AppCompat.Light">
+    <!-- Hint color and label color in FALSE state -->
+    <item name="android:textColorHint">#ffffff</item>
+    <item name="android:textSize">20sp</item>
+    <!-- Label color in TRUE state and bar color FALSE and TRUE State -->
+    <item name="colorAccent">#d3d3d3</item>
+    <item name="colorControlNormal">#d3d3d3</item>
+    <item name="colorControlActivated">#ffffff</item>
+  </style>
   <color name="my_actionbar_shadow">#1C5025</color>
   <color name="actionbar_color">#3f51b5</color>
 </resources>

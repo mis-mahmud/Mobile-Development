@@ -149,7 +149,7 @@ namespace BitopiApprovalSystem
                 }
             };
 
-            base.LoadDrawerView(this);
+            //base.LoadDrawerView();
         }
         protected async override void OnStart()
         {

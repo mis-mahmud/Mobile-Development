@@ -11,6 +11,7 @@ using Android.Views;
 using Android.Widget;
 using Model;
 using BitopiApprovalSystem.Model;
+using Newtonsoft.Json;
 
 namespace BitopiApprovalSystem
 {
@@ -93,6 +94,13 @@ namespace BitopiApprovalSystem
         public string CurrentVersion;
         public string CurrentActivity;
         public MyTaskType MyTaskType;
+
+        public string ProcessID;
+        public string ProcessName;
+        public string LocationID;
+        public string LocationName;
+        public List<DDL> DDLList;
+        public string PRStatus;
         public BitopiApplication(IntPtr handle, JniHandleOwnership transfer)
             : base(handle, transfer)
         {
@@ -142,5 +150,49 @@ namespace BitopiApprovalSystem
             }
         }
         public Dictionary<string, List<string>> ReceivingMessages { get; set; }
+    }
+    public class ProcessSingleton
+    {
+        public static ProcessSingleton Instance = new ProcessSingleton();
+
+        ProcessSingleton()
+        {
+        }
+        public DDL Location
+        {
+            set
+            {
+                DDL[] _locList = this.LocationList;
+                _locList[0] = _locList[1];
+                _locList[1] = _locList[2];
+                _locList[2] = value;
+                this.LocationList = _locList;
+            }
+        }
+        public DDL[] LocationList
+        {
+            get
+            {
+                var text = "";
+
+                var documents = Android.OS.Environment.ExternalStorageDirectory.AbsolutePath;
+                var filename = System.IO.Path.Combine(documents, "mfc.txt");
+                if (System.IO.File.Exists(filename))
+                    text = System.IO.File.ReadAllText(filename);
+                if (text != "")
+                    return JsonConvert.DeserializeObject<DDL[]>(text);
+                else
+                    return new DDL[3];
+            }
+            set
+            {
+                var text = Newtonsoft.Json.JsonConvert.SerializeObject(value);
+                var documents = Android.OS.Environment.ExternalStorageDirectory.AbsolutePath;
+                var filename = System.IO.Path.Combine(documents, "mfc.txt");
+                System.IO.File.WriteAllText(filename, text);
+                ;
+            }
+        }
+
     }
 }

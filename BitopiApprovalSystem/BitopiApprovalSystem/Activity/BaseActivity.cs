@@ -12,6 +12,7 @@ using Android.Widget;
 using Android.Support.V7.App;
 using Android.Graphics;
 using ApiRepository;
+using Android.Support.V4.Widget;
 
 namespace BitopiApprovalSystem
 {
@@ -19,14 +20,31 @@ namespace BitopiApprovalSystem
     public class BaseActivity : AppCompatActivity
     {
         protected BitopiApplication bitopiApplication;
+        RelativeLayout RLleft_drawer;
+        private DrawerLayout mDrawerLayout;
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             bitopiApplication = (BitopiApplication)this.ApplicationContext;
             // Create your application here
+            
         }
-        protected void LoadDrawerView(Activity Context)
+        protected override void OnStart()
         {
+            
+            base.OnStart();
+            InitializeControl();
+            LoadDrawerView();
+            InitializeEvent();
+        }
+        protected void LoadDrawerView()
+        {
+            Activity Context = this;
+            var DrawerMenuParent = FindViewById<RelativeLayout>(Resource.Id.RLleft_drawer);
+            DrawerMenuParent.RemoveAllViews();
+            var layout = LayoutInflater.Inflate(Resource.Layout.DrawerMenu, null, true);
+            DrawerMenuParent.AddView(layout);
+
             Context.FindViewById<TextView>(Resource.Id.tvUserName).Text = bitopiApplication.User.EmployeeName;
             if (bitopiApplication.User.EmpImage.Length > 0)
             {
@@ -75,5 +93,25 @@ namespace BitopiApprovalSystem
                 StartActivity(i);
             };
         }
+        protected virtual void InitializeControl()
+        {
+            RLleft_drawer = FindViewById<RelativeLayout>(Resource.Id.RLleft_drawer);
+            mDrawerLayout = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
+        }
+        protected virtual void InitializeEvent() {
+
+            FindViewById<ImageButton>(Resource.Id.btnDrawermenu).Click += (s, e) =>
+            {
+                if (mDrawerLayout.IsDrawerOpen(RLleft_drawer))
+                {
+                    mDrawerLayout.CloseDrawer(RLleft_drawer);
+                }
+                else
+                {
+                    mDrawerLayout.OpenDrawer(RLleft_drawer);
+                }
+            };
+        }
+
     }
 }

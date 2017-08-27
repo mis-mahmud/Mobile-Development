@@ -9,51 +9,40 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
-using BitopiApprovalSystem;
 using Android.Graphics;
 using System.Threading;
 using ApiRepository;
 using Android.Support.V7.App;
-using BitopiApprovalSystem.Model;
 using Android.Support.V4.Widget;
-using BitopiApprovalSystem.PushNotification;
 
 namespace BitopiApprovalSystem
 {
-    [Activity(Label = "MyTaskMenu",WindowSoftInputMode =SoftInput.AdjustPan)]
-    public class MyTaskMenu : AppCompatActivity
+    [Activity(Label = "BitopiActivity")]
+    public class BitopiActivity : BaseActivity
     {
-        BitopiApplication bitopiApplication;
+        //BitopiApplication bitopiApplication;
         RelativeLayout RLleft_drawer;
-        TextView numberSeen;
-        TextView numberUnseen;
-        TextView numberCompleted;
         private DrawerLayout mDrawerLayout;
         protected override void OnCreate(Bundle savedInstanceState)
         {
-            bitopiApplication = (BitopiApplication)this.ApplicationContext;
+            //bitopiApplication = (BitopiApplication)this.ApplicationContext;
             base.OnCreate(savedInstanceState);
-            SetContentView(Resource.Layout.MyTaskMenuLayout);
+            SetContentView(Resource.Layout.MenuLayout);
             SupportActionBar.SetDisplayShowCustomEnabled(true);
             SupportActionBar.SetCustomView(Resource.Layout.custom_actionbar);
-            LoadDrawerView();
-            PushNotificationSingleton.Instance.SaveNotification("");
-            FindViewById<RelativeLayout>(Resource.Id.rlSeenTask).Click += (s, e) =>
+            FindViewById<RelativeLayout>(Resource.Id.rlApproval).Click += (s, e) =>
             {
-                Intent i = new Intent(this, typeof(TNAMyTaskActivity));
-                bitopiApplication.MyTaskType = MyTaskType.SEEN;
+                Intent i = new Intent(this, typeof(ApprovalActivity));
                 StartActivity(i);
             };
-            FindViewById<RelativeLayout>(Resource.Id.rlUnSeenTask).Click += (s, e) =>
+            FindViewById<RelativeLayout>(Resource.Id.rlMyTask).Click += (s, e) =>
             {
-                Intent i = new Intent(this, typeof(TNAMyTaskActivity));
-                bitopiApplication.MyTaskType = MyTaskType.UNSEEN;
+                Intent i = new Intent(this, typeof(MyTaskMenu));
                 StartActivity(i);
             };
-            FindViewById<RelativeLayout>(Resource.Id.rlCompleteTask).Click += (s, e) =>
+            FindViewById<RelativeLayout>(Resource.Id.rlPA).Click += (s, e) =>
             {
-                Intent i = new Intent(this, typeof(TNAMyTaskActivity));
-                bitopiApplication.MyTaskType = MyTaskType.COMPLETED;
+                Intent i = new Intent(this, typeof(ProcessListActivity));
                 StartActivity(i);
             };
             RLleft_drawer = FindViewById<RelativeLayout>(Resource.Id.RLleft_drawer);
@@ -70,52 +59,8 @@ namespace BitopiApprovalSystem
                     mDrawerLayout.OpenDrawer(RLleft_drawer);
                 }
             };
-           var tvHeaderName = FindViewById<TextView>(Resource.Id.tvHeaderName);
-            tvHeaderName.Text = "My Task";
-            numberSeen = FindViewById<TextView>(Resource.Id.numberImageSeen) ;
-             numberUnseen= FindViewById<TextView>(Resource.Id.numberImageUnseen);
-             numberCompleted= FindViewById<TextView>(Resource.Id.numberImageCompleted);
-        }
-        protected async override void OnStart()
-        {
-            base.OnStart();
-            TNARepository repo = new TNARepository();
-
-            MyTaskCountDBModel mytaskList = null;
-            mytaskList = await repo.GetTaskCount(bitopiApplication.User.UserCode);
-            if (mytaskList != null)
-            {
-                if (mytaskList.TotalUnSeenTask != "0")
-                {
-                    numberUnseen.Text = mytaskList.TotalUnSeenTask;
-                    numberUnseen.Visibility = ViewStates.Visible;
-                }
-                else
-                {
-                    numberUnseen.Visibility = ViewStates.Gone;
-                }
-                if (mytaskList.TotalSeenTask != "0")
-                {
-                    numberSeen.Text = mytaskList.TotalSeenTask;
-                    numberSeen.Visibility = ViewStates.Visible;
-                }
-                else
-                {
-                    numberSeen.Visibility = ViewStates.Gone;
-                }
-                if (mytaskList.TotalCompleteTask != "0")
-                {
-                    numberCompleted.Text = mytaskList.TotalCompleteTask;
-                    numberCompleted.Visibility = ViewStates.Visible;
-                }
-                else
-                {
-                    numberCompleted.Visibility = ViewStates.Gone;
-                }
-
-
-            }
-
+            
+            //base.LoadDrawerView();
         }
         void LoadDrawerView()
         {

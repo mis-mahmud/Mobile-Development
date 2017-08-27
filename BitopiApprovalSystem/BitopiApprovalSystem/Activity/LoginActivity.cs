@@ -110,6 +110,9 @@ namespace BitopiApprovalSystem
                 tvMsg.Visibility = ViewStates.Gone;
                 //BitopiSingelton.Instance.User = user;
                 bitopiApplication.User = user;
+                List<DDL> ddl = await new ProductionRepository().GetProductionDDL(user.UserCode);
+                
+                bitopiApplication.DDLList = ddl;
                 ISharedPreferences pref = Application.Context.GetSharedPreferences ("_bitopi_UserInfo", FileCreationMode.Private);
                 
                 pref.Edit().PutString("UserName", encryptedUser).Commit();

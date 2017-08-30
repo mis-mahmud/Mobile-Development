@@ -29,9 +29,13 @@ namespace BitopiApprovalSystem.PushNotification
         public string TokenId { get; set; }
        public void SaveNotification(string msg)
        {
-           var documents = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData);
-           var filename = System.IO.Path.Combine(documents, "myNotificaion.txt");
-           System.IO.File.WriteAllText(filename, msg);
+            try
+            {
+                var documents = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData);
+                var filename = System.IO.Path.Combine(documents, "myNotificaion.txt");
+                System.IO.File.WriteAllText(filename, msg);
+            }
+            catch { }
        }
        public string ReadNotification()
        {

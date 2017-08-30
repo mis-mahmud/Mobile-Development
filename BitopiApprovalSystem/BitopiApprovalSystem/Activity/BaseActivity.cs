@@ -30,12 +30,11 @@ namespace BitopiApprovalSystem
             
         }
         protected override void OnStart()
-        {
-            
-            base.OnStart();
-            InitializeControl();
+        {                
+            //InitializeControl();
             LoadDrawerView();
-            InitializeEvent();
+            //InitializeEvent();
+            base.OnStart();
         }
         protected void LoadDrawerView()
         {
@@ -66,10 +65,11 @@ namespace BitopiApprovalSystem
                      bitopiApplication.MacAddress,
                      "",
                      "",
-                     "android", 2, bitopiApplication.User.UserCode).Result;
+                     "android", 2, bitopiApplication.CurrentVersion, bitopiApplication.User.UserCode).Result;
                     ISharedPreferences pref = Application.Context.GetSharedPreferences("_bitopi_UserInfo", FileCreationMode.Private);
                     pref.Edit().Clear().Commit();
                     bitopiApplication.ClearData();
+                    ProcessSingleton.Instance.RemoveProcess();
                     RunOnUiThread(() =>
                     {
                         progressDialog.Dismiss();
@@ -89,6 +89,12 @@ namespace BitopiApprovalSystem
             Context.FindViewById<RelativeLayout>(Resource.Id.rlmenumytask).Click += (s, e) =>
             {
                 Intent i = new Intent(Context, typeof(MyTaskMenu));
+
+                StartActivity(i);
+            };
+            Context.FindViewById<RelativeLayout>(Resource.Id.rlmenuPA).Click += (s, e) =>
+            {
+                Intent i = new Intent(Context, typeof(ProcessListActivity));
 
                 StartActivity(i);
             };

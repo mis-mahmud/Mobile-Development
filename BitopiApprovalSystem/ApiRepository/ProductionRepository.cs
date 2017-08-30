@@ -12,13 +12,13 @@ namespace ApiRepository
 {
     public class ProductionRepository
     {
-        public async Task<List<ProdcutionAccountingDBModel>> GetProductionList(string userid, string ProcessID,string LocationID,string PRStatus)
+        public  List<ProdcutionAccountingDBModel> GetProductionList(string userid, string ProcessID,string LocationID,string PRStatus)
         {
             userid = Cipher.Encrypt(userid);
             string url = RepositorySettings.BaseURl + "ProdcutionAccounting?UserID=" + userid + "&ProcessID=" + ProcessID + "&LocationID=" + LocationID + "&PRStatus=" + PRStatus;
 
             HttpClient client = new HttpClient();
-            HttpResponseMessage result = await client.GetAsync(url);
+            HttpResponseMessage result =  client.GetAsync(url).Result;
             var aproves = JsonConvert.DeserializeObject<List<ProdcutionAccountingDBModel>>(result.Content.ReadAsStringAsync().Result);
             if (aproves == null)
                 aproves = new List<ProdcutionAccountingDBModel>();
@@ -36,16 +36,19 @@ namespace ApiRepository
                 aproves = new List<DDL>();
             return aproves;
         }
-        public async Task<int> SetProduction(string RefNO, int Qty, string AddedBy)
+        public int SetProduction(string RefNO, int Qty, string LocationRef, string AddedBy)
         {
             
-            string url = RepositorySettings.BaseURl + "ProdcutionAccounting?RefNO=" + RefNO + "&Qty=" + Qty + "&ProdDateTime=" + DateTime.Now + "&AddedBy=" + AddedBy;
+                string url = RepositorySettings.BaseURl + "ProdcutionAccounting?RefNO="
+                    + RefNO + "&Qty=" + Qty + "&ProdDateTime=" + DateTime.Now + "&AddedBy=" + AddedBy
+                    + "&LocationRef=" + LocationRef;
 
-            HttpClient client = new HttpClient();
-            HttpResponseMessage result = await client.GetAsync(url);
-            var aproves = JsonConvert.DeserializeObject<int>(result.Content.ReadAsStringAsync().Result);
+                HttpClient client = new HttpClient();
+                HttpResponseMessage result =  client.GetAsync(url).Result;
+                var aproves = JsonConvert.DeserializeObject<int>(result.Content.ReadAsStringAsync().Result);
+
+                return aproves;
             
-            return aproves;
         }
 
 

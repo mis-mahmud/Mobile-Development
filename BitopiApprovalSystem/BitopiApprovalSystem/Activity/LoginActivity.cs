@@ -94,8 +94,13 @@ namespace BitopiApprovalSystem
                 bitopiApplication.MacAddress,
                 bitopiApplication.MacAddress,
                 bitopiApplication.DeviceName,
-                "android", 1);
+                "android", 1,bitopiApplication.CurrentVersion);
             user.PermittedApproval = new List<int> { 1, 3, 4 };
+            if (user.VersionCode > bitopiApplication.CurrentVersion)
+            {
+                BitopiSingelton.Instance.ShowNewVersionDialog(this);
+                return;
+            }
             if (String.IsNullOrEmpty(user.UserCode))
             {
                 progressDialog.Dismiss();

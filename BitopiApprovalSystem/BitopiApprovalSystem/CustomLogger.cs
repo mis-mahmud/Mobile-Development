@@ -21,7 +21,7 @@ namespace BitopiApprovalSystem.Library
     {
         
         public const string APP_TAG = "BITOPIApproval";
-        public static string VersionName="";
+        public static int VersionName;
         public static void CustomLog(string msg, string tag,string employeeName)
         {
             Log.Info(tag, System.DateTime.Now.ToString() + " - " + msg);

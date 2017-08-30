@@ -29,7 +29,7 @@ namespace BitopiApprovalSystem
     {
         TextView tvMsg;
         BitopiApplication bitopiApplication;
-        protected async override void OnCreate(Bundle savedInstanceState)
+        protected  override void OnCreate(Bundle savedInstanceState)
         {
             bitopiApplication = (BitopiApplication)this.ApplicationContext;
             //BitopiSingelton.Instance.CurrentActivity = "Startup Activity";
@@ -55,12 +55,30 @@ namespace BitopiApprovalSystem
             //BitopiSingelton.Instance.CurrentVersion = this.PackageManager.GetPackageInfo(this.PackageName,
             //    Android.Content.PM.PackageInfoFlags.MetaData).VersionName;
             bitopiApplication.CurrentVersion = this.PackageManager.GetPackageInfo(this.PackageName,
-                Android.Content.PM.PackageInfoFlags.MetaData).VersionName;
+                Android.Content.PM.PackageInfoFlags.MetaData).VersionCode;
             //StartService(new Intent(this, typeof(BitopiRegistrationIntentService)));
             //StartService(new Intent(this, typeof(BitopiInstanceIDListenerService)));
             //StartService(new Intent(this, typeof(BitopiGcmListenerService)));
             //StartService(new Intent(this, typeof(BitopiNotification)));
             StartService(new Intent(this, typeof(BitopiNotificationService)));
+            AppDomain.CurrentDomain.UnhandledException += (s, e) =>
+            {
+                try
+                {
+                    typeof(System.Exception).GetField("stack_trace", BindingFlags.NonPublic | BindingFlags.Instance)
+                        .SetValue(e.ExceptionObject, null);
+
+                  
+                    throw  new Exception("CurrentDomainOnUnhandledException", e.ExceptionObject as Exception);
+                }
+                catch (Exception ex)
+                {
+                    string str = ex.Message;
+                    CustomLogger.VersionName = bitopiApplication.CurrentVersion;
+                    CustomLogger.CustomLog("From Activity: " + bitopiApplication.CurrentActivity + "\nMessage: " + ex.Message + "\nStack Trace: " + ex.StackTrace + "\n\n", "", bitopiApplication.User != null ?
+                         bitopiApplication.User.UserName : "");
+                }
+            };
             AndroidEnvironment.UnhandledExceptionRaiser += delegate (object sender, RaiseThrowableEventArgs args)
             {
                 try
@@ -119,8 +137,13 @@ namespace BitopiApprovalSystem
                     UserModel user = await repo.getUser(UserName, Password, bitopiApplication.MacAddress,
                     bitopiApplication.MacAddress,
                    bitopiApplication.DeviceName,
-                    "android", 1);
-                    if (!String.IsNullOrEmpty(user.UserCode))
+                    "android", 1,bitopiApplication.CurrentVersion);
+                    if(user.VersionCode>bitopiApplication.CurrentVersion)
+                    {
+                        BitopiSingelton.Instance.ShowNewVersionDialog(this);
+                        return;
+                    }
+                    else if (!String.IsNullOrEmpty(user.UserCode))
                     {
                         bitopiApplication.User = user;
                         List<DDL> ddl = await new ProductionRepository().GetProductionDDL(user.UserCode);

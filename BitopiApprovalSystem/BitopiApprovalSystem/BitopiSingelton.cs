@@ -12,6 +12,8 @@ using Android.Widget;
 using Model;
 using BitopiApprovalSystem.Model;
 using Newtonsoft.Json;
+using Android.Text;
+using Android.Text.Util;
 
 namespace BitopiApprovalSystem
 {
@@ -59,6 +61,24 @@ namespace BitopiApprovalSystem
             builder.Show();
 
         }
+        public void ShowNewVersionDialog(Activity activity)
+        {
+            AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+            builder.SetTitle(" New Version Available ");
+            var version = activity.PackageManager.GetPackageInfo(activity.PackageName,
+                Android.Content.PM.PackageInfoFlags.MetaData);
+            SpannableString s = new SpannableString(String.Format("Please download the new version of this app from" 
+                + System.Environment.NewLine +"http://apps.bitopibd.com/bimobapps"));
+            Linkify.AddLinks(s, MatchOptions.WebUrls);
+            builder.SetMessage(s);
+
+            builder.SetCancelable(false);
+            builder.SetPositiveButton("OK", delegate { builder.Dispose();Android.OS.Process.KillProcess(Android.OS.Process.MyPid()); });
+
+
+            builder.Show();
+
+        }
         public void ClearData()
         {
             _instance.User = null;
@@ -91,7 +111,7 @@ namespace BitopiApprovalSystem
         public int ApprovalId;
         public ApprovalType ApprovalType;
         public ApprovalRoleType ApprovalRoleType;
-        public string CurrentVersion;
+        public int CurrentVersion;
         public string CurrentActivity;
         public MyTaskType MyTaskType;
 
@@ -163,8 +183,8 @@ namespace BitopiApprovalSystem
             set
             {
                 DDL[] _locList = this.LocationList;
-                _locList[0] = _locList[1];
-                _locList[1] = _locList[2];
+                _locList[0] = _locList[1]!=null? _locList[1]:new DDL { LocationName="",ProcessName=""};
+                _locList[1] = _locList[2] != null ? _locList[2] : new DDL { LocationName = "", ProcessName = "" };
                 _locList[2] = value;
                 this.LocationList = _locList;
             }
@@ -174,6 +194,8 @@ namespace BitopiApprovalSystem
             get
             {
                 var text = "";
+                //string path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
+                //var filename= System.IO.Path.Combine(path, "mfc.txt");
 
                 var documents = Android.OS.Environment.ExternalStorageDirectory.AbsolutePath;
                 var filename = System.IO.Path.Combine(documents, "mfc.txt");
@@ -186,12 +208,30 @@ namespace BitopiApprovalSystem
             }
             set
             {
-                var text = Newtonsoft.Json.JsonConvert.SerializeObject(value);
-                var documents = Android.OS.Environment.ExternalStorageDirectory.AbsolutePath;
-                var filename = System.IO.Path.Combine(documents, "mfc.txt");
-                System.IO.File.WriteAllText(filename, text);
-                ;
+                try
+                {
+                    var text = Newtonsoft.Json.JsonConvert.SerializeObject(value);
+                    //string path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
+                    //var filename = System.IO.Path.Combine(path, "mfc.txt");
+                    var documents = Android.OS.Environment.ExternalStorageDirectory.AbsolutePath;
+                    var filename = System.IO.Path.Combine(documents, "mfc.txt");
+                    System.IO.File.WriteAllText(filename, text);
+                    ;
+                }
+                catch(Exception ex) {
+                    string msg = ex.Message;
+                }
             }
+        }
+        public void RemoveProcess()
+        {
+            var documents = Android.OS.Environment.ExternalStorageDirectory.AbsolutePath;
+            var filename = System.IO.Path.Combine(documents, "mfc.txt");
+
+            //string path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
+            //var filename = System.IO.Path.Combine(path, "mfc.txt");
+            if (System.IO.File.Exists(filename))
+                System.IO.File.Delete(filename);
         }
 
     }

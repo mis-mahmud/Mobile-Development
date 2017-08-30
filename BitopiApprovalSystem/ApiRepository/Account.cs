@@ -16,11 +16,12 @@ namespace ApiRepository
             string DeviceToken,
             string DeviceName,
             string Platform,
-            int QryOption,string UserCode="")
+            int QryOption,int VersionCode, string UserCode="")
         {
             string url = RepositorySettings.BaseURl + "Account?userName=" + userName + "&Password=" + password
                 + "&DeviceID=" + DeviceID + " &DeviceToken=" + DeviceToken
-                + "&DeviceName=" + DeviceName + "&Platform=" + Platform+ "&QryOption="+QryOption+ "&UserCode="+ UserCode;
+                + "&DeviceName=" + DeviceName + "&Platform=" + Platform+ "&QryOption="+QryOption+ "&UserCode="
+                + UserCode+ "&VersionCode="+ VersionCode;
                 
             HttpClient client = new HttpClient();
             HttpResponseMessage result= await client.GetAsync(url);         

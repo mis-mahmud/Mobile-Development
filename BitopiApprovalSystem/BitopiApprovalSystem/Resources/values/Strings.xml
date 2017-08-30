@@ -4,4 +4,8 @@
     <string name="ApplicationName">Bitopi Approval System</string>
   <string name="prompt_process">Please Choose a Process</string>
   <string name="promp_Location">Please Choose a Location</string>
+<string name="dialogContent">
+    Please downlaod the new version of this app from http://apps.bitopibd.com/bimobapps
+    <!--<a href='http://apps.bitopibd.com/bimobapps'>here</a>-->
+</string>
 </resources>

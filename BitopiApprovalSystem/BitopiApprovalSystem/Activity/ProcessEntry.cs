@@ -16,17 +16,18 @@ using Android.Util;
 using Android.Support.V4.View;
 using PullToRefresharp.Android.Views;
 using Android.Support.V4.Widget;
+using System.Threading;
 
 namespace BitopiApprovalSystem
 {
-    [Activity(Label = "ProcessEntry")]
+    [Activity(Label = "ProcessEntry",WindowSoftInputMode = SoftInput.StateHidden| SoftInput.AdjustResize)]
     public class ProcessEntry : BaseActivity
     {
         PullToRefresharp.Android.Widget.ScrollView ptr;
         ProductionRepository repo = new ProductionRepository();
         ListView lvProduct;
         TextView tvLocation;
-        TextView tvRef, tvOrderQty, tvBalanceQty, tvProducedQty;
+        TextView tvRef, tvOrderQty, tvBalanceQty, tvProducedQty, txtWIPQty;
         EditText etQty;
         Button btnSave, btnPlus, btnMinus;
         public ProductionAccountigListAdapter adapter;
@@ -35,31 +36,40 @@ namespace BitopiApprovalSystem
         private IPullToRefresharpView ptr_view;
         RelativeLayout rlTop;
         RelativeLayout rltitle;
-        
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            
+
             SupportActionBar.SetDisplayShowCustomEnabled(true);
             SupportActionBar.SetCustomView(Resource.Layout.custom_actionbar);
             SetContentView(Resource.Layout.ProcessEntry);
-            
+            InitializeControl();
+
+            base.LoadDrawerView();
         }
-        protected override void OnStart()
+        protected  override void OnStart()
         {
             base.OnStart();
+            InitializeEvent();
             gifView.Visibility = ViewStates.Visible;
             LoadList();
             gifView.Visibility = ViewStates.Gone;
         }
-        async void LoadList()
+        void LoadList()
         {
-            list = await repo.GetProductionList(bitopiApplication.User.UserCode, bitopiApplication.ProcessID,
-                bitopiApplication.LocationID, bitopiApplication.PRStatus);
-            adapter.Items = list;
-            adapter.NotifyDataSetChanged();
-            //AndHUD.Shared.Dismiss();
-            Log.Debug("", list.Count().ToString());
+            new Thread(new ThreadStart(() =>
+            {
+                list = repo.GetProductionList(bitopiApplication.User.UserCode, bitopiApplication.ProcessID,
+                    bitopiApplication.LocationID, bitopiApplication.PRStatus);
+                RunOnUiThread(() =>
+                {
+                    adapter.Items = list;
+                    adapter.NotifyDataSetChanged();
+                    //AndHUD.Shared.Dismiss();
+                    Log.Debug("", list.Count().ToString());
+                });
+            })).Start();
         }
         private void setSearchIcons(SearchView mSearchView)
         {
@@ -140,7 +150,7 @@ namespace BitopiApprovalSystem
         }
         protected override void InitializeControl()
         {
-            
+
             FindViewById<ImageButton>(Resource.Id.btnDrawermenu).Visibility = ViewStates.Visible;
             // ptr = FindViewById<PullToRefresharp.Android.Widget.ScrollView>(Resource.Id.ptr);
             rltitle = FindViewById<RelativeLayout>(Resource.Id.rltitle);
@@ -154,6 +164,7 @@ namespace BitopiApprovalSystem
             tvOrderQty = FindViewById<TextView>(Resource.Id.txtOrderQty);
             tvBalanceQty = FindViewById<TextView>(Resource.Id.txtBalanceQty);
             tvProducedQty = FindViewById<TextView>(Resource.Id.txtProduceQty);
+            txtWIPQty = FindViewById<TextView>(Resource.Id.txtWIPQty);
             etQty = FindViewById<EditText>(Resource.Id.etQty);
             btnSave = FindViewById<Button>(Resource.Id.btnSubmit);
 
@@ -202,30 +213,42 @@ namespace BitopiApprovalSystem
             etQty.Text = qty.ToString();
         }
 
-        private async void BtnSave_Click(object sender, EventArgs e)
+        private void BtnSave_Click(object sender, EventArgs e)
         {
+
             if (tvRef.Text == "None")
             {
                 Toast.MakeText(this, "Please Select an item first", ToastLength.Long).Show();
                 return;
             }
+            var model = list.Where(t => t.RefNo == tvRef.Text).First();
             gifView.Visibility = ViewStates.Visible;
-            var result = await repo.SetProduction(tvRef.Text, Convert.ToInt16(etQty.Text), bitopiApplication.User.UserCode);
 
-            if (result > 0)
-            {
-                LoadList();
-                var model = list.Where(t => t.RefNo == tvRef.Text).First();
-                tvOrderQty.Text = model.OrderQty.ToString("N0");
-                tvBalanceQty.Text = model.BalanceQty.ToString("N0");
-                tvProducedQty.Text = model.ProducedQty.ToString("N0");
-                Toast.MakeText(this, "Successfully Saved", ToastLength.Long).Show();
-            }
-            else
-            {
-                Toast.MakeText(this, "Unsuccessfull operation", ToastLength.Long).Show();
-            }
-            gifView.Visibility = ViewStates.Gone;
+            //new Thread(new ThreadStart(() =>
+            //{
+
+                var result = repo.SetProduction(tvRef.Text,
+                    Convert.ToInt16(etQty.Text), model.LocationRef, bitopiApplication.User.UserCode);
+
+                RunOnUiThread(() =>
+                {
+                    if (result > 0)
+                    {
+                        LoadList();
+
+                        tvOrderQty.Text = model.OrderQty.ToString("N0");
+                        tvBalanceQty.Text = model.BalanceQty.ToString("N0");
+                        tvProducedQty.Text = model.ProducedQty.ToString("N0");
+                        txtWIPQty.Text = model.WIP.ToString("N0");
+                        Toast.MakeText(this, "Successfully Saved", ToastLength.Long).Show();
+                    }
+                    else
+                    {
+                        Toast.MakeText(this, "Unsuccessfull operation", ToastLength.Long).Show();
+                    }
+                    gifView.Visibility = ViewStates.Gone;
+                });
+            //})).Start();
         }
 
         private void LvProduct_ItemClick(object sender, AdapterView.ItemClickEventArgs e)

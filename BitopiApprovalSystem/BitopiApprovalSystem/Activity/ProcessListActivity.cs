@@ -27,7 +27,7 @@ namespace BitopiApprovalSystem
         Spinner spProcess, spLocation, spPr;
         Switch swLoadLastLocation;
         bool LastLocation;
-        ISharedPreferences pref;
+        
         DDL[] ProcessName;
         DDL[] LocationName;
         string SelectedProcess;
@@ -36,7 +36,8 @@ namespace BitopiApprovalSystem
         private DrawerLayout mDrawerLayout;
         protected override void OnCreate(Bundle savedInstanceState)
         {
-            pref = Application.Context.GetSharedPreferences("_bitopi_UserInfo", FileCreationMode.Private);
+            ISharedPreferences pref = Application.Context.GetSharedPreferences
+                ("_bitopi_UserInfo", FileCreationMode.Private);
             LastLocation = pref.GetBoolean("IsLastLocation", false);
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.ProcessList);
@@ -44,7 +45,7 @@ namespace BitopiApprovalSystem
             SupportActionBar.SetCustomView(Resource.Layout.custom_actionbar);
             InitializeControl();
             InitializeEvent();
-            //base.LoadDrawerView();
+            base.LoadDrawerView();
         }
         protected override void OnStart()
         {
@@ -79,17 +80,17 @@ namespace BitopiApprovalSystem
             swLoadLastLocation.CheckedChange += SwLoadLastLocation_CheckedChange;
             spProcess.ItemSelected += SpProcess_ItemSelected;
             spLocation.ItemSelected += SpLocation_ItemSelected;
-            FindViewById<ImageButton>(Resource.Id.btnDrawermenu).Click += (s, e) =>
-            {
-                if (mDrawerLayout.IsDrawerOpen(RLleft_drawer))
-                {
-                    mDrawerLayout.CloseDrawer(RLleft_drawer);
-                }
-                else
-                {
-                    mDrawerLayout.OpenDrawer(RLleft_drawer);
-                }
-            };
+            //FindViewById<ImageButton>(Resource.Id.btnDrawermenu).Click += (s, e) =>
+            //{
+            //    if (mDrawerLayout.IsDrawerOpen(RLleft_drawer))
+            //    {
+            //        mDrawerLayout.CloseDrawer(RLleft_drawer);
+            //    }
+            //    else
+            //    {
+            //        mDrawerLayout.OpenDrawer(RLleft_drawer);
+            //    }
+            //};
             base.InitializeEvent();
         }
         private void SpLocation_ItemSelected(object sender, AdapterView.ItemSelectedEventArgs e)
@@ -112,6 +113,8 @@ namespace BitopiApprovalSystem
         }
         private void SwLoadLastLocation_CheckedChange(object sender, CompoundButton.CheckedChangeEventArgs e)
         {
+            ISharedPreferences pref= Application.Context.GetSharedPreferences
+                ("_bitopi_UserInfo", FileCreationMode.Private); ;
             if (e.IsChecked)
             {
                 LastLocation = true;
@@ -145,6 +148,8 @@ namespace BitopiApprovalSystem
         }
         void LoadCombo()
         {
+            ISharedPreferences pref = Application.Context.GetSharedPreferences
+                ("_bitopi_UserInfo", FileCreationMode.Private); ;
             if (ProcessSingleton.Instance.LocationList[2] == null)
             {
                 LastLocation = false;

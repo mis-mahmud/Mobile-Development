@@ -338,7 +338,7 @@ namespace BitopiApprovalSystem
                      bitopiApplication.MacAddress,
                      "",
                      "",
-                     "android", 2, bitopiApplication.User.UserCode).Result;
+                     "android", 2, bitopiApplication.CurrentVersion, bitopiApplication.User.UserCode).Result;
                     ISharedPreferences pref = Application.Context.GetSharedPreferences("_bitopi_UserInfo", FileCreationMode.Private);
                     pref.Edit().Clear().Commit();
                     bitopiApplication.ClearData();

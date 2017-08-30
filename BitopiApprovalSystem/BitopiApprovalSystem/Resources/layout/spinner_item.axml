@@ -5,8 +5,7 @@
     android:textSize="13sp"
     android:gravity="center"
     android:textColor="#349790"
-    android:paddingLeft="2dip"
-    android:paddingRight="2dip"
-    android:paddingBottom="5dip"
-    android:background="#ffffff"
-    android:id="@+id/tvSpinner" />
+    android:id="@+id/tvSpinner"
+    android:text="test "
+    android:fontFamily="sans-serif-thin"
+    android:padding="5dp" />

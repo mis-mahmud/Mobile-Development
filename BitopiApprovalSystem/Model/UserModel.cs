@@ -21,5 +21,6 @@ namespace Model
         public string LeaveApproval { get; set; }
         public string LeaveRecommend { get; set; }
         public List<int> PermittedApproval { get; set; }
+        public int VersionCode { get; set; }
     }
 }

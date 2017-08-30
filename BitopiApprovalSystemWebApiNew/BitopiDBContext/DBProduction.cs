@@ -12,12 +12,15 @@ namespace BitopiDBContext
 {
     public class DBProduction : DBContext
     {
-        public List<ProdcutionAccountingDBModel> Get(string UserCode, string ProcessID)
+        public List<ProdcutionAccountingDBModel> Get(string UserCode, string ProcessID, string LocationID, string PRStatus)
         {
        
             SqlParameter[] param = new SqlParameter[] {
                 new SqlParameter("@UserCode",UserCode),
-                new SqlParameter("@ProcessID",ProcessID)
+                new SqlParameter("@ProcessID",ProcessID),
+                new SqlParameter("@LocationID",LocationID),
+                new SqlParameter("@PRStatus",PRStatus)
+
             };
             List<ProdcutionAccountingDBModel> _DBModelList = new List<ProdcutionAccountingDBModel>();
             try
@@ -38,6 +41,7 @@ namespace BitopiDBContext
                         _DBModel.BalanceQty = Convert.ToInt32(dr["BalanceQty"]);
                         _DBModel.OrderQty = Convert.ToInt32(dr["OrderQty"]);
                         _DBModel.ProducedQty = Convert.ToInt32(dr["ProducedQty"]);
+                        _DBModel.WIP = Convert.ToInt32(dr["WIP"]);
                         _DBModel.Size = dr["Size"].ToString();
                         _DBModelList.Add(_DBModel);
                     }
@@ -54,12 +58,13 @@ namespace BitopiDBContext
                 _DBModelList = null;
             }
         }
-        public int Set(string RefNO, DateTime ProdDateTime,int Qty,string AddedBy)
+        public int Set(string RefNO, DateTime ProdDateTime, string LocationRef,int Qty,string AddedBy)
         {
 
             SqlParameter[] param = new SqlParameter[] {
                 new SqlParameter("@Ref",RefNO),
                 new SqlParameter("@ProdDateTime",ProdDateTime),
+                new SqlParameter("@LocationRef",LocationRef),
                 new SqlParameter("@Qty",Qty),
                 new SqlParameter("@AddedBy",AddedBy),
             };

@@ -24,7 +24,7 @@ namespace BitopiDBContext
             string DeviceToken,
             string DeviceName,
             string Platform,
-            int QryOption, string UserCode)
+            int QryOption, string UserCode,string VersionCode)
         {
             SqlParameter[] param = new SqlParameter[] {
                 new SqlParameter("@UserName",username),
@@ -34,7 +34,8 @@ namespace BitopiDBContext
                 new SqlParameter("@DeviceName",DeviceName),
                 new SqlParameter("@Platform",Platform),
                  new SqlParameter("@UserCode",UserCode),
-                new SqlParameter("@QryOption",QryOption)
+                new SqlParameter("@QryOption",QryOption),
+                new SqlParameter("@VersionCode",VersionCode)
             };
             if (QryOption == 1)
             {
@@ -51,7 +52,8 @@ namespace BitopiDBContext
                         Designation = row.Field<string>("Designation"),
                         Email = row.Field<string>("Email"),
                         EmpImage = row.Field<byte[]>("EmpImage"),
-                        EmployeeName = row.Field<string>("EmployeeName")
+                        EmployeeName = row.Field<string>("EmployeeName"),
+                        VersionCode = row.Field<int>("VersionCode")
                     };
                 }
                 return user;

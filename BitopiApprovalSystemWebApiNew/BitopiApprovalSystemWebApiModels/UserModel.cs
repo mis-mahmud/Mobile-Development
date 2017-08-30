@@ -21,7 +21,7 @@ namespace BitopiApprovalSystemWebApiModels
 
         public string LeaveApproval { get; set; }
         public string LeaveRecommend { get; set; }
-
+        public int VersionCode { get; set; }
 
     }
 }

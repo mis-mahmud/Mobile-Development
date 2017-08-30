@@ -22,6 +22,7 @@ namespace BitopiApprovalSystemWebApiModels
         public int ProducedQty { get; set; }
 
         public int BalanceQty { get; set; }
+        public int WIP { get; set; }
     }
     public class DDL
     {

@@ -31,7 +31,7 @@ namespace BitopiApprovalSystemWebApiNew.Controllers
             userdb = new DBUser();
         }
         public UserModel GetUserInfo(string userName, string Password, string DeviceID, string DeviceToken, string
-            DeviceName, string Platform, int QryOption, string UserCode)
+            DeviceName, string Platform, int QryOption, string UserCode,string VersionCode)
         {
             Encryption encObj = new Encryption();
 
@@ -45,7 +45,7 @@ namespace BitopiApprovalSystemWebApiNew.Controllers
             }
 
             UserModel model = userdb.GetUser(decryptUser1, decryptPwd1, DeviceID, DeviceToken,
-             DeviceName, Platform, QryOption, UserCode);
+             DeviceName, Platform, QryOption, UserCode, VersionCode);
 
             return model;
         }

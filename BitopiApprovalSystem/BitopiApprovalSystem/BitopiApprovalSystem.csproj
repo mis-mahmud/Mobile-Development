@@ -29,6 +29,7 @@
     <SccProvider>
     </SccProvider>
     <JavaMaximumHeapSize>1G</JavaMaximumHeapSize>
+    <AndroidEnableMultiDex>true</AndroidEnableMultiDex>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>True</DebugSymbols>
@@ -44,7 +45,6 @@
     <EmbedAssembliesIntoApk>False</EmbedAssembliesIntoApk>
     <JavaMaximumHeapSize>1G</JavaMaximumHeapSize>
     <Debugger>Xamarin</Debugger>
-    <AndroidEnableMultiDex>true</AndroidEnableMultiDex>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -56,7 +56,7 @@
     <AndroidUseSharedRuntime>False</AndroidUseSharedRuntime>
     <AndroidLinkMode>SdkOnly</AndroidLinkMode>
     <AndroidKeyStore>True</AndroidKeyStore>
-    <AndroidSigningKeyStore>E:\SourceSafe\MobileApps\BitopiApprovals\publiskey</AndroidSigningKeyStore>
+    <AndroidSigningKeyStore>F:\MyGit\Mobile-Development\BitopiApprovalSystem\keystore\publiskey</AndroidSigningKeyStore>
     <AndroidSigningStorePass>123456</AndroidSigningStorePass>
     <AndroidSigningKeyAlias>bitopi</AndroidSigningKeyAlias>
     <AndroidSigningKeyPass>123456</AndroidSigningKeyPass>
@@ -64,7 +64,6 @@
     <JavaMaximumHeapSize>1G</JavaMaximumHeapSize>
     <Debugger>Xamarin</Debugger>
     <DebugSymbols>False</DebugSymbols>
-    <AndroidEnableMultiDex>true</AndroidEnableMultiDex>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Badge.Plugin">
@@ -319,7 +318,9 @@
     </AndroidResource>
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\rounded_button.xml" />
+    <AndroidResource Include="Resources\drawable\rounded_button.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ApiRepository\ApiRepository.csproj">

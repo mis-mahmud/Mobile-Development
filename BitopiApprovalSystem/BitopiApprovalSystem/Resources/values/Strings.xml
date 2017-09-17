@@ -8,4 +8,10 @@
     Please downlaod the new version of this app from http://apps.bitopibd.com/bimobapps
     <!--<a href='http://apps.bitopibd.com/bimobapps'>here</a>-->
 </string>
+  <string-array name="entry_type_array">
+    <item>Production</item>
+    <item>Quality</item>
+    <item>Rejection</item>
+  </string-array>
+
 </resources>

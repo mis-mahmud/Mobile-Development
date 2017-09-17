@@ -12,10 +12,12 @@ namespace ApiRepository
 {
     public class ProductionRepository
     {
-        public  List<ProdcutionAccountingDBModel> GetProductionList(string userid, string ProcessID,string LocationID,string PRStatus)
+        public  List<ProdcutionAccountingDBModel> GetProductionList(string userid, string ProcessID,string LocationID,string PRStatus,
+            string RefID="")
         {
             userid = Cipher.Encrypt(userid);
-            string url = RepositorySettings.BaseURl + "ProdcutionAccounting?UserID=" + userid + "&ProcessID=" + ProcessID + "&LocationID=" + LocationID + "&PRStatus=" + PRStatus;
+            string url = RepositorySettings.BaseURl + "ProdcutionAccounting?UserID=" + userid + "&ProcessID=" + ProcessID + "&LocationID=" + LocationID + 
+                "&PRStatus=" + PRStatus+(RefID!=""? "&RefID="+RefID:"");
 
             HttpClient client = new HttpClient();
             HttpResponseMessage result =  client.GetAsync(url).Result;

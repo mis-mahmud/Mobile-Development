@@ -17,10 +17,111 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#eee">
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:id="@+id/tvLocation"
+            android:text="None"
+            android:fontFamily="sans-serif-thin"
+            android:textColor="#111"
+            android:textSize="13sp"
+            android:gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:textStyle="bold"
+            android:typeface="serif" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/rlPRType"
+            android:layout_below="@+id/tvLocation">
+            <Button
+                android:layout_width="170dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnRunning"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/rounded_button_reject"
+                android:text="Running"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="10dp" />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnAll"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/rounded_button_recommend"
+                android:text="All"
+                android:layout_marginTop="10dp"
+                android:layout_toLeftOf="@+id/btnRunning" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/rlRecent"
+            android:layout_below="@+id/rlPRType"
+            android:layout_height="50dp"
+            android:layout_width="match_parent"
+            android:backgroundTint="#ff026292"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:background="@drawable/rounded_textview_bgcolor">
+            <Button
+                android:id="@+id/recent1"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/dotted"
+                android:layout_marginRight="5dp"
+                android:textAllCaps="false"
+                android:textSize="10sp"
+                android:hint="Recent1" />
+            <Button
+                android:id="@+id/recent2"
+                android:layout_toRightOf="@+id/recent1"
+                android:layout_height="wrap_content"
+                android:layout_width="50dp"
+                android:background="@drawable/dotted"
+                android:layout_marginRight="5dp"
+                android:textAllCaps="false"
+                android:textSize="10sp"
+                android:hint="Recent 2" />
+            <Button
+                android:id="@+id/recent3"
+                android:layout_toRightOf="@+id/recent2"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/dotted"
+                android:layout_marginRight="5dp"
+                android:textStyle="normal"
+                android:textAllCaps="false"
+                android:textSize="10sp"
+                android:hint="Recent3" />
+            <Button
+                android:id="@+id/recent4"
+                android:layout_toRightOf="@+id/recent3"
+                android:layout_height="wrap_content"
+                android:layout_width="50dp"
+                android:background="@drawable/dotted"
+                android:layout_marginRight="5dp"
+                android:textAllCaps="false"
+                android:textSize="10sp"
+                android:hint="Recent 4" />
+            <Button
+                android:id="@+id/recent5"
+                android:layout_toRightOf="@+id/recent4"
+                android:layout_height="wrap_content"
+                android:layout_width="50dp"
+                android:background="@drawable/dotted"
+                android:layout_marginRight="5dp"
+                android:textAllCaps="false"
+                android:textSize="10sp"
+                android:hint="Recent 5" />
+        </RelativeLayout>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="85dp"
-            android:id="@+id/rlTop">
+            android:id="@+id/rlTop"
+            android:layout_below="@id/rlRecent">
             <RelativeLayout
                 android:layout_height="match_parent"
                 android:layout_width="wrap_content"
@@ -32,7 +133,7 @@
                 android:padding="5dp"
                 android:paddingBottom="0dp">
                 <TextView
-                    android:text="Location"
+                    android:text="Reference"
                     android:layout_height="wrap_content"
                     android:layout_width="100dp"
                     android:id="@+id/lblLocation"
@@ -40,15 +141,13 @@
                     android:textColor="#FFF"
                     android:textStyle="bold"
                     android:textSize="13sp" />
-                <TextView
+                <AutoCompleteTextView
                     android:layout_height="wrap_content"
-                    android:layout_width="140dp"
-                    android:id="@+id/tvLocation"
-                    android:layout_below="@id/lblLocation"
-                    android:text="None"
-                    android:fontFamily="sans-serif-thin"
-                    android:textColor="#FFF"
-                    android:textSize="13sp" />
+                    android:layout_width="100dp"
+                    android:id="@+id/atvReference"
+                    android:layout_below="@+id/lblLocation"
+                    android:textColor="#111" />
+            <!--android:background="@drawable/gradient_spinner"-->
             </RelativeLayout>
         <!--<RelativeLayout xmlns:tools="http://schemas.android.com/tools"
             android:layout_height="wrap_content"
@@ -116,7 +215,8 @@
                     android:textColor="#222222"
                     android:gravity="center"
                     android:layout_marginTop="5dp"
-                    android:backgroundTint="#fffafafa" />
+                    android:backgroundTint="#fffafafa"
+                    android:backgroundTintMode="src_over" />
                 <Button
                     android:id="@+id/btnPlus"
                     android:layout_height="50dp"
@@ -162,6 +262,7 @@
             android:padding="5dp"
             android:gravity="center">
             <RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
                 android:id="@+id/rlRef"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
@@ -323,7 +424,7 @@
             android:textAllCaps="false"
             android:shadowRadius="4"
             android:shadowColor="#ffefefef" />
-        <ListView
+        <ListView xmlns:tools="http://schemas.android.com/tools"
             android:layout_height="match_parent"
             android:layout_width="match_parent"
             android:layout_below="@id/btnSubmit"
@@ -333,7 +434,8 @@
             android:layout_marginTop="5dp"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="5dp"
-            android:dividerHeight="1dp" />
+            android:dividerHeight="1dp"
+            tools:visibility="visible" />
         <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

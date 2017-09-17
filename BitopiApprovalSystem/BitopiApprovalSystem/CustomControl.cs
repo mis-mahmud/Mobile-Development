@@ -1,8 +1,10 @@
 ﻿
 using Android.Content;
 using Android.Graphics;
+using Android.Runtime;
 using Android.Util;
 using Android.Views;
+using Android.Widget;
 using Java.IO;
 
 namespace BitopiApprovalSystem.CustomControl
@@ -98,6 +100,40 @@ namespace BitopiApprovalSystem.CustomControl
 
             }
 
+        }
+
+    }
+
+    public class InstantAutoComplete : AutoCompleteTextView
+    {
+
+        public InstantAutoComplete(Context context) : base(context)
+        {
+
+        }
+
+        public InstantAutoComplete(Context arg0, IAttributeSet arg1) : base(arg0, arg1)
+        {
+
+        }
+
+        public InstantAutoComplete(Context arg0, IAttributeSet arg1, int arg2) : base(arg0, arg1, arg2)
+        {
+
+        }
+
+        public override bool EnoughToFilter()
+        {
+            return true;
+        }
+
+        protected override void OnFocusChanged(bool gainFocus, [GeneratedEnum] FocusSearchDirection direction, Rect previouslyFocusedRect)
+        {
+            base.OnFocusChanged(gainFocus, direction, previouslyFocusedRect);
+            if (gainFocus)
+            {
+                PerformFiltering(Text, 0);
+            }
         }
 
     }

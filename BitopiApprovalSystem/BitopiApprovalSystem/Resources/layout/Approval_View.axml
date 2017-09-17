@@ -13,7 +13,8 @@
         android:clickable="true"
         android:layout_margin="15dp"
         android:gravity="center"
-        android:background="@drawable/approvalbutton">
+        android:background="@drawable/approvalButton"
+        android:clipToPadding="false">
     <!--<TextView
             android:id="@+id/tvMsg"
             android:layout_width="wrap_content"
@@ -48,9 +49,9 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="-15dp"
-            android:background="@drawable/number"
-            android:layout_marginRight="-10dp"
+            android:layout_marginTop="-20dp"
+            android:background="@drawable/bell"
+            android:layout_marginRight="-20dp"
             android:text="30"
             android:textStyle="bold"
             android:textColor="#ffffff"

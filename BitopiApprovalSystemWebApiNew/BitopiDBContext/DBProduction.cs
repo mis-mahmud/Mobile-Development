@@ -12,14 +12,15 @@ namespace BitopiDBContext
 {
     public class DBProduction : DBContext
     {
-        public List<ProdcutionAccountingDBModel> Get(string UserCode, string ProcessID, string LocationID, string PRStatus)
+        public List<ProdcutionAccountingDBModel> Get(string UserCode, string ProcessID, string LocationID, string PRStatus,string RefID)
         {
        
             SqlParameter[] param = new SqlParameter[] {
                 new SqlParameter("@UserCode",UserCode),
                 new SqlParameter("@ProcessID",ProcessID),
                 new SqlParameter("@LocationID",LocationID),
-                new SqlParameter("@PRStatus",PRStatus)
+                new SqlParameter("@PRStatus",PRStatus),
+                new SqlParameter("@RefID",RefID)
 
             };
             List<ProdcutionAccountingDBModel> _DBModelList = new List<ProdcutionAccountingDBModel>();

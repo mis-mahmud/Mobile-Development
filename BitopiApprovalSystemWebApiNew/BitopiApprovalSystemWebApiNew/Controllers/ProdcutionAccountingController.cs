@@ -30,7 +30,8 @@ namespace BitopiApprovalSystemWebApiNew.Controllers
     {
         DBProduction Context=new DBProduction();
         [HttpGet]
-        public List<ProdcutionAccountingDBModel> Get(string UserID,string ProcessID, string LocationID, string PRStatus, string RefID="")
+        public List<ProdcutionAccountingDBModel> Get(string UserID,string ProcessID, string LocationID, string PRStatus, 
+            string RefID="")
         {
             UserID=Cipher.Decrypt(UserID);
            List< ProdcutionAccountingDBModel> Lsist= Context.Get(UserID, ProcessID, LocationID,  PRStatus, RefID);
@@ -49,6 +50,11 @@ namespace BitopiApprovalSystemWebApiNew.Controllers
         {
             int result = Context.Set( RefNO,  ProdDateTime, LocationRef,  Qty,   AddedBy);
             return result;
+        }
+
+        public List<DefectMaster> GetGetDefectList()
+        {
+          return  Context.GetDefectList();
         }
     }
 }

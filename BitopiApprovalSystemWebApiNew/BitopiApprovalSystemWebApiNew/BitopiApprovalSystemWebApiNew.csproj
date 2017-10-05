@@ -383,7 +383,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>19528</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://192.168.14.236:8080/BitopiApprovalSystemWebApi</IISUrl>
+          <IISUrl>http://192.168.14.236/BitopiApprovalSystemWebApi</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

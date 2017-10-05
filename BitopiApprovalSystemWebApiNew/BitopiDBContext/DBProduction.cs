@@ -7,14 +7,15 @@ using System.Data.SqlClient;
 using System.Data;
 using BitopiApprovalSystemWebApiModels;
 using System.Globalization;
+using System.Configuration;
 
 namespace BitopiDBContext
 {
     public class DBProduction : DBContext
     {
-        public List<ProdcutionAccountingDBModel> Get(string UserCode, string ProcessID, string LocationID, string PRStatus,string RefID)
+        public List<ProdcutionAccountingDBModel> Get(string UserCode, string ProcessID, string LocationID, string PRStatus, string RefID)
         {
-       
+
             SqlParameter[] param = new SqlParameter[] {
                 new SqlParameter("@UserCode",UserCode),
                 new SqlParameter("@ProcessID",ProcessID),
@@ -59,7 +60,7 @@ namespace BitopiDBContext
                 _DBModelList = null;
             }
         }
-        public int Set(string RefNO, DateTime ProdDateTime, string LocationRef,int Qty,string AddedBy)
+        public int Set(string RefNO, DateTime ProdDateTime, string LocationRef, int Qty, string AddedBy)
         {
 
             SqlParameter[] param = new SqlParameter[] {
@@ -69,11 +70,11 @@ namespace BitopiDBContext
                 new SqlParameter("@Qty",Qty),
                 new SqlParameter("@AddedBy",AddedBy),
             };
-            
+
             try
             {
-                int count = ExecuteNonQuery(CommandType.StoredProcedure,"bimob.dbo.USP_Productionentry", param);
-                
+                int count = ExecuteNonQuery(CommandType.StoredProcedure, "bimob.dbo.USP_Productionentry", param);
+
                 return count;
             }
             catch (Exception ex)
@@ -116,6 +117,26 @@ namespace BitopiDBContext
                 _DBModelList = null;
             }
         }
-        
+
+        public List<DefectMaster> GetDefectList()
+        {
+            using (SqlConnection f_conn = new SqlConnection(ConfigurationManager.ConnectionStrings["sqlConnStr"].ConnectionString))
+            {
+                SqlCommand cmd = new SqlCommand("select * from bimob..Defect_Master", f_conn);
+                cmd.CommandType = CommandType.Text;
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                List<DefectMaster> List = (from DataRow dr in dt.Rows
+                                           select new DefectMaster
+                                           {
+                                               DefectCode = dr.Field<string>("DefectCode"),
+                                               DefectName = dr.Field<string>("DefectName"),
+                                               Category = dr.Field<string>("Category"),
+                                               OperationCode = dr.Field<string>("OperationCode")
+                                           }).ToList();
+                return List;
+            }
+        }
     }
 }

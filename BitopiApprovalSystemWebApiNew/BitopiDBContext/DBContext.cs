@@ -316,12 +316,12 @@ namespace BitopiDBContext
 
         #region Execute DataTable
 
-        public DataTable ExecuteDataTable(string commandText, SqlParameter[] commandParameters)
+        public DataTable ExecuteDataTable(string commandText, SqlParameter[] commandParameters,CommandType cmdType= CommandType.StoredProcedure)
         {
             DataTable dt = null;
             //SqlConnection f_conn = new SqlConnection(ConfigurationManager.AppSettings["sqlConnStr"]);
             SqlConnection f_conn = new SqlConnection(ConfigurationManager.ConnectionStrings["sqlConnStr"].ConnectionString);
-            DataSet ds = ExecuteDataset(f_conn, CommandType.StoredProcedure, commandText, commandParameters);
+            DataSet ds = ExecuteDataset(f_conn, cmdType, commandText, commandParameters);
             f_conn.Close();
 
             if (ds != null && ds.Tables.Count >0)

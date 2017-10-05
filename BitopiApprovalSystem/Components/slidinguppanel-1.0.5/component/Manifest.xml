@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<component format="1" id="slidinguppanel" is-shell="true">
+  <name>SlidingUpPanel</name>
+  <publisher>Tomasz Cielecki</publisher>
+  <publisher-url>http://ostebaronen.dk</publisher-url>
+  <src-url>https://github.com/Cheesebaron/SlidingUpPanel</src-url>
+  <version>1.0.5</version>
+  <summary>A panel that slides out from the bottom or top of the screen.</summary>
+  <packages>
+    <package id="Xamarin.Android.Support.v4" version="24.2.1" framework="android" />
+    <package id="Xamarin.Android.Support.Compat" version="24.2.1" framework="android" />
+  </packages>
+  <samples>
+    <sample id="SlidingUpPanel">
+      <name>Sample</name>
+      <summary>Sample</summary>
+    </sample>
+  </samples>
+</component>

@@ -10,26 +10,24 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using ApiRepository;
-using Android.Graphics.Drawables;
 using BitopiApprovalSystem.Model;
-using Android.Util;
-using Android.Support.V4.View;
 using PullToRefresharp.Android.Views;
-using Android.Support.V4.Widget;
 using System.Threading;
 using BitopiApprovalSystem.DAL;
+using Android.Support.V4.View;
 using Android.Graphics;
-using System.Threading.Tasks;
+using Android.Util;
 using Android.Views.Animations;
+using Android.Text;
 
 namespace BitopiApprovalSystem
 {
-    [Activity(Label = "ProcessEntry", WindowSoftInputMode = SoftInput.StateHidden | SoftInput.AdjustResize)]
-    public class ProcessEntry : BaseActivity
+    [Activity(Label = "ProductionQuality",WindowSoftInputMode =SoftInput.AdjustPan)]
+    public class ProductionQuality : BaseActivity
     {
         PullToRefresharp.Android.Widget.ScrollView ptr;
         ProductionRepository repo = new ProductionRepository();
-        ListView lvProduct;
+        ListView lvProduct, lvDefect;
         TextView tvLocation;
         TextView tvRef, tvOrderQty, tvBalanceQty, tvProducedQty, txtWIPQty;
         EditText etQty;
@@ -44,13 +42,16 @@ namespace BitopiApprovalSystem
         Button recent1, recent2, recent3, recent4, recent5;
         Button btnAll, btnRunning;
         string SelectedPRStatus = "";
+        Spinner spStatus;
+        List<DefectMaster> defectList;
+        public static string[] EntryTypeArray = { "Pass", "Fail" };
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
 
             SupportActionBar.SetDisplayShowCustomEnabled(true);
             SupportActionBar.SetCustomView(Resource.Layout.custom_actionbar);
-            SetContentView(Resource.Layout.ProcessEntry);
+            SetContentView(Resource.Layout.ProductionQuality);
             InitializeControl();
             PopulateRecentItem();
             if (recent1.Text != "")
@@ -67,12 +68,17 @@ namespace BitopiApprovalSystem
         {
             base.OnStart();
             InitializeEvent();
-            gifView.Visibility = ViewStates.Visible;
 
-            gifView.Visibility = ViewStates.Gone;
+            defectList = repo.GetGetDefectList();
+            DefectMastAdapter adapter = new BitopiApprovalSystem.DefectMastAdapter(defectList, this);
+            lvDefect.Adapter = adapter;
+            adapter.NotifyDataSetChanged();
+            //gifView.Visibility = ViewStates.Visible;
+
+            //gifView.Visibility = ViewStates.Gone;
 
         }
-        void LoadList(string PRStatus, Action task=null)
+        void LoadList(string PRStatus, Action task = null)
         {
             var progressDialog = ProgressDialog.Show(this, null, "Please Wait.", true);
             new Thread(new ThreadStart(() =>
@@ -81,12 +87,14 @@ namespace BitopiApprovalSystem
                     DBAccess.Database.RecentHistory.Result.LocationID, PRStatus);
                 RunOnUiThread(() =>
                 {
+
                     atvReference.Adapter = new ArrayAdapter(this, Android.Resource.Layout.SimpleDropDownItem1Line, list.Select(t => t.RefNo).ToArray());
                     adapter.Items = list;
                     adapter.NotifyDataSetChanged();
                     progressDialog.Dismiss();
                     //AndHUD.Shared.Dismiss();
                     if (task != null) task();
+                    Log.Debug("", list.Count().ToString());
                 });
             })).Start();
         }
@@ -154,7 +162,7 @@ namespace BitopiApprovalSystem
                     //_searchListView.Visibility = ViewStates.Visible;
                 };
 
-                _searchView.SetOnCloseListener(new TruckSearchViewOnCloseListenter(rltitle, this));
+                //_searchView.SetOnCloseListener(new TruckSearchViewOnCloseListenter(rltitle, this));
                 _searchView.SetOnSearchClickListener(new TruckSearchviewclicklistener(rltitle));
 
                 //ImageView searchIcon = (ImageView)_searchView.FindViewById();
@@ -176,6 +184,7 @@ namespace BitopiApprovalSystem
             rlPRLV = FindViewById<RelativeLayout>(Resource.Id.rlPRLV);
             rlTop = FindViewById<RelativeLayout>(Resource.Id.rlTop);
             lvProduct = FindViewById<ListView>(Resource.Id.lvProduct);
+            lvDefect = FindViewById<ListView>(Resource.Id.lvDefect);
             adapter = new ProductionAccountigListAdapter(list, this);
             lvProduct.Adapter = (adapter);
             gifView = FindViewById<RelativeLayout>(Resource.Id.gifview);
@@ -192,7 +201,8 @@ namespace BitopiApprovalSystem
             btnMinus = FindViewById<Button>(Resource.Id.btnMinus);
             btnAll = FindViewById<Button>(Resource.Id.btnAll);
             btnRunning = FindViewById<Button>(Resource.Id.btnRunning);
-            FindViewById<TextView>(Resource.Id.tvHeaderName).Text = DBAccess.Database.RecentHistory.Result.Process;
+            FindViewById<TextView>(Resource.Id.tvHeaderName).Text =
+             Html.FromHtml(DBAccess.Database.RecentHistory.Result.Process + @"\Quality").ToString();
             tvLocation.Text = DBAccess.Database.RecentHistory.Result.Location;
 
             recent1 = FindViewById<Button>(Resource.Id.recent1);
@@ -200,7 +210,8 @@ namespace BitopiApprovalSystem
             recent3 = FindViewById<Button>(Resource.Id.recent3);
             recent4 = FindViewById<Button>(Resource.Id.recent4);
             recent5 = FindViewById<Button>(Resource.Id.recent5);
-
+            spStatus = FindViewById<Spinner>(Resource.Id.spStatus);
+            spStatus.Adapter = new ArrayAdapter<string>(this, Resource.Layout.spinner_item, EntryTypeArray);
             base.InitializeControl();
         }
         public void PopulateRecentItem()
@@ -243,8 +254,7 @@ namespace BitopiApprovalSystem
         {
             lvProduct.ItemClick += LvProduct_ItemClick;
             btnSave.Click += BtnSave_Click;
-            btnPlus.Click += BtnPlus_Click;
-            btnMinus.Click += BtnMinus_Click;
+
             btnAll.Click += LoadPR_Click;
             btnRunning.Click += LoadPR_Click;
             recent1.Click += Recent_Click;
@@ -252,23 +262,15 @@ namespace BitopiApprovalSystem
             recent3.Click += Recent_Click;
             recent4.Click += Recent_Click;
             recent5.Click += Recent_Click;
-            rlPRLV.Click += RlPRLV_Click;
             //if (ptr_view == null && ptr is IPullToRefresharpView)
             //{
             //    ptr_view = (IPullToRefresharpView)ptr;
             //    ptr_view.RefreshActivated += Ptr_view_RefreshActivated; ;
             //}
+            rlPRLV.Click += RlPRLV_Click;
             base.InitializeEvent();
         }
-        private void RlPRLV_Click(object sender, EventArgs e)
-        {
-            Animation bottomUp = Android.Views.Animations.AnimationUtils.LoadAnimation(this,
-             Resource.Animation.bottom_down);
 
-            lvProduct.StartAnimation(bottomUp);
-            rlPRLV.Visibility = (ViewStates.Gone);
-
-        }
         private void Recent_Click(object sender, EventArgs e)
         {
             string Ref = ((Button)sender).Text;
@@ -303,6 +305,20 @@ namespace BitopiApprovalSystem
                 rlPRLV.Visibility = (ViewStates.Visible);
                 lvProduct.StartAnimation(bottomUp);
             });
+        }
+        private void RlPRLV_Click(object sender, EventArgs e)
+        {
+            Animation bottomUp = Android.Views.Animations.AnimationUtils.LoadAnimation(this,
+             Resource.Animation.bottom_down);
+
+            lvProduct.StartAnimation(bottomUp);
+            rlPRLV.Visibility = (ViewStates.Gone);
+
+        }
+
+        private void LvProduct_AnimationEnd(object sender, Animation.AnimationEndEventArgs e)
+        {
+
         }
 
         //private void Ptr_view_RefreshActivated(object sender, EventArgs e)
@@ -412,27 +428,33 @@ namespace BitopiApprovalSystem
         }
         private void LvProduct_ItemClick(object sender, AdapterView.ItemClickEventArgs e)
         {
+            Animation bottomUp = Android.Views.Animations.AnimationUtils.LoadAnimation(this,
+            Resource.Animation.bottom_down);
+
+            lvProduct.StartAnimation(bottomUp);
+            rlPRLV.Visibility = (ViewStates.Gone);
             var model = list[e.Position];
             tvRef.Text = atvReference.Text = model.RefNo;
             tvOrderQty.Text = model.OrderQty.ToString("N0");
             tvBalanceQty.Text = model.BalanceQty.ToString("N0");
             tvProducedQty.Text = model.ProducedQty.ToString("N0");
             tvLocation.Text = model.LocationName;
+
         }
     }
 
-    public class ProductionAccountigListAdapter : BaseAdapter, IFilterable
+    public class DefectMastAdapter : BaseAdapter
     {
-        List<ProdcutionAccountingDBModel> _list;
+        List<DefectMaster> _list;
         Context _context;
         Filter filter;
-        public ProductionAccountigListAdapter(List<ProdcutionAccountingDBModel> list, Context context)
+        public DefectMastAdapter(List<DefectMaster> list, Context context)
         {
             _list = list;
             _context = context;
-            filter = new SuggestionsFilter(this);
+
         }
-        public List<ProdcutionAccountingDBModel> Items
+        public List<DefectMaster> Items
         {
             set { _list = value; }
             get { return _list; }
@@ -443,17 +465,33 @@ namespace BitopiApprovalSystem
             var model = Items[position];
             if (view == null)
             {
-                view = LayoutInflater.From(_context).Inflate(Resource.Layout.EntryItem, parent, false);
+                view = LayoutInflater.From(_context).Inflate(Resource.Layout.DefectItem, parent, false);
             }
-            view.FindViewById<TextView>(Resource.Id.tvRefNo).Text = model.RefNo;
-            view.FindViewById<TextView>(Resource.Id.tvColor).Text = model.Color;
-            view.FindViewById<TextView>(Resource.Id.tvEO).Text = model.EO;
-            view.FindViewById<TextView>(Resource.Id.tvPR).Text = model.PR;
-            view.FindViewById<TextView>(Resource.Id.tvSize).Text = model.Size;
-            view.FindViewById<TextView>(Resource.Id.tvStyle).Text = model.Style;
-
+            view.FindViewById<TextView>(Resource.Id.tvDC).Text = model.DefectCode;
+            view.FindViewById<TextView>(Resource.Id.tvDZ).Text = model.DefectName;
+            view.FindViewById<TextView>(Resource.Id.tvOC).Text = model.OperationCode;
+            view.FindViewById<TextView>(Resource.Id.tvCategory).Text = model.Category;
+            view.FindViewById<TextView>(Resource.Id.etNO).Text = model.No.ToString();
+            view.FindViewById<TextView>(Resource.Id.etNO).TextChanged -= DefectMastAdapter_TextChanged;
+            view.FindViewById<TextView>(Resource.Id.etNO).TextChanged += DefectMastAdapter_TextChanged;
+            view.FindViewById<TextView>(Resource.Id.etNO).Tag = model.DefectCode;
+            if (position % 2 == 0)
+                view.SetBackgroundColor(Color.ParseColor("#aaaaaa"));
+            else
+                view.SetBackgroundColor(Color.ParseColor("#ffffff"));
             return view;
         }
+
+        private void DefectMastAdapter_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            EditText etNO = ((EditText)sender);
+            var DefectCode= etNO.Tag.ToString();
+            var item= _list.Where(t => t.DefectCode == DefectCode).FirstOrDefault() ;
+            if (etNO.Text != "")
+                item.No = Convert.ToInt32(etNO.Text);
+
+        }
+
         public override long GetItemId(int position)
         {
             return 1;
@@ -470,88 +508,6 @@ namespace BitopiApprovalSystem
                     return 0;
                 return Items.Count;
             }
-        }
-
-        public Filter Filter
-        {
-            get
-            {
-                return filter;
-            }
-        }
-        class SuggestionsFilter : Filter
-        {
-            ProductionAccountigListAdapter customAdapter;
-            public SuggestionsFilter(ProductionAccountigListAdapter adapter)
-                : base()
-            {
-                customAdapter = adapter;
-            }
-            protected override Filter.FilterResults PerformFiltering(Java.Lang.ICharSequence constraint)
-            {
-                FilterResults results = new FilterResults();
-                if (constraint != null)
-                {
-                    var searchFor = constraint.ToString().ToLower();
-                    //Console.System.Diagnostics.Debug.WriteLine("searchFor:" + searchFor);
-                    // var matchList = new List<TruckModel>();
-                    // find matches, IndexOf means look for the input anywhere in the items
-                    // but it isn't case-sensitive by default!
-                    var matches = from i in customAdapter._list where i.RefNo.ToLower().Contains(searchFor) select i;
-                    //foreach (var match in matches) {
-                    //matchList.Add (match);
-                    //}
-                    customAdapter._list = matches.ToList();
-                    // Console.System.Diagnostics.Debug.WriteLine("resultCount:" + customAdapter.MatchItems.Count);
-                    // not sure if the Java array/FilterResults are used
-                    Java.Lang.Object[] matchObjects;
-                    matchObjects = new Java.Lang.Object[customAdapter._list.Count];
-                    for (int i = 0; i < customAdapter._list.Count; i++)
-                    {
-                        matchObjects[i] = new Java.Lang.String(customAdapter._list[i].RefNo.ToLower());
-                    }
-                    results.Values = matchObjects;
-                    results.Count = customAdapter._list.Count;
-                }
-                return results;
-            }
-            protected override void PublishResults(Java.Lang.ICharSequence constraint, Filter.FilterResults results)
-            {
-                customAdapter.NotifyDataSetChanged();
-            }
-        }
-    }
-    class TruckSearchviewclicklistener : Java.Lang.Object, Android.Views.View.IOnClickListener
-    {
-        private bool extended = false;
-        RelativeLayout _rltitle;
-        public TruckSearchviewclicklistener(RelativeLayout rltitle)
-        {
-            _rltitle = rltitle;
-        }
-        public void OnClick(View v)
-        {
-            _rltitle.Visibility = ViewStates.Gone;
-        }
-    }
-    class TruckSearchViewOnCloseListenter : Java.Lang.Object, Android.Widget.SearchView.IOnCloseListener
-    {
-        SearchView _searchView;
-        ListView _searchListView;
-        RelativeLayout _rltitle;
-        ProcessEntry _activity;
-        public TruckSearchViewOnCloseListenter(RelativeLayout rltitle, ProcessEntry activity)
-        {
-            _rltitle = rltitle;
-            this._activity = activity;
-
-        }
-        public bool OnClose()
-        {
-            _rltitle.Visibility = ViewStates.Visible;
-            _activity.adapter.Items = _activity.list;
-            _activity.adapter.NotifyDataSetChanged();
-            return false;
         }
 
     }

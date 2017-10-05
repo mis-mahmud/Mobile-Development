@@ -52,7 +52,18 @@ namespace ApiRepository
                 return aproves;
             
         }
+        public List<DefectMaster> GetGetDefectList()
+        {
+            
+            string url = RepositorySettings.BaseURl + "ProdcutionAccounting/GetGetDefectList";
 
+            HttpClient client = new HttpClient();
+            HttpResponseMessage result =  client.GetAsync(url).Result;
+            var aproves = JsonConvert.DeserializeObject<List<DefectMaster>>(result.Content.ReadAsStringAsync().Result);
+            if (aproves == null)
+                aproves = new List<DefectMaster>();
+            return aproves;
+        }
 
     }
 }

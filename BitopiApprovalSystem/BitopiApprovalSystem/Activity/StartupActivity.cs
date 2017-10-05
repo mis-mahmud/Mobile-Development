@@ -28,6 +28,7 @@ namespace BitopiApprovalSystem
     public class StartupActivity : AppCompatActivity
     {
         TextView tvMsg;
+        WebView webView;
         BitopiApplication bitopiApplication;
         protected  override void OnCreate(Bundle savedInstanceState)
         {
@@ -38,7 +39,7 @@ namespace BitopiApprovalSystem
             SetContentView(Resource.Layout.layout_startup);
             tvMsg = FindViewById<TextView>(Resource.Id.tvMsg);
             tvMsg.Visibility = ViewStates.Gone;
-            WebView webView = (WebView)FindViewById(Resource.Id.wvLoader);
+             webView = (WebView)FindViewById(Resource.Id.wvLoader);
             webView.SetInitialScale(1);
             webView.Settings.JavaScriptEnabled = true;
             webView.Settings.LoadWithOverviewMode = true;
@@ -109,6 +110,13 @@ namespace BitopiApprovalSystem
                     CrossBadge.Current.ClearBadge();
                 }
                 catch { }
+                if (!bitopiApplication.IsInternetConnectionAvailable(this))
+                {
+                    webView.Visibility = ViewStates.Gone;
+                    tvMsg.Visibility = ViewStates.Visible;
+                    tvMsg.Text = "No Internet Connection Available.";
+                    return;
+                }
                 ISharedPreferences pref = Application.Context.GetSharedPreferences("_bitopi_UserInfo", FileCreationMode.Private);
                 ISharedPreferences prefToken = Application.Context.GetSharedPreferences("_bitopi_DeviceToken", FileCreationMode.Private);
                 string UserName = pref.GetString("UserName", String.Empty);

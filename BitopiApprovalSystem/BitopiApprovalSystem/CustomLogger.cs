@@ -19,13 +19,13 @@ namespace BitopiApprovalSystem.Library
 {
     public class CustomLogger
     {
-        
+
         public const string APP_TAG = "BITOPIApproval";
         public static int VersionName;
-        public static void CustomLog(string msg, string tag,string employeeName)
+        public static void CustomLog(string msg, string tag, string employeeName)
         {
             Log.Info(tag, System.DateTime.Now.ToString() + " - " + msg);
-            CustomLogger.CustomWriteToLog(msg, tag, employeeName+".txt");
+            CustomLogger.CustomWriteToLog(msg, tag, employeeName + ".txt");
         }
 
         public static void CustomActivityLog(string msg, string tag)
@@ -42,19 +42,26 @@ namespace BitopiApprovalSystem.Library
 
         private static void CustomWriteToLog(string msg, string tag, string logFileName)
         {
-            //string path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal); //Android.OS.Environment.ExternalStorageDirectory.AbsolutePath;
-            string path = System.IO.Path.Combine(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath, "BITOPERROR");
-
-            if (!System.IO.File.Exists(path))
+            try
             {
-                Java.IO.File dir = new Java.IO.File(path);
-                bool test = dir.Mkdir();
+                //string path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal); //Android.OS.Environment.ExternalStorageDirectory.AbsolutePath;
+                string path = System.IO.Path.Combine(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath, "BITOPERROR");
+
+                if (!System.IO.File.Exists(path))
+                {
+                    Java.IO.File dir = new Java.IO.File(path);
+                    bool test = dir.Mkdir();
+                }
+                string filename = Path.Combine(path, logFileName);
+
+                using (var streamWriter = new StreamWriter(filename, true))
+                {
+                    streamWriter.WriteLine(System.DateTime.Now.ToString() + " (" + VersionName + ") - " + msg + System.Environment.NewLine);
+                }
             }
-            string filename = Path.Combine(path, DateTime.Now.ToString("MM-dd-yyyy") + "_" + logFileName);
-
-            using (var streamWriter = new StreamWriter(filename, true))
+            catch
             {
-                streamWriter.WriteLine(System.DateTime.Now.ToString() +" ("+ VersionName + ") - " + msg + System.Environment.NewLine);
+
             }
         }
         private static void CustomWriteToLogToPersonal(string msg, string logFileName)
@@ -92,6 +99,6 @@ namespace BitopiApprovalSystem.Library
 
         }
 
-       
+
     }
 }

@@ -68,7 +68,13 @@ namespace BitopiApprovalSystem
         }
         public async void onLoginClick(object sender, EventArgs er)
         {
-            var progressDialog = ProgressDialog.Show(this, null, "", true);
+            if(!bitopiApplication.IsInternetConnectionAvailable(this))
+            {
+                tvMsg.Visibility = ViewStates.Visible;
+                tvMsg.Text = "No Internet Connection Available.";
+                return;
+            }
+            var progressDialog = ProgressDialog.Show(this, null, "Please Wait.", true);
             AccountRepository repo = new AccountRepository();
 
         

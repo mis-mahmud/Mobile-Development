@@ -142,7 +142,23 @@ namespace BitopiApprovalSystem
         }
         private void btnProcess_Click(object sender, EventArgs e)
         {
-            Intent i = new Intent(this, typeof(ProcessEntry));
+            int selectedItem = spEntryType.SelectedItemPosition;
+
+            Intent i = null;
+
+            switch (selectedItem)
+            {
+                case 0:
+                    i = new Intent(this, typeof(ProcessEntry));
+                    break;
+                case 1:
+                    i = new Intent(this, typeof(ProductionQuality));
+                    break;
+                case 2:
+                    i = new Intent(this, typeof(ProductionRejection));
+                    break;
+            }
+            
             recentHistory.Process = SelectedProcess;
             recentHistory.Location = SelectedLocation;
             recentHistory.EntryType = SelectedEntryType;
@@ -163,7 +179,7 @@ namespace BitopiApprovalSystem
             spProcess.Adapter = new ArrayAdapter<string>(this, Resource.Layout.spinner_item, ProcessName.Select(t => t.ProcessName).Distinct().ToArray());
 
             
-            spEntryType.Adapter = new ArrayAdapter<string>(this, Resource.Layout.spinner_item, EntryTypeArray); ;
+            spEntryType.Adapter = new ArrayAdapter<string>(this, Resource.Layout.spinner_item, EntryTypeArray); 
             spLocation.Adapter = new ArrayAdapter<string>(this, Resource.Layout.spinner_item, LocationName.Select(t => t.LocationName).Distinct().ToArray());
             spProcess.SetSelection(Array.IndexOf(ProcessName.Select(t => t.ProcessName).Distinct().ToArray(), RecentProces));
             

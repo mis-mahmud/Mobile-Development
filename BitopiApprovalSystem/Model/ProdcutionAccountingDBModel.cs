@@ -30,4 +30,12 @@ namespace BitopiApprovalSystem.Model
         public string ProcessCode { get; set; }
         public string ProcessName { get; set; }
     }
+    public class DefectMaster
+    {
+        public string DefectCode { get; set; }
+        public string DefectName { get; set; }
+        public string Category { get; set; }
+        public string OperationCode { get; set; }
+        public int No { get; set; }
+    }
 }

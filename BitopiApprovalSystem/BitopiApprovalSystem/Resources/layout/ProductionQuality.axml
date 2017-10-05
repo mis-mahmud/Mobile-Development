@@ -3,16 +3,6 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-<!--<pulltorefresharp.android.views.ViewWrapper xmlns:pullToRefresharpWrapper="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/ptr_wrapper"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"               
-                pullToRefresharpWrapper:pullDownTension="0.5"
-                pullToRefresharpWrapper:snapbackDuration="300">
-    <PullToRefresharp.Android.Widget.ScrollView
-                android:id="@+id/ptr"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" >-->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -40,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/btnRunning"
                 android:layout_marginRight="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:background="@drawable/rounded_button_reject"
                 android:text="Running"
                 android:layout_alignParentRight="true"
@@ -52,7 +42,7 @@
                 android:layout_marginLeft="10dp"
                 android:background="@drawable/rounded_button_recommend"
                 android:text="All"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:layout_toLeftOf="@+id/btnRunning" />
         </RelativeLayout>
         <RelativeLayout
@@ -60,10 +50,9 @@
             android:layout_below="@+id/rlPRType"
             android:layout_height="50dp"
             android:layout_width="match_parent"
-            android:backgroundTint="#ff026292"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="2dp"
             android:gravity="center"
             android:background="@drawable/rounded_textview_bgcolor">
             <Button
@@ -119,20 +108,19 @@
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="85dp"
+            android:layout_height="wrap_content"
             android:id="@+id/rlTop"
             android:layout_below="@id/rlRecent">
             <RelativeLayout
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:id="@+id/rlLocation"
                 android:background="@drawable/rounded_textview_bgcolor"
-                android:layout_marginTop="5dp"
-                android:backgroundTint="#ff026292"
+                android:layout_marginTop="2dp"
                 android:layout_marginLeft="10dp"
                 android:padding="5dp"
-                android:paddingBottom="0dp"
-                android:focusableInTouchMode="true">
+                android:focusableInTouchMode="true"
+                android:paddingBottom="0dp">
                 <TextView
                     android:text="Reference"
                     android:layout_height="wrap_content"
@@ -148,60 +136,25 @@
                     android:id="@+id/atvReference"
                     android:layout_below="@+id/lblLocation"
                     android:textColor="#111"
+                    android:padding="5dp"
+                    android:layout_marginTop="5dp"
                     android:nextFocusUp="@id/atvReference"
-    android:nextFocusLeft="@id/atvReference"/>
-            <!--android:background="@drawable/gradient_spinner"-->
+                    android:nextFocusLeft="@id/atvReference" />
             </RelativeLayout>
-        <!--<RelativeLayout xmlns:tools="http://schemas.android.com/tools"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:id="@+id/rlProdRef"
-            android:background="@drawable/rounded_textview"
-            android:layout_marginLeft="2dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="5dp"
-            android:padding="5dp"
-            android:backgroundTint="#ff026292"
-            android:layout_toRightOf="@id/rlLocation"
-            tools:visibility="gone">
-            <TextView
-                android:text="Prod Ref"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:id="@+id/lblRef"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="10dp"
-                android:fontFamily="sans-serif-thin"
-                android:textColor="#FFF" />
-            <TextView
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:layout_below="@id/lblRef"
-                android:id="@+id/tvRef"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:text="None"
-                android:fontFamily="sans-serif-thin"
-                android:textColor="#FFF" />
-        </RelativeLayout>-->
             <RelativeLayout
-                android:layout_height="match_parent"
-                android:layout_width="match_parent"
-                android:id="@+id/rlProdQty"
+                android:layout_height="wrap_content"
+                android:layout_width="120dp"
+                android:id="@+id/rlGrade"
                 android:background="@drawable/rounded_textview_bgcolor"
                 android:layout_marginLeft="5dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="2dp"
                 android:padding="5dp"
-                android:backgroundTint="#ff026292"
                 android:layout_toRightOf="@id/rlLocation">
                 <TextView
-                    android:text="Quantity"
+                    android:text="Lot Q"
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
-                    android:id="@+id/lblQty"
+                    android:id="@+id/lblLot"
                     android:fontFamily="sans-serif-thin"
                     android:textColor="#FFF"
                     android:textStyle="bold"
@@ -209,59 +162,158 @@
                 <EditText
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
-                    android:id="@+id/etQty"
-                    android:layout_below="@id/lblQty"
+                    android:id="@+id/etLot"
+                    android:layout_below="@+id/lblLot"
                     android:inputType="number"
                     android:layout_marginRight="5dp"
-                    android:background="@drawable/rounded_textview_bgcolor"
                     android:text="0"
                     android:textColor="#222222"
                     android:gravity="center"
                     android:layout_marginTop="5dp"
-                    android:backgroundTint="#fffafafa"
-                    android:backgroundTintMode="src_over" />
-                <Button
-                    android:id="@+id/btnPlus"
-                    android:layout_height="50dp"
-                    android:layout_width="30dp"
-                    android:text="+"
-                    android:textSize="25sp"
-                    android:layout_alignTop="@id/etQty"
-                    android:layout_alignBottom="@id/etQty"
-                    android:layout_alignLeft="@id/etQty"
-                    android:gravity="center"
-                    android:background="@drawable/roundshapebtn_plus"
+                    android:padding="5dp"
+                    android:background="@drawable/rounded_textview" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:id="@+id/rlSKUCode"
+                android:background="@drawable/rounded_textview_bgcolor"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="2dp"
+                android:padding="5dp"
+                android:layout_toRightOf="@id/rlGrade">
+                <TextView
+                    android:text="Sample"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:id="@+id/lblSample"
+                    android:fontFamily="sans-serif-thin"
+                    android:textColor="#FFF"
                     android:textStyle="bold"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp" />
-                <Button
-                    android:id="@+id/btnMinus"
-                    android:layout_height="10dp"
-                    android:layout_width="30dp"
-                    android:text="-"
-                    android:textSize="25sp"
-                    android:layout_alignTop="@id/etQty"
-                    android:layout_alignRight="@id/etQty"
-                    android:layout_alignBottom="@id/etQty"
-                    android:background="@drawable/roundshapebtn_minus"
-                    android:textStyle="bold"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"
+                    android:textSize="13sp" />
+                <EditText
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:id="@+id/etSample"
+                    android:layout_below="@id/lblSample"
+                    android:inputType="number"
                     android:layout_marginRight="5dp"
-                    android:gravity="center" />
+                    android:text="0"
+                    android:textColor="#222222"
+                    android:gravity="center"
+                    android:layout_marginTop="5dp"
+                    android:padding="5dp"
+                    android:background="@drawable/rounded_textview" />
+            </RelativeLayout>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/rlMid"
+            android:layout_below="@id/rlTop">
+            <RelativeLayout
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:id="@+id/rlLocation"
+                android:background="@drawable/rounded_textview_bgcolor"
+                android:layout_marginTop="2dp"
+                android:layout_marginLeft="10dp"
+                android:padding="5dp"
+                android:paddingBottom="0dp">
+                <TextView
+                    android:text="Check"
+                    android:layout_height="wrap_content"
+                    android:layout_width="100dp"
+                    android:id="@+id/lblCheck"
+                    android:fontFamily="sans-serif-thin"
+                    android:textColor="#FFF"
+                    android:textStyle="bold"
+                    android:textSize="13sp" />
+                <EditText
+                    android:layout_height="wrap_content"
+                    android:layout_width="100dp"
+                    android:id="@+id/etCheck"
+                    android:layout_below="@+id/lblCheck"
+                    android:textColor="#111"
+                    android:padding="5dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/rounded_textview" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_height="wrap_content"
+                android:layout_width="120dp"
+                android:id="@+id/rlGrade"
+                android:background="@drawable/rounded_textview_bgcolor"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="2dp"
+                android:padding="5dp"
+                android:layout_toRightOf="@id/rlLocation">
+                <TextView
+                    android:text="Defective Unit"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:id="@+id/lblDU"
+                    android:fontFamily="sans-serif-thin"
+                    android:textColor="#FFF"
+                    android:textStyle="bold"
+                    android:textSize="13sp" />
+                <EditText
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:id="@+id/etDU"
+                    android:layout_below="@+id/lblDU"
+                    android:inputType="number"
+                    android:layout_marginRight="5dp"
+                    android:text="0"
+                    android:textColor="#222222"
+                    android:gravity="center"
+                    android:layout_marginTop="5dp"
+                    android:padding="5dp"
+                    android:background="@drawable/rounded_textview" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:id="@+id/rlSKUCode"
+                android:background="@drawable/rounded_textview_bgcolor"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="2dp"
+                android:padding="5dp"
+                android:layout_toRightOf="@id/rlGrade">
+                <TextView
+                    android:text="Status"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:id="@+id/lblStatus"
+                    android:fontFamily="sans-serif-thin"
+                    android:textColor="#FFF"
+                    android:textStyle="bold"
+                    android:textSize="13sp" />
+                <Spinner
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:id="@+id/spStatus"
+                    android:layout_below="@+id/lblStatus"
+                    android:inputType="number"
+                    android:layout_marginRight="5dp"
+                    android:text="0"
+                    android:textColor="#222222"
+                    android:gravity="center"
+                    android:layout_marginTop="5dp"
+                    android:padding="4dp" />
             </RelativeLayout>
         </RelativeLayout>
         <RelativeLayout
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:id="@+id/rlQty"
-            android:layout_below="@id/rlTop"
+            android:layout_below="@id/rlMid"
             android:background="@drawable/rounded_textview_bgcolor"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_marginTop="5dp"
-            android:backgroundTint="#ff026292"
+            android:layout_marginTop="2dp"
             android:padding="5dp"
             android:gravity="center">
             <RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -271,10 +323,9 @@
                 android:layout_width="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:background="@drawable/rounded_textview_bgcolor"
-                android:layout_marginRight="5dp"
-                app:backgroundTint="#00000000"
-                android:backgroundTint="#ff0a64be"
-                android:layout_marginLeft="0dp">
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="0dp"
+                android:padding="0dp">
                 <TextView
                     android:text="Ref"
                     android:layout_height="wrap_content"
@@ -302,8 +353,8 @@
                 android:layout_toRightOf="@id/rlRef"
                 android:background="@drawable/rounded_textview_bgcolor"
                 android:id="@+id/rlOQty"
-                android:layout_marginRight="5dp"
-                android:backgroundTint="#ff0a64be">
+                android:layout_marginRight="20dp"
+                android:padding="0dp">
                 <TextView
                     android:text="Order "
                     android:layout_height="wrap_content"
@@ -329,8 +380,8 @@
                 android:background="@drawable/rounded_textview_bgcolor"
                 android:id="@+id/rlProdQty"
                 android:layout_toRightOf="@+id/rlOQty"
-                android:layout_marginRight="5dp"
-                android:backgroundTint="#ff0a64be">
+                android:layout_marginRight="20dp"
+                android:padding="0dp">
                 <TextView
                     android:text="Prod"
                     android:layout_height="wrap_content"
@@ -359,8 +410,8 @@
                 android:background="@drawable/rounded_textview_bgcolor"
                 android:id="@+id/rlBlQty"
                 android:layout_toRightOf="@+id/rlProdQty"
-                android:backgroundTint="#ff0a64be"
-                android:layout_marginRight="5dp">
+                android:layout_marginRight="20dp"
+                android:padding="0dp">
                 <TextView
                     android:text="Balance"
                     android:layout_height="wrap_content"
@@ -388,8 +439,8 @@
                 android:background="@drawable/rounded_textview_bgcolor"
                 android:id="@+id/rlWIP"
                 android:layout_toRightOf="@+id/rlBlQty"
-                android:backgroundTint="#ff0a64be"
-                android:layout_marginRight="5dp">
+                android:layout_marginRight="5dp"
+                android:padding="0dp">
                 <TextView
                     android:text="W.I.P"
                     android:layout_height="wrap_content"
@@ -412,44 +463,83 @@
                     android:textSize="12sp" />
             </RelativeLayout>
         </RelativeLayout>
-        <Button
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:layout_below="@id/rlQty"
-            android:id="@+id/btnSubmit"
-            android:text="Submit"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="5dp"
-            android:background="@drawable/rounded_button_reject"
-            android:fontFamily="sans-serif-thin"
-            android:textColor="#fff"
-            android:textAllCaps="false"
-            android:shadowRadius="4"
-            android:shadowColor="#ffefefef" />
-    <!--<ListView xmlns:tools="http://schemas.android.com/tools"
-            android:layout_height="match_parent"
-            android:layout_width="match_parent"
-            android:layout_below="@id/btnSubmit"
-            android:id="@+id/lvProduct"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="5dp"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="5dp"
-            android:dividerHeight="1dp"
-            tools:visibility="visible" />-->
-        <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/gifview"
-            tools:visibility="gone">
-            <BitopiApprovalSystem.CustomControl.CustomGifView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
+            android:layout_below="@+id/rlQty"
+            android:id="@+id/rlBottom"
+            android:layout_marginTop="2dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:id="@+id/rlDefectHeading"
+                android:paddingTop="10dp"
+                android:paddingLeft="20dp"
+                android:background="@drawable/bg">
+                <TextView
+                    android:id="@+id/lblDC"
+                    android:text="Defect Code"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="#fff"
+                    android:layout_marginRight="10dp" />
+                <TextView
+                    android:id="@+id/lblDZ"
+                    android:text="Defect Name"
+                    android:layout_toRightOf="@id/lblDC"
+                    android:textColor="#fff"
+                    android:layout_height="wrap_content"
+                    android:layout_width="50dp"
+                    android:layout_marginRight="10dp" />
+                <TextView
+                    android:id="@+id/lblNO"
+                    android:text="# Unit"
+                    android:textColor="#fff"
+                    android:layout_height="wrap_content"
+                    android:layout_width="50dp"
+                    android:layout_toRightOf="@id/lblDZ"
+                    android:layout_marginRight="10dp" />
+                <TextView
+                    android:id="@+id/lblOC"
+                    android:text="Operation Code"
+                    android:textColor="#fff"
+                    android:layout_height="wrap_content"
+                    android:layout_width="70dp"
+                    android:layout_toRightOf="@id/lblNO"
+                    android:layout_marginRight="10dp" />
+                <TextView
+                    android:id="@+id/lblCategory"
+                    android:text="Category"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:textColor="#fff"
+                    android:layout_toRightOf="@id/lblOC" />
+            </RelativeLayout>
+            <ListView xmlns:tools="http://schemas.android.com/tools"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_below="@id/rlDefectHeading"
+                android:descendantFocusability="afterDescendants"
+                android:addStatesFromChildren="false"
+                android:id="@+id/lvDefect"
                 android:layout_marginBottom="50dp" />
+            <Button
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:id="@+id/btnSubmit"
+                android:text="Submit"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/rounded_button_reject"
+                android:fontFamily="sans-serif-thin"
+                android:textColor="#fff"
+                android:textAllCaps="false"
+                android:shadowRadius="4"
+                android:shadowColor="#ffefefef"
+                android:layout_alignParentBottom="true" />
         </RelativeLayout>
     </RelativeLayout>
     <RelativeLayout

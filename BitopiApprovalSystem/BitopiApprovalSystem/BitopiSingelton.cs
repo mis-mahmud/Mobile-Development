@@ -170,6 +170,27 @@ namespace BitopiApprovalSystem
             }
         }
         public Dictionary<string, List<string>> ReceivingMessages { get; set; }
+        public delegate void OkButtonClickedOfNetErrorDialog();
+        public OkButtonClickedOfNetErrorDialog okButtonClickedOfNetErrorDialog;
+        public bool IsInternetConnectionAvailable(Activity activity)
+        {
+            var connectivityManager = (Android.Net.ConnectivityManager)GetSystemService(ConnectivityService);
+            var activeConnection = connectivityManager.ActiveNetworkInfo;
+            if ((activeConnection != null) && activeConnection.IsConnected)
+            {
+
+                return true;
+            }
+
+            //Android.App.AlertDialog.Builder builder = new Android.App.AlertDialog.Builder(activity);
+            //builder.SetTitle("Internet Connection Error");
+            //builder.SetMessage("No internet connection available. Please check your device.");
+            //builder.SetCancelable(false);
+            //builder.SetPositiveButton("OK", delegate { if (okButtonClickedOfNetErrorDialog != null) okButtonClickedOfNetErrorDialog(); builder.Dispose(); });
+            //builder.Show();
+
+            return false;
+        }
     }
     public class ProcessSingleton
     {

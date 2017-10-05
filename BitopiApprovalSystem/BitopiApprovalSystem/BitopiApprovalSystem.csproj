@@ -191,6 +191,8 @@
     <Compile Include="Activity\MyTaskMenu.cs" />
     <Compile Include="Activity\ProcessEntry.cs" />
     <Compile Include="Activity\ProcessListActivity.cs" />
+    <Compile Include="Activity\ProductionQuality.cs" />
+    <Compile Include="Activity\ProductionRejection.cs" />
     <Compile Include="Activity\StartupActivity.cs" />
     <Compile Include="Activity\TNAMyTask.cs" />
     <Compile Include="AnimatedExpandableListView.cs" />
@@ -272,11 +274,20 @@
     <AndroidResource Include="Resources\layout\EntryItem.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
-    <AndroidResource Include="Resources\layout\ProcessEntry.axml" />
+    <AndroidResource Include="Resources\layout\ProcessEntry.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
     <AndroidResource Include="Resources\layout\ProcessList.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\spinner_item.axml" />
+    <AndroidResource Include="Resources\layout\ProductionQuality.axml" />
+    <AndroidResource Include="Resources\layout\ProductionRejection.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\DefectItem.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\values\Strings.xml" />
@@ -484,6 +495,13 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\Dotted.xml" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <AndroidResource Include="Resources\anim\bottom_down.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\anim\bottom_up.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\packages\Xamarin.GooglePlayServices.Basement.29.0.0.2\build\Xamarin.GooglePlayServices.Basement.targets" Condition="Exists('..\packages\Xamarin.GooglePlayServices.Basement.29.0.0.2\build\Xamarin.GooglePlayServices.Basement.targets')" />

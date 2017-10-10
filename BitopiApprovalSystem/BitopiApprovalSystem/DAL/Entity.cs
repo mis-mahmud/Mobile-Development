@@ -15,10 +15,12 @@ namespace BitopiApprovalSystem.DAL
 {
     public class RecentPR
     {
-        [PrimaryKey, AutoIncrement]
-        public int ID { get; set; }
+        //[PrimaryKey, AutoIncrement]
+        public int ID { get; set; }  
+        public int EntryType { get; set; }
         public string RefID { get; set; }
         public string LocationRef { get; set; }
+        
     }
     public class RecentHistory
     {
@@ -29,5 +31,9 @@ namespace BitopiApprovalSystem.DAL
         public string Location { get; set; }
         public string LocationID { get; set; }
         public string EntryType { get; set; }
+    }
+    public enum EntryType
+    {
+        Production,Quality,Rejection
     }
 }

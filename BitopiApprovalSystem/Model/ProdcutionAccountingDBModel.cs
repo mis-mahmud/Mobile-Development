@@ -23,6 +23,20 @@ namespace BitopiApprovalSystem.Model
         public int BalanceQty { get; set; }
         public int WIP { get; set; }
     }
+    public class ProductionQualityDBModel : ProdcutionAccountingDBModel
+    {
+        public int LotQ { get; set; }
+        public int Sample { get; set; }
+        public string Check { get; set; }
+        public int DefectiveUnit { get; set; }
+        public string QualityStatus { get; set; }
+        public List<DefectMaster> DefectList { get; set; }
+    }
+    public class ProductionRejectionDBModel : ProdcutionAccountingDBModel
+    {
+        public int Grade { get; set; }
+        public int SKUCode { get; set; }
+    }
     public class DDL
     {
         public string LocationRef { get; set; }

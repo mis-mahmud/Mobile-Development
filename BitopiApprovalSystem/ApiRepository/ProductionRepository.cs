@@ -12,12 +12,12 @@ namespace ApiRepository
 {
     public class ProductionRepository
     {
-        public  List<ProdcutionAccountingDBModel> GetProductionList(string userid, string ProcessID,string LocationID,string PRStatus,
+        public  List<ProdcutionAccountingDBModel> GetProductionList(string userid, string ProcessID,string LocationID,string PRStatus, int EntryType,
             string RefID="")
         {
             userid = Cipher.Encrypt(userid);
             string url = RepositorySettings.BaseURl + "ProdcutionAccounting?UserID=" + userid + "&ProcessID=" + ProcessID + "&LocationID=" + LocationID + 
-                "&PRStatus=" + PRStatus+(RefID!=""? "&RefID="+RefID:"");
+                "&PRStatus=" + PRStatus+ "&EntryType="+ EntryType+(RefID!=""? "&RefID="+RefID:"");
 
             HttpClient client = new HttpClient();
             HttpResponseMessage result =  client.GetAsync(url).Result;
@@ -51,6 +51,34 @@ namespace ApiRepository
 
                 return aproves;
             
+        }
+        public int SetQuality(ProductionQualityDBModel model)
+        {
+            model.RefNo = "Test Ref";
+            string url = RepositorySettings.BaseURl + "ProdcutionAccounting";
+
+            HttpClient client = new HttpClient();
+            HttpContent contentPost = new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8,
+"application/json");
+            HttpResponseMessage result = client.PostAsync(url, contentPost).Result;
+            var aproves = JsonConvert.DeserializeObject<int>(result.Content.ReadAsStringAsync().Result);
+
+            return aproves;
+
+        }
+        public int SetRejection(ProductionRejectionDBModel model)
+        {
+            model.RefNo = "Test Ref";
+            string url = RepositorySettings.BaseURl + "ProdcutionAccounting";
+
+            HttpClient client = new HttpClient();
+            HttpContent contentPost = new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8,
+"application/json");
+            HttpResponseMessage result = client.PostAsync(url, contentPost).Result;
+            var aproves = JsonConvert.DeserializeObject<int>(result.Content.ReadAsStringAsync().Result);
+
+            return aproves;
+
         }
         public List<DefectMaster> GetGetDefectList()
         {

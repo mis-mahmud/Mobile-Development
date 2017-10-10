@@ -67,6 +67,7 @@ namespace BitopiApprovalSystem.DAL
         {
             if (item.ID == 0)
             {
+                item.ID = this.RecentPRs.Result.Where(t=>t.EntryType==item.EntryType).Count()+1;
                 return db.InsertAsync(item);
             }
             else

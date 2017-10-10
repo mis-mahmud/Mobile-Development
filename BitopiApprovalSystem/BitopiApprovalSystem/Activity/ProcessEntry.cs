@@ -78,7 +78,7 @@ namespace BitopiApprovalSystem
             new Thread(new ThreadStart(() =>
             {
                 list = repo.GetProductionList(bitopiApplication.User.UserCode, DBAccess.Database.RecentHistory.Result.ProcessID,
-                    DBAccess.Database.RecentHistory.Result.LocationID, PRStatus);
+                    DBAccess.Database.RecentHistory.Result.LocationID, PRStatus,1);
                 RunOnUiThread(() =>
                 {
                     atvReference.Adapter = new ArrayAdapter(this, Android.Resource.Layout.SimpleDropDownItem1Line, list.Select(t => t.RefNo).ToArray());
@@ -205,7 +205,7 @@ namespace BitopiApprovalSystem
         }
         public void PopulateRecentItem()
         {
-            List<RecentPR> prs = DBAccess.Database.RecentPRs.Result;
+            List<RecentPR> prs = DBAccess.Database.RecentPRs.Result.Where(t=>t.EntryType== (int)EntryType.Production).ToList();
             if (prs.Count == 0)
             {
                 return;
@@ -280,7 +280,7 @@ namespace BitopiApprovalSystem
             new Thread(new ThreadStart(() =>
             {
                 ProdcutionAccountingDBModel model = repo.GetProductionList(bitopiApplication.User.UserCode, DBAccess.Database.RecentHistory.Result.ProcessID,
-                      DBAccess.Database.RecentHistory.Result.LocationID, SelectedPRStatus, Ref).First();
+                      DBAccess.Database.RecentHistory.Result.LocationID, SelectedPRStatus, 1,Ref).First();
                 RunOnUiThread(() =>
                 {
                     tvOrderQty.Text = model.OrderQty.ToString("N0");
@@ -338,11 +338,11 @@ namespace BitopiApprovalSystem
                 return;
             }
 
-            List<RecentPR> prs = DBAccess.Database.RecentPRs.Result;
+            List<RecentPR> prs = DBAccess.Database.RecentPRs.Result.Where(t => t.EntryType == (int)EntryType.Production).ToList();
             if (prs.Where(t => t.RefID == atvReference.Text).Count() == 0)
             {
-                DBAccess.Database.SaveRecentPR(new DAL.RecentPR { RefID = atvReference.Text, LocationRef = tvLocation.Text });
-                prs = DBAccess.Database.RecentPRs.Result;
+                DBAccess.Database.SaveRecentPR(new DAL.RecentPR { RefID = atvReference.Text, LocationRef = tvLocation.Text, EntryType = (int)EntryType.Production });
+                prs = DBAccess.Database.RecentPRs.Result.Where(t => t.EntryType == (int)EntryType.Production).ToList();
                 if (prs.Count == 6)
                 {
                     DBAccess.Database.DeleteItemAsync(prs.Where(t => t.ID == 1).FirstOrDefault());
@@ -354,12 +354,12 @@ namespace BitopiApprovalSystem
                 }
                 PopulateRecentItem();
             }
-            ProdcutionAccountingDBModel model;
-            if (list != null)
-                model = list.Where(t => t.RefNo == atvReference.Text).First();
-            else
-                model = new ProdcutionAccountingDBModel { LocationRef = DBAccess.Database.RecentPRs.Result.Where(t => t.RefID == atvReference.Text).First().LocationRef };
-            gifView.Visibility = ViewStates.Visible;
+            //ProdcutionAccountingDBModel model;
+            //if (list != null)
+            //    model = list.Where(t => t.RefNo == atvReference.Text).First();
+            //else
+            //    model = new ProdcutionAccountingDBModel { LocationRef = DBAccess.Database.RecentPRs.Result.Where(t => t.RefID == atvReference.Text).First().LocationRef };
+            ////gifView.Visibility = ViewStates.Visible;
 
             var progressDialog = ProgressDialog.Show(this, null, "Please Wait.", true);
             var refid = atvReference.Text;
@@ -367,9 +367,9 @@ namespace BitopiApprovalSystem
             var userCode = bitopiApplication.User.UserCode;
             //new Thread(new ThreadStart(() =>
             //{
-
+            var location = DBAccess.Database.RecentHistory.Result.LocationID;
             var result = repo.SetProduction(refid,
-            qty, model.LocationRef, userCode);
+            qty, location, userCode);
 
             RunOnUiThread(() =>
             {
@@ -398,7 +398,7 @@ namespace BitopiApprovalSystem
             new Thread(new ThreadStart(() =>
             {
                 var prodList = repo.GetProductionList(bitopiApplication.User.UserCode, DBAccess.Database.RecentHistory.Result.ProcessID,
-                     DBAccess.Database.RecentHistory.Result.LocationID, "", Ref);
+                     DBAccess.Database.RecentHistory.Result.LocationID, "", 1,Ref);
                 RunOnUiThread(() =>
                 {
                     var m = prodList.First();
@@ -412,12 +412,17 @@ namespace BitopiApprovalSystem
         }
         private void LvProduct_ItemClick(object sender, AdapterView.ItemClickEventArgs e)
         {
+            Animation bottomUp = Android.Views.Animations.AnimationUtils.LoadAnimation(this,
+            Resource.Animation.bottom_down);
+
+            lvProduct.StartAnimation(bottomUp);
+            rlPRLV.Visibility = (ViewStates.Gone);
             var model = list[e.Position];
             tvRef.Text = atvReference.Text = model.RefNo;
             tvOrderQty.Text = model.OrderQty.ToString("N0");
             tvBalanceQty.Text = model.BalanceQty.ToString("N0");
             tvProducedQty.Text = model.ProducedQty.ToString("N0");
-            tvLocation.Text = model.LocationName;
+            //tvLocation.Text = model.LocationName;
         }
     }
 

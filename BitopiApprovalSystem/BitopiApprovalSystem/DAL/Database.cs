@@ -63,6 +63,11 @@ namespace BitopiApprovalSystem.DAL
                 return db.UpdateAsync(item);
             }
         }
+        public void DropAllTable()
+        {
+            db.DropTableAsync<RecentHistory>();
+            db.DropTableAsync<RecentPR>();
+        }
         public Task<int> SaveRecentPR(RecentPR item)
         {
             if (item.ID == 0)

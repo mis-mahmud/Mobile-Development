@@ -45,6 +45,7 @@ namespace BitopiApprovalSystem
         Spinner spStatus;
         List<DefectMaster> defectList;
         public static string[] EntryTypeArray = { "Pass", "Fail" };
+        bool isListShown;
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -93,11 +94,17 @@ namespace BitopiApprovalSystem
                     adapter.NotifyDataSetChanged();
                     progressDialog.Dismiss();
                     //AndHUD.Shared.Dismiss();
-                    if (task != null) task();
+                    if (task != null)
+                    {
+                        if (list.Count > 0) task();
+                        else
+                            Toast.MakeText(this, "No Data Found", ToastLength.Long).Show();
+                    }
                     Log.Debug("", list.Count().ToString());
                 });
             })).Start();
         }
+
         private void setSearchIcons(SearchView mSearchView)
         {
             try
@@ -257,6 +264,7 @@ namespace BitopiApprovalSystem
         protected override void InitializeEvent()
         {
             lvProduct.ItemClick += LvProduct_ItemClick;
+            btnSave.Click -= BtnSave_Click;
             btnSave.Click += BtnSave_Click;
 
             btnAll.Click += LoadPR_Click;
@@ -308,6 +316,7 @@ namespace BitopiApprovalSystem
             Resource.Animation.bottom_up);
                 rlPRLV.Visibility = (ViewStates.Visible);
                 lvProduct.StartAnimation(bottomUp);
+                isListShown = true;
             });
         }
         private void RlPRLV_Click(object sender, EventArgs e)
@@ -317,6 +326,7 @@ namespace BitopiApprovalSystem
 
             lvProduct.StartAnimation(bottomUp);
             rlPRLV.Visibility = (ViewStates.Gone);
+            isListShown = false;
 
         }
 
@@ -336,7 +346,7 @@ namespace BitopiApprovalSystem
 
         private void BtnMinus_Click(object sender, EventArgs e)
         {
-            int qty = Convert.ToInt16(etQty.Text);
+            int qty = Convert.ToInt16(etQty.Text == "" ? "0" : etQty.Text);
             qty -= 10;
             if (qty >= 0)
                 etQty.Text = qty.ToString();
@@ -344,7 +354,7 @@ namespace BitopiApprovalSystem
 
         private void BtnPlus_Click(object sender, EventArgs e)
         {
-            int qty = Convert.ToInt16(etQty.Text);
+            int qty = Convert.ToInt16(etQty.Text == "" ? "0" : etQty.Text);
             qty += 10;
             etQty.Text = qty.ToString();
         }
@@ -394,6 +404,7 @@ namespace BitopiApprovalSystem
             model.DefectiveUnit = Convert.ToInt16(etDefectiveUnit.Text);
             model.QualityStatus = spStatus.SelectedItem.ToString();
             model.DefectList = defectList;
+            model.AddedBy= bitopiApplication.User.UserCode;
             //new Thread(new ThreadStart(() =>
             //{
 
@@ -422,6 +433,22 @@ namespace BitopiApprovalSystem
                 //gifView.Visibility = ViewStates.Gone;
             });
             //})).Start();
+        }
+        public override void OnBackPressed()
+        {
+            if (isListShown)
+            {
+                Animation bottomUp = Android.Views.Animations.AnimationUtils.LoadAnimation(this,
+                Resource.Animation.bottom_down);
+
+                lvProduct.StartAnimation(bottomUp);
+                rlPRLV.Visibility = (ViewStates.Gone);
+                isListShown = false;
+            }
+            else
+            {
+                base.OnBackPressed();
+            }
         }
         public void LoadSelectedList(string Ref)
         {
@@ -453,6 +480,7 @@ namespace BitopiApprovalSystem
             tvBalanceQty.Text = model.BalanceQty.ToString("N0");
             tvProducedQty.Text = model.ProducedQty.ToString("N0");
             //tvLocation.Text = model.LocationName;
+            isListShown = false;
 
         }
     }
@@ -485,7 +513,7 @@ namespace BitopiApprovalSystem
             view.FindViewById<TextView>(Resource.Id.tvDZ).Text = model.DefectName;
             view.FindViewById<TextView>(Resource.Id.tvOC).Text = model.OperationCode;
             view.FindViewById<TextView>(Resource.Id.tvCategory).Text = model.Category;
-            view.FindViewById<TextView>(Resource.Id.etNO).Text = model.No.ToString();
+            view.FindViewById<TextView>(Resource.Id.etNO).Text = model.No>0?model.No.ToString():"";
             view.FindViewById<TextView>(Resource.Id.etNO).TextChanged -= DefectMastAdapter_TextChanged;
             view.FindViewById<TextView>(Resource.Id.etNO).TextChanged += DefectMastAdapter_TextChanged;
             view.FindViewById<TextView>(Resource.Id.etNO).Tag = model.DefectCode;

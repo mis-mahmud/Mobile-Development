@@ -13,6 +13,7 @@ using Android.Support.V7.App;
 using Android.Graphics;
 using ApiRepository;
 using Android.Support.V4.Widget;
+using BitopiApprovalSystem.DAL;
 
 namespace BitopiApprovalSystem
 {
@@ -70,6 +71,7 @@ namespace BitopiApprovalSystem
                     pref.Edit().Clear().Commit();
                     bitopiApplication.ClearData();
                     ProcessSingleton.Instance.RemoveProcess();
+                    DBAccess.Database.DropAllTable();
                     RunOnUiThread(() =>
                     {
                         progressDialog.Dismiss();

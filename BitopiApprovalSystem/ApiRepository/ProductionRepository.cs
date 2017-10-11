@@ -54,31 +54,46 @@ namespace ApiRepository
         }
         public int SetQuality(ProductionQualityDBModel model)
         {
-            model.RefNo = "Test Ref";
-            string url = RepositorySettings.BaseURl + "ProdcutionAccounting";
+            try
+            {
+                //model.RefNo = "Test Ref";
+                string url = RepositorySettings.BaseURl + "ProdcutionAccounting";
 
-            HttpClient client = new HttpClient();
-            HttpContent contentPost = new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8,
-"application/json");
-            HttpResponseMessage result = client.PostAsync(url, contentPost).Result;
-            var aproves = JsonConvert.DeserializeObject<int>(result.Content.ReadAsStringAsync().Result);
+                HttpClient client = new HttpClient();
+                HttpContent contentPost = new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8,
+    "application/json");
+                HttpResponseMessage result = client.PostAsync(url, contentPost).Result;
+                var aproves = JsonConvert.DeserializeObject<int>(result.Content.ReadAsStringAsync().Result);
+           
 
             return aproves;
+            }
+            catch(Exception ex)
+            {
+                string msg = ex.Message;
+                return 0;
+            }
 
         }
         public int SetRejection(ProductionRejectionDBModel model)
         {
-            model.RefNo = "Test Ref";
-            string url = RepositorySettings.BaseURl + "ProdcutionAccounting";
+            try
+            {
+                //model.RefNo = "Test Ref";
+            string url = RepositorySettings.BaseURl + "Rejection";
 
             HttpClient client = new HttpClient();
             HttpContent contentPost = new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8,
 "application/json");
             HttpResponseMessage result = client.PostAsync(url, contentPost).Result;
             var aproves = JsonConvert.DeserializeObject<int>(result.Content.ReadAsStringAsync().Result);
-
             return aproves;
-
+            }
+            catch (Exception ex)
+            {
+                string msg = ex.Message;
+                return 0;
+            }
         }
         public List<DefectMaster> GetGetDefectList()
         {

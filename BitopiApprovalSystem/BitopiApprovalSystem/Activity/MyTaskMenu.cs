@@ -17,6 +17,7 @@ using Android.Support.V7.App;
 using BitopiApprovalSystem.Model;
 using Android.Support.V4.Widget;
 using BitopiApprovalSystem.PushNotification;
+using BitopiApprovalSystem.DAL;
 
 namespace BitopiApprovalSystem
 {
@@ -146,6 +147,7 @@ namespace BitopiApprovalSystem
                     Application.Context.GetSharedPreferences("_bitopi_UserInfo", FileCreationMode.Private);
                     pref.Edit().Clear().Commit();
                     bitopiApplication.ClearData();
+                    DBAccess.Database.DropAllTable();
                     RunOnUiThread(() =>
                     {
                         progressDialog.Dismiss();

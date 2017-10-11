@@ -22,6 +22,7 @@ namespace BitopiApprovalSystem.Model
 
         public int BalanceQty { get; set; }
         public int WIP { get; set; }
+        public string AddedBy { get; set; }
     }
     public class ProductionQualityDBModel : ProdcutionAccountingDBModel
     {

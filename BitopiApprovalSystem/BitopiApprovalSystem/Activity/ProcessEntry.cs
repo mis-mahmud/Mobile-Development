@@ -44,6 +44,7 @@ namespace BitopiApprovalSystem
         Button recent1, recent2, recent3, recent4, recent5;
         Button btnAll, btnRunning;
         string SelectedPRStatus = "";
+        bool isListShown;
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -72,13 +73,29 @@ namespace BitopiApprovalSystem
             gifView.Visibility = ViewStates.Gone;
 
         }
-        void LoadList(string PRStatus, Action task=null)
+        public override void OnBackPressed()
+        {
+            if (isListShown)
+            {
+                Animation bottomUp = Android.Views.Animations.AnimationUtils.LoadAnimation(this,
+                Resource.Animation.bottom_down);
+
+                lvProduct.StartAnimation(bottomUp);
+                rlPRLV.Visibility = (ViewStates.Gone);
+                isListShown = false;
+            }
+            else
+            {
+                base.OnBackPressed();
+            }
+        }
+        void LoadList(string PRStatus, Action task = null)
         {
             var progressDialog = ProgressDialog.Show(this, null, "Please Wait.", true);
             new Thread(new ThreadStart(() =>
             {
                 list = repo.GetProductionList(bitopiApplication.User.UserCode, DBAccess.Database.RecentHistory.Result.ProcessID,
-                    DBAccess.Database.RecentHistory.Result.LocationID, PRStatus,1);
+                    DBAccess.Database.RecentHistory.Result.LocationID, PRStatus, 1);
                 RunOnUiThread(() =>
                 {
                     atvReference.Adapter = new ArrayAdapter(this, Android.Resource.Layout.SimpleDropDownItem1Line, list.Select(t => t.RefNo).ToArray());
@@ -86,7 +103,13 @@ namespace BitopiApprovalSystem
                     adapter.NotifyDataSetChanged();
                     progressDialog.Dismiss();
                     //AndHUD.Shared.Dismiss();
-                    if (task != null) task();
+                    if (task != null)
+                    {
+                        if (list.Count > 0) task();
+                        else
+                            Toast.MakeText(this, "No Data Found", ToastLength.Long).Show();
+                    }
+
                 });
             })).Start();
         }
@@ -205,7 +228,7 @@ namespace BitopiApprovalSystem
         }
         public void PopulateRecentItem()
         {
-            List<RecentPR> prs = DBAccess.Database.RecentPRs.Result.Where(t=>t.EntryType== (int)EntryType.Production).ToList();
+            List<RecentPR> prs = DBAccess.Database.RecentPRs.Result.Where(t => t.EntryType == (int)EntryType.Production).ToList();
             if (prs.Count == 0)
             {
                 return;
@@ -267,6 +290,7 @@ namespace BitopiApprovalSystem
 
             lvProduct.StartAnimation(bottomUp);
             rlPRLV.Visibility = (ViewStates.Gone);
+            isListShown = false;
 
         }
         private void Recent_Click(object sender, EventArgs e)
@@ -280,7 +304,7 @@ namespace BitopiApprovalSystem
             new Thread(new ThreadStart(() =>
             {
                 ProdcutionAccountingDBModel model = repo.GetProductionList(bitopiApplication.User.UserCode, DBAccess.Database.RecentHistory.Result.ProcessID,
-                      DBAccess.Database.RecentHistory.Result.LocationID, SelectedPRStatus, 1,Ref).First();
+                      DBAccess.Database.RecentHistory.Result.LocationID, SelectedPRStatus, 1, Ref).First();
                 RunOnUiThread(() =>
                 {
                     tvOrderQty.Text = model.OrderQty.ToString("N0");
@@ -302,6 +326,7 @@ namespace BitopiApprovalSystem
             Resource.Animation.bottom_up);
                 rlPRLV.Visibility = (ViewStates.Visible);
                 lvProduct.StartAnimation(bottomUp);
+                isListShown = true;
             });
         }
 
@@ -316,7 +341,7 @@ namespace BitopiApprovalSystem
 
         private void BtnMinus_Click(object sender, EventArgs e)
         {
-            int qty = Convert.ToInt16(etQty.Text);
+            int qty = Convert.ToInt16(etQty.Text == "" ? "0" : etQty.Text);
             qty -= 10;
             if (qty >= 0)
                 etQty.Text = qty.ToString();
@@ -324,7 +349,8 @@ namespace BitopiApprovalSystem
 
         private void BtnPlus_Click(object sender, EventArgs e)
         {
-            int qty = Convert.ToInt16(etQty.Text);
+
+            int qty = Convert.ToInt16(etQty.Text==""?"0": etQty.Text);
             qty += 10;
             etQty.Text = qty.ToString();
         }
@@ -398,7 +424,7 @@ namespace BitopiApprovalSystem
             new Thread(new ThreadStart(() =>
             {
                 var prodList = repo.GetProductionList(bitopiApplication.User.UserCode, DBAccess.Database.RecentHistory.Result.ProcessID,
-                     DBAccess.Database.RecentHistory.Result.LocationID, "", 1,Ref);
+                     DBAccess.Database.RecentHistory.Result.LocationID, "", 1, Ref);
                 RunOnUiThread(() =>
                 {
                     var m = prodList.First();
@@ -423,6 +449,7 @@ namespace BitopiApprovalSystem
             tvBalanceQty.Text = model.BalanceQty.ToString("N0");
             tvProducedQty.Text = model.ProducedQty.ToString("N0");
             //tvLocation.Text = model.LocationName;
+            isListShown = false;
         }
     }
 

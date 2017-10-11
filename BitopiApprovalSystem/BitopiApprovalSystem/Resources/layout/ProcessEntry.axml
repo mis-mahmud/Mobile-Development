@@ -65,10 +65,11 @@
             android:layout_marginRight="10dp"
             android:layout_marginTop="5dp"
             android:gravity="center"
-            android:background="@drawable/rounded_textview_bgcolor">
+            android:background="@drawable/rounded_textview_bgcolor"
+            android:padding="2dp">
             <Button
                 android:id="@+id/recent1"
-                android:layout_width="50dp"
+                android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/dotted"
                 android:layout_marginRight="5dp"
@@ -79,16 +80,17 @@
                 android:id="@+id/recent2"
                 android:layout_toRightOf="@+id/recent1"
                 android:layout_height="wrap_content"
-                android:layout_width="50dp"
+                android:layout_width="60dp"
                 android:background="@drawable/dotted"
                 android:layout_marginRight="5dp"
                 android:textAllCaps="false"
                 android:textSize="10sp"
-                android:hint="Recent 2" />
+                android:hint="Recent 2"
+                android:width="70dp" />
             <Button
                 android:id="@+id/recent3"
                 android:layout_toRightOf="@+id/recent2"
-                android:layout_width="50dp"
+                android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/dotted"
                 android:layout_marginRight="5dp"
@@ -100,7 +102,7 @@
                 android:id="@+id/recent4"
                 android:layout_toRightOf="@+id/recent3"
                 android:layout_height="wrap_content"
-                android:layout_width="50dp"
+                android:layout_width="60dp"
                 android:background="@drawable/dotted"
                 android:layout_marginRight="5dp"
                 android:textAllCaps="false"
@@ -110,9 +112,8 @@
                 android:id="@+id/recent5"
                 android:layout_toRightOf="@+id/recent4"
                 android:layout_height="wrap_content"
-                android:layout_width="50dp"
+                android:layout_width="60dp"
                 android:background="@drawable/dotted"
-                android:layout_marginRight="5dp"
                 android:textAllCaps="false"
                 android:textSize="10sp"
                 android:hint="Recent 5" />
@@ -143,13 +144,14 @@
                     android:textStyle="bold"
                     android:textSize="13sp" />
                 <AutoCompleteTextView
-                    android:layout_height="wrap_content"
+                    android:layout_height="60dp"
                     android:layout_width="100dp"
                     android:id="@+id/atvReference"
                     android:layout_below="@+id/lblLocation"
-                    android:textColor="#111"
+                    android:textColor="#fff"
                     android:nextFocusUp="@id/atvReference"
-    android:nextFocusLeft="@id/atvReference"/>
+                    android:nextFocusLeft="@id/atvReference"
+                    android:textSize="12sp" />
             <!--android:background="@drawable/gradient_spinner"-->
             </RelativeLayout>
         <!--<RelativeLayout xmlns:tools="http://schemas.android.com/tools"
@@ -195,7 +197,6 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="5dp"
                 android:padding="5dp"
-                android:backgroundTint="#ff026292"
                 android:layout_toRightOf="@id/rlLocation">
                 <TextView
                     android:text="Quantity"
@@ -213,13 +214,11 @@
                     android:layout_below="@id/lblQty"
                     android:inputType="number"
                     android:layout_marginRight="5dp"
-                    android:background="@drawable/rounded_textview_bgcolor"
+                    android:background="@drawable/rounded_textview"
                     android:text="0"
                     android:textColor="#222222"
                     android:gravity="center"
-                    android:layout_marginTop="5dp"
-                    android:backgroundTint="#fffafafa"
-                    android:backgroundTintMode="src_over" />
+                    android:layout_marginTop="5dp" />
                 <Button
                     android:id="@+id/btnPlus"
                     android:layout_height="50dp"
@@ -264,17 +263,15 @@
             android:backgroundTint="#ff026292"
             android:padding="5dp"
             android:gravity="center">
-            <RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
-                xmlns:tools="http://schemas.android.com/tools"
+            <RelativeLayout
                 android:id="@+id/rlRef"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:background="@drawable/rounded_textview_bgcolor"
                 android:layout_marginRight="5dp"
-                app:backgroundTint="#00000000"
-                android:backgroundTint="#ff0a64be"
-                android:layout_marginLeft="0dp">
+                android:layout_marginLeft="0dp"
+                android:visibility="gone">
                 <TextView
                     android:text="Ref"
                     android:layout_height="wrap_content"
@@ -300,9 +297,8 @@
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:layout_toRightOf="@id/rlRef"
-                android:background="@drawable/rounded_textview_bgcolor"
                 android:id="@+id/rlOQty"
-                android:layout_marginRight="5dp"
+                android:layout_marginRight="20dp"
                 android:backgroundTint="#ff0a64be">
                 <TextView
                     android:text="Order "
@@ -326,10 +322,9 @@
             <RelativeLayout
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:background="@drawable/rounded_textview_bgcolor"
                 android:id="@+id/rlProdQty"
                 android:layout_toRightOf="@+id/rlOQty"
-                android:layout_marginRight="5dp"
+                android:layout_marginRight="20dp"
                 android:backgroundTint="#ff0a64be">
                 <TextView
                     android:text="Prod"
@@ -356,11 +351,10 @@
             <RelativeLayout
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:background="@drawable/rounded_textview_bgcolor"
                 android:id="@+id/rlBlQty"
                 android:layout_toRightOf="@+id/rlProdQty"
                 android:backgroundTint="#ff0a64be"
-                android:layout_marginRight="5dp">
+                android:layout_marginRight="20dp">
                 <TextView
                     android:text="Balance"
                     android:layout_height="wrap_content"
@@ -385,11 +379,10 @@
             <RelativeLayout
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:background="@drawable/rounded_textview_bgcolor"
                 android:id="@+id/rlWIP"
                 android:layout_toRightOf="@+id/rlBlQty"
                 android:backgroundTint="#ff0a64be"
-                android:layout_marginRight="5dp">
+                android:layout_marginRight="20dp">
                 <TextView
                     android:text="W.I.P"
                     android:layout_height="wrap_content"
@@ -462,7 +455,7 @@
         android:addStatesFromChildren="false"
         android:clickable="true">
         <ListView xmlns:tools="http://schemas.android.com/tools"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:layout_below="@id/btnSubmit"
             android:id="@+id/lvProduct"

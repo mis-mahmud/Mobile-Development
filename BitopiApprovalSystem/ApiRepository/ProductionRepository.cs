@@ -57,7 +57,7 @@ namespace ApiRepository
             try
             {
                 //model.RefNo = "Test Ref";
-                string url = RepositorySettings.BaseURl + "ProdcutionAccounting";
+                string url = RepositorySettings.BaseURl + "Quality";
 
                 HttpClient client = new HttpClient();
                 HttpContent contentPost = new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8,
@@ -107,6 +107,27 @@ namespace ApiRepository
                 aproves = new List<DefectMaster>();
             return aproves;
         }
+        public string GetAQL(string RefID, int LotQ, int? DefectUnit = null)
+        {
 
+            string url = RepositorySettings.BaseURl + "ProdcutionAccounting?RefID=" + RefID + "&LotQ=" + LotQ + "&DefectUnit=" + DefectUnit;
+
+            HttpClient client = new HttpClient();
+            HttpResponseMessage result = client.GetAsync(url).Result;
+            var aproves = JsonConvert.DeserializeObject<string>(result.Content.ReadAsStringAsync().Result);
+            return aproves;
+        }
+        public List<Operation> GetOperationList(string RefID)
+        {
+
+            string url = RepositorySettings.BaseURl + "Quality?RefID=" + RefID ;
+
+            HttpClient client = new HttpClient();
+            HttpResponseMessage result = client.GetAsync(url).Result;
+            var aproves = JsonConvert.DeserializeObject<List<Operation>>(result.Content.ReadAsStringAsync().Result);
+            if (aproves == null)
+                aproves = new List<Operation>();
+            return aproves;
+        }
     }
 }

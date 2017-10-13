@@ -8,12 +8,13 @@ using System.Data;
 using BitopiApprovalSystemWebApiModels;
 using System.Globalization;
 using System.Configuration;
+using System.Xml.Serialization;
 
 namespace BitopiDBContext
 {
     public class DBProduction : DBContext
     {
-        public List<ProdcutionAccountingDBModel> Get(string UserCode, string ProcessID, string LocationID, string PRStatus, string RefID)
+        public List<ProdcutionAccountingDBModel> Get(string UserCode, string ProcessID, string LocationID, string PRStatus, int EntryType, string RefID)
         {
 
             SqlParameter[] param = new SqlParameter[] {
@@ -21,9 +22,11 @@ namespace BitopiDBContext
                 new SqlParameter("@ProcessID",ProcessID),
                 new SqlParameter("@LocationID",LocationID),
                 new SqlParameter("@PRStatus",PRStatus),
+                new SqlParameter("@EntryType",EntryType),
                 new SqlParameter("@RefID",RefID)
 
             };
+            string sql = toSqlString(param, "bimob.dbo.sp_productionAccounting");
             List<ProdcutionAccountingDBModel> _DBModelList = new List<ProdcutionAccountingDBModel>();
             try
             {
@@ -83,6 +86,61 @@ namespace BitopiDBContext
                 throw ex;
             }
         }
+        public int SetRejection(ProductionRejectionDBModel model)
+        {
+            
+            SqlParameter[] param = new SqlParameter[] {
+                new SqlParameter("@Ref",model.RefNo),
+                new SqlParameter("@ProdDateTime",DateTime.Now),
+                new SqlParameter("@LocationRef",model.LocationRef),
+                new SqlParameter("@Grade",model.Grade),
+                new SqlParameter("@SKUCode",model.SKUCode.ToString()),
+                new SqlParameter("@SKUQuantiy",model.ProducedQty),
+                
+                new SqlParameter("@AddedBy",model.AddedBy)
+            };
+
+            try
+            {
+                int count = ExecuteNonQuery(CommandType.StoredProcedure, "bimob.dbo.USP_Rejectionentry", param);
+
+                return count;
+            }
+            catch (Exception ex)
+            {
+                //ErrorSignal.FromCurrentContext().Raise(ex);
+                throw ex;
+            }
+        }
+        public int SetQuality(ProductionQualityDBModel model)
+        {
+            string xmlString = ConvertToXML(model.DefectList.Where(t=>t.No>0).ToList());
+            SqlParameter[] param = new SqlParameter[] {
+                new SqlParameter("@Ref",model.RefNo),
+                new SqlParameter("@ProdDateTime",DateTime.Now),
+                new SqlParameter("@LocationRef",model.LocationRef),
+                new SqlParameter("@LotQ",model.LotQ),
+                new SqlParameter("@Sample",model.Sample),
+                new SqlParameter("@Check",model.Check),
+                new SqlParameter("@Status",model.QualityStatus),
+                new SqlParameter("@DefectiveUnit",model.DefectiveUnit),
+                new SqlParameter("@xmlString",xmlString),
+                new SqlParameter("@AddedBy",model.AddedBy)
+            };
+            string sql = toSqlString(param, "bimob.dbo.USP_Qualityentry ");
+            try
+            {
+                int count = ExecuteNonQuery(CommandType.StoredProcedure, "bimob.dbo.USP_Qualityentry", param);
+
+                return count;
+            }
+            catch (Exception ex)
+            {
+                //ErrorSignal.FromCurrentContext().Raise(ex);
+                throw ex;
+            }
+            
+        }
         public List<DDL> GetDDL(string UserCode)
         {
             SqlParameter[] param = new SqlParameter[] {
@@ -117,7 +175,44 @@ namespace BitopiDBContext
                 _DBModelList = null;
             }
         }
-
+        public string GetAQL(string RefID, int LotQ, int? DefectUnit = null)
+        {
+            SqlParameter[] param = new SqlParameter[] {
+                new SqlParameter("@RefID",RefID),
+                new SqlParameter("@LotQ",LotQ),
+                new SqlParameter("@DefectUnit",DefectUnit)
+            };
+            List<DDL> _DBModelList = new List<DDL>();
+            string result="";
+            try
+            {
+                DataTable dt = ExecuteDataTable("bimob.dbo.sp_aql", param);
+                if (dt.Rows.Count > 0)
+                {
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        if(DefectUnit==null)
+                        {
+                            result = dr["Sample"].ToString();
+                        }
+                        else
+                        {
+                            result = dr["Status"].ToString();
+                        }
+                    }
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                //ErrorSignal.FromCurrentContext().Raise(ex);
+                throw ex;
+            }
+            finally
+            {
+                _DBModelList = null;
+            }
+        }
         public List<DefectMaster> GetDefectList()
         {
             using (SqlConnection f_conn = new SqlConnection(ConfigurationManager.ConnectionStrings["sqlConnStr"].ConnectionString))
@@ -137,6 +232,56 @@ namespace BitopiDBContext
                                            }).ToList();
                 return List;
             }
+        }
+        public List<Operation> GetOperationList(string RefNo)
+        {
+            SqlParameter[] param = new SqlParameter[] {
+                new SqlParameter("@RefNO",RefNo)
+            };
+            List<Operation> _DBModelList = new List<Operation>();
+            try
+            {
+                DataTable dt = ExecuteDataTable("bimob.dbo.sp_get_operation_code", param);
+                if (dt.Rows.Count > 0)
+                {
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        Operation _DBModel = new Operation();
+                        _DBModel.OperationCode = dr["OperationCode"].ToString();
+                        _DBModel.OperationName = dr["OperationName"].ToString();
+
+                        _DBModelList.Add(_DBModel);
+                    }
+                }
+                return _DBModelList;
+            }
+            catch (Exception ex)
+            {
+                //ErrorSignal.FromCurrentContext().Raise(ex);
+                throw ex;
+            }
+            finally
+            {
+                _DBModelList = null;
+            }
+        }
+        public string ConvertToXML(List<DefectMaster> list)
+        {
+            XmlSerializer serializer = new XmlSerializer(typeof(List<DefectMaster>));
+
+            var stringwriter = new System.IO.StringWriter();
+            serializer.Serialize(stringwriter, list);
+            return stringwriter.ToString();
+        }
+        public string  toSqlString(SqlParameter[] param,string sql)
+        {
+            
+            foreach (var p in param)
+            {
+                sql += p.ParameterName + "='" + p.SqlValue + "',";
+            }
+            //sql = sql.Substring(sql.LastIndexOf(','), 1);
+            return sql;
         }
     }
 }

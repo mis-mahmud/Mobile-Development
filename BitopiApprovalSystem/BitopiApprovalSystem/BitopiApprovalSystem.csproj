@@ -288,6 +288,9 @@
     <AndroidResource Include="Resources\layout\DefectItem.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
+    <AndroidResource Include="Resources\layout\OperationItem.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\values\Strings.xml" />
@@ -496,7 +499,11 @@
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\Dotted.xml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\rounded_button_pass.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\anim\bottom_down.xml" />
   </ItemGroup>

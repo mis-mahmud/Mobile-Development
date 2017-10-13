@@ -136,13 +136,12 @@
                     android:layout_width="100dp"
                     android:id="@+id/atvReference"
                     android:layout_below="@+id/lblLocation"
-                    android:textColor="#111"
+                    android:textColor="#fff"
                     android:padding="5dp"
                     android:layout_marginTop="5dp"
                     android:nextFocusUp="@id/atvReference"
                     android:nextFocusLeft="@id/atvReference"
-                    android:textSize="12sp"
-                    android:text="PR-17-235 .1.1.1.1.1.1" />
+                    android:textSize="12sp" />
             </RelativeLayout>
             <RelativeLayout
                 android:layout_width="120dp"
@@ -166,7 +165,7 @@
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
                     android:id="@+id/etLot"
-                    android:inputType="number"
+                    android:inputType="numberSigned"
                     android:layout_marginRight="5dp"
                     android:textColor="#222222"
                     android:gravity="center"
@@ -195,7 +194,7 @@
                     android:textColor="#FFF"
                     android:textStyle="bold"
                     android:textSize="13sp" />
-                <EditText
+                <TextView
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
                     android:id="@+id/etSample"
@@ -241,7 +240,9 @@
                     android:textColor="#111"
                     android:padding="5dp"
                     android:layout_marginTop="5dp"
-                    android:background="@drawable/rounded_textview" />
+                    android:background="@drawable/rounded_textview"
+                    android:inputType="numberSigned"
+                    android:enabled="true" />
             </RelativeLayout>
             <RelativeLayout
                 android:layout_height="wrap_content"
@@ -266,13 +267,14 @@
                     android:layout_width="match_parent"
                     android:id="@+id/etDU"
                     android:layout_below="@+id/lblDU"
-                    android:inputType="number"
+                    android:inputType="numberSigned"
                     android:layout_marginRight="5dp"
                     android:textColor="#222222"
                     android:gravity="center"
                     android:layout_marginTop="5dp"
                     android:padding="5dp"
-                    android:background="@drawable/rounded_textview" />
+                    android:background="@drawable/rounded_textview"
+                    android:enabled="true" />
             </RelativeLayout>
             <RelativeLayout
                 android:layout_height="wrap_content"
@@ -293,18 +295,19 @@
                     android:textColor="#FFF"
                     android:textStyle="bold"
                     android:textSize="13sp" />
-                <Spinner
+                <TextView
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
                     android:id="@+id/spStatus"
                     android:layout_below="@+id/lblStatus"
                     android:inputType="number"
                     android:layout_marginRight="5dp"
-                    android:text="0"
+                    android:text="N/A"
                     android:textColor="#222222"
                     android:gravity="center"
                     android:layout_marginTop="5dp"
-                    android:padding="4dp" />
+                    android:padding="8dp"
+                    android:background="@drawable/rounded_textview" />
             </RelativeLayout>
         </RelativeLayout>
         <RelativeLayout
@@ -487,14 +490,15 @@
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:textColor="#fff"
-                    android:layout_marginRight="10dp" />
+                    android:layout_marginRight="10dp"
+                    android:visibility="gone" />
                 <TextView
                     android:id="@+id/lblDZ"
                     android:text="Defect Name"
                     android:layout_toRightOf="@id/lblDC"
                     android:textColor="#fff"
                     android:layout_height="wrap_content"
-                    android:layout_width="50dp"
+                    android:layout_width="100dp"
                     android:layout_marginRight="10dp" />
                 <TextView
                     android:id="@+id/lblNO"
@@ -564,6 +568,27 @@
             android:layout_marginTop="50dp"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="5dp"
+            android:dividerHeight="1dp" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/rlPOPUpOperation"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:background="#a0000000"
+        android:visibility="gone"
+        android:animateLayoutChanges="true"
+        android:addStatesFromChildren="false"
+        android:clickable="true">
+        <ListView xmlns:tools="http://schemas.android.com/tools"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_below="@id/btnSubmit"
+            android:id="@+id/lvOperation"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="50dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="50dp"
             android:dividerHeight="1dp" />
     </RelativeLayout>
 <!--</PullToRefresharp.Android.Widget.ScrollView>

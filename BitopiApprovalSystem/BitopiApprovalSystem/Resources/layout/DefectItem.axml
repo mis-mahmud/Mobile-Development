@@ -11,33 +11,42 @@
         android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:textColor="#000"
-        android:layout_marginRight="10dp" />
+        android:layout_marginRight="10dp"
+        android:visibility="gone" />
     <TextView
         android:id="@+id/tvDZ"
         android:text="Defect Name"
         android:textColor="#000"
         android:layout_height="wrap_content"
-        android:layout_width="50dp"
+        android:layout_width="100dp"
         android:layout_marginRight="10dp"
         android:layout_toRightOf="@id/tvDC" />
     <EditText
         android:id="@+id/etNO"
         android:textColor="#000"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:layout_width="50dp"
         android:layout_toRightOf="@id/tvDZ"
         android:layout_marginRight="10dp"
         android:inputType="number"
         android:textSize="13sp"
         android:background="@drawable/rounded_textview" />
-    <TextView
+    <Button
         android:id="@+id/tvOC"
-        android:text="Operation Code"
-        android:textColor="#000"
-        android:layout_height="wrap_content"
+        android:text="T-O16-93-39"
+        android:textColor="#fff"
+        android:layout_height="30dp"
         android:layout_width="70dp"
         android:layout_toRightOf="@id/etNO"
-        android:layout_marginRight="10dp" />
+        android:layout_marginRight="10dp"
+        android:background="@drawable/approvalbutton"
+        android:fontFamily="sans-serif-thin"
+        android:textAllCaps="false"
+        android:shadowRadius="4"
+        android:shadowColor="#ffefefef"
+        android:textSize="10sp"
+        android:padding="2dp"
+        android:textStyle="bold" />
     <TextView
         android:id="@+id/tvCategory"
         android:text="Category"

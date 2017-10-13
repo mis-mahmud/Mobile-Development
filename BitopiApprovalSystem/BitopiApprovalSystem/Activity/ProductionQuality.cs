@@ -19,33 +19,37 @@ using Android.Graphics;
 using Android.Util;
 using Android.Views.Animations;
 using Android.Text;
+using System.Threading.Tasks;
 
 namespace BitopiApprovalSystem
 {
-    [Activity(Label = "ProductionQuality",WindowSoftInputMode =SoftInput.AdjustPan)]
+    [Activity(Label = "ProductionQuality", WindowSoftInputMode = SoftInput.AdjustPan)]
     public class ProductionQuality : BaseActivity
     {
         PullToRefresharp.Android.Widget.ScrollView ptr;
         ProductionRepository repo = new ProductionRepository();
-        ListView lvProduct, lvDefect;
-        TextView tvLocation;
+        ListView lvProduct, lvDefect, lvOperation;
+        TextView tvLocation, etSample;
         TextView tvRef, tvOrderQty, tvBalanceQty, tvProducedQty, txtWIPQty;
-        EditText etQty,etLotQ,etSample,etCheck,etDefectiveUnit;
+        EditText etQty, etLotQ, etCheck, etDefectiveUnit;
         Button btnSave, btnPlus, btnMinus;
         AutoCompleteTextView atvReference;
         public ProductionAccountigListAdapter adapter;
         public List<ProdcutionAccountingDBModel> list;
+        public OperationAdapter operationAdapter;
+        public List<Operation> OperationList;
         RelativeLayout gifView;
         private IPullToRefresharpView ptr_view;
         RelativeLayout rlTop;
-        RelativeLayout rltitle, rlPRLV;
+        RelativeLayout rltitle, rlPRLV, rlPOPUPOperation;
         Button recent1, recent2, recent3, recent4, recent5;
         Button btnAll, btnRunning;
         string SelectedPRStatus = "";
-        Spinner spStatus;
+        DefectMastAdapter defectAdapter;
+        TextView spStatus;
         List<DefectMaster> defectList;
         public static string[] EntryTypeArray = { "Pass", "Fail" };
-        bool isListShown;
+        bool isListShown, isPopupShown;
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -71,9 +75,8 @@ namespace BitopiApprovalSystem
             InitializeEvent();
 
             defectList = repo.GetGetDefectList();
-            DefectMastAdapter adapter = new BitopiApprovalSystem.DefectMastAdapter(defectList, this);
-            lvDefect.Adapter = adapter;
-            adapter.NotifyDataSetChanged();
+            defectAdapter.Items = defectList;
+            defectAdapter.NotifyDataSetChanged();
             //gifView.Visibility = ViewStates.Visible;
 
             //gifView.Visibility = ViewStates.Gone;
@@ -85,7 +88,7 @@ namespace BitopiApprovalSystem
             new Thread(new ThreadStart(() =>
             {
                 list = repo.GetProductionList(bitopiApplication.User.UserCode, DBAccess.Database.RecentHistory.Result.ProcessID,
-                    DBAccess.Database.RecentHistory.Result.LocationID, PRStatus,2);
+                    DBAccess.Database.RecentHistory.Result.LocationID, PRStatus, 2);
                 RunOnUiThread(() =>
                 {
 
@@ -189,11 +192,21 @@ namespace BitopiApprovalSystem
             // ptr = FindViewById<PullToRefresharp.Android.Widget.ScrollView>(Resource.Id.ptr);
             rltitle = FindViewById<RelativeLayout>(Resource.Id.rltitle);
             rlPRLV = FindViewById<RelativeLayout>(Resource.Id.rlPRLV);
+            rlPOPUPOperation = FindViewById<RelativeLayout>(Resource.Id.rlPOPUpOperation);
             rlTop = FindViewById<RelativeLayout>(Resource.Id.rlTop);
             lvProduct = FindViewById<ListView>(Resource.Id.lvProduct);
+            lvOperation = FindViewById<ListView>(Resource.Id.lvOperation);
             lvDefect = FindViewById<ListView>(Resource.Id.lvDefect);
             adapter = new ProductionAccountigListAdapter(list, this);
             lvProduct.Adapter = (adapter);
+
+            operationAdapter = new BitopiApprovalSystem.OperationAdapter(OperationList, this);
+            lvOperation.Adapter = operationAdapter;
+
+            defectAdapter = new BitopiApprovalSystem.DefectMastAdapter(defectList, this, ShowOperationPopup);
+            lvDefect.Adapter = defectAdapter;
+
+
             gifView = FindViewById<RelativeLayout>(Resource.Id.gifview);
             tvLocation = FindViewById<TextView>(Resource.Id.tvLocation);
             tvRef = FindViewById<TextView>(Resource.Id.tvRef);
@@ -202,10 +215,10 @@ namespace BitopiApprovalSystem
             tvProducedQty = FindViewById<TextView>(Resource.Id.txtProduceQty);
             txtWIPQty = FindViewById<TextView>(Resource.Id.txtWIPQty);
             etQty = FindViewById<EditText>(Resource.Id.etQty);
-            etLotQ= FindViewById<EditText>(Resource.Id.etLot);
-            etSample= FindViewById<EditText>(Resource.Id.etSample);
-            etCheck= FindViewById<EditText>(Resource.Id.etCheck);
-            etDefectiveUnit= FindViewById<EditText>(Resource.Id.etDU);
+            etLotQ = FindViewById<EditText>(Resource.Id.etLot);
+            etSample = FindViewById<TextView>(Resource.Id.etSample);
+            etCheck = FindViewById<EditText>(Resource.Id.etCheck);
+            etDefectiveUnit = FindViewById<EditText>(Resource.Id.etDU);
             btnSave = FindViewById<Button>(Resource.Id.btnSubmit);
 
             btnPlus = FindViewById<Button>(Resource.Id.btnPlus);
@@ -221,8 +234,8 @@ namespace BitopiApprovalSystem
             recent3 = FindViewById<Button>(Resource.Id.recent3);
             recent4 = FindViewById<Button>(Resource.Id.recent4);
             recent5 = FindViewById<Button>(Resource.Id.recent5);
-            spStatus = FindViewById<Spinner>(Resource.Id.spStatus);
-            spStatus.Adapter = new ArrayAdapter<string>(this, Resource.Layout.spinner_item, EntryTypeArray);
+            spStatus = FindViewById<TextView>(Resource.Id.spStatus);
+            //spStatus.Adapter = new ArrayAdapter<string>(this, Resource.Layout.spinner_item, EntryTypeArray);
             base.InitializeControl();
         }
         public void PopulateRecentItem()
@@ -264,6 +277,7 @@ namespace BitopiApprovalSystem
         protected override void InitializeEvent()
         {
             lvProduct.ItemClick += LvProduct_ItemClick;
+            lvOperation.ItemClick += LvOperation_ItemClick;
             btnSave.Click -= BtnSave_Click;
             btnSave.Click += BtnSave_Click;
 
@@ -274,6 +288,50 @@ namespace BitopiApprovalSystem
             recent3.Click += Recent_Click;
             recent4.Click += Recent_Click;
             recent5.Click += Recent_Click;
+            etLotQ.TextChanged += (e, r) =>
+            {
+                EditText etNO = ((EditText)e);
+                if (etNO.Text != "")
+                {
+                    new Thread(new ThreadStart(() =>
+                    {
+                        string Sample = repo.GetAQL(atvReference.Text, Convert.ToInt32(etNO.Text));
+
+                        RunOnUiThread(() =>
+                        {
+                            etSample.Text = Sample;
+                        });
+                    })).Start();
+                }
+
+            };
+            etDefectiveUnit.TextChanged += (e, r) =>
+            {
+                EditText detDefect = ((EditText)e);
+                if (detDefect.Text != "")
+                {
+                    new Thread(new ThreadStart(() =>
+                {
+                    string status = repo.GetAQL(atvReference.Text, Convert.ToInt32(etLotQ.Text), Convert.ToInt32(detDefect.Text));
+
+                    RunOnUiThread(() =>
+                    {
+                        spStatus.Text = status;
+                        if (status == "Fail")
+                        {
+                            spStatus.SetBackgroundResource(Resource.Drawable.rounded_textview_error);
+                            spStatus.SetTextColor(Color.Red);
+                        }
+                        else
+                        {
+                            spStatus.SetBackgroundResource(Resource.Drawable.rounded_button_pass);
+                            spStatus.SetTextColor(Color.Green);
+                        }
+                    });
+                })).Start();
+                }
+
+            };
             //if (ptr_view == null && ptr is IPullToRefresharpView)
             //{
             //    ptr_view = (IPullToRefresharpView)ptr;
@@ -282,6 +340,8 @@ namespace BitopiApprovalSystem
             rlPRLV.Click += RlPRLV_Click;
             base.InitializeEvent();
         }
+
+
 
         private void Recent_Click(object sender, EventArgs e)
         {
@@ -294,7 +354,7 @@ namespace BitopiApprovalSystem
             new Thread(new ThreadStart(() =>
             {
                 ProdcutionAccountingDBModel model = repo.GetProductionList(bitopiApplication.User.UserCode, DBAccess.Database.RecentHistory.Result.ProcessID,
-                      DBAccess.Database.RecentHistory.Result.LocationID, SelectedPRStatus,2, Ref).First();
+                      DBAccess.Database.RecentHistory.Result.LocationID, SelectedPRStatus, 2, Ref).First();
                 RunOnUiThread(() =>
                 {
                     tvOrderQty.Text = model.OrderQty.ToString("N0");
@@ -392,19 +452,19 @@ namespace BitopiApprovalSystem
             ////gifView.Visibility = ViewStates.Visible;
 
             var progressDialog = ProgressDialog.Show(this, null, "Please Wait.", true);
-            
+
             //var qty = Convert.ToInt16(etQty.Text);
             var userCode = bitopiApplication.User.UserCode;
             ProductionQualityDBModel model = new ProductionQualityDBModel();
             model.LocationRef = DBAccess.Database.RecentHistory.Result.LocationID;
-            model.RefNo= atvReference.Text;
+            model.RefNo = atvReference.Text;
             model.LotQ = Convert.ToInt16(etLotQ.Text);
             model.Sample = Convert.ToInt16(etSample.Text);
             model.Check = etSample.Text;
             model.DefectiveUnit = Convert.ToInt16(etDefectiveUnit.Text);
-            model.QualityStatus = spStatus.SelectedItem.ToString();
+            model.QualityStatus = spStatus.Text.ToString();
             model.DefectList = defectList;
-            model.AddedBy= bitopiApplication.User.UserCode;
+            model.AddedBy = bitopiApplication.User.UserCode;
             //new Thread(new ThreadStart(() =>
             //{
 
@@ -434,9 +494,32 @@ namespace BitopiApprovalSystem
             });
             //})).Start();
         }
+        string selectedDefectCode = "";
+        public void ShowOperationPopup(string DefectCode)
+        {
+            isPopupShown = true;
+            selectedDefectCode = DefectCode;
+            rlPOPUPOperation.Visibility = ViewStates.Visible;
+            var progressDialog = ProgressDialog.Show(this, null, "Please Wait.", true);
+            new Thread(new ThreadStart(() =>
+            {
+                OperationList = repo.GetOperationList(atvReference.Text);
+                RunOnUiThread(() =>
+                {
+                    operationAdapter.Items = OperationList;
+                    operationAdapter.NotifyDataSetChanged();
+                    progressDialog.Dismiss();
+                });
+            })).Start();
+        }
         public override void OnBackPressed()
         {
-            if (isListShown)
+            if (isPopupShown)
+            {
+                rlPOPUPOperation.Visibility = ViewStates.Gone;
+                isPopupShown = false;
+            }
+            else if (isListShown)
             {
                 Animation bottomUp = Android.Views.Animations.AnimationUtils.LoadAnimation(this,
                 Resource.Animation.bottom_down);
@@ -455,7 +538,7 @@ namespace BitopiApprovalSystem
             new Thread(new ThreadStart(() =>
             {
                 var prodList = repo.GetProductionList(bitopiApplication.User.UserCode, DBAccess.Database.RecentHistory.Result.ProcessID,
-                     DBAccess.Database.RecentHistory.Result.LocationID, "", 2,Ref);
+                     DBAccess.Database.RecentHistory.Result.LocationID, "", 2, Ref);
                 RunOnUiThread(() =>
                 {
                     var m = prodList.First();
@@ -483,6 +566,15 @@ namespace BitopiApprovalSystem
             isListShown = false;
 
         }
+        private void LvOperation_ItemClick(object sender, AdapterView.ItemClickEventArgs e)
+        {
+            string operationCode = OperationList[e.Position].OperationCode;
+            defectList.Where(t => t.DefectCode == selectedDefectCode).First().OperationCode = operationCode;
+            defectAdapter.Items = defectList;
+            defectAdapter.NotifyDataSetChanged();
+            rlPOPUPOperation.Visibility = ViewStates.Gone;
+            isPopupShown = false;
+        }
     }
 
     public class DefectMastAdapter : BaseAdapter
@@ -490,10 +582,12 @@ namespace BitopiApprovalSystem
         List<DefectMaster> _list;
         Context _context;
         Filter filter;
-        public DefectMastAdapter(List<DefectMaster> list, Context context)
+        Action<string> _CallBack;
+        public DefectMastAdapter(List<DefectMaster> list, Context context, Action<string> CallBack)
         {
             _list = list;
             _context = context;
+            _CallBack = CallBack;
 
         }
         public List<DefectMaster> Items
@@ -505,18 +599,21 @@ namespace BitopiApprovalSystem
         {
             View view = convertView;
             var model = Items[position];
-            if (view == null)
-            {
-                view = LayoutInflater.From(_context).Inflate(Resource.Layout.DefectItem, parent, false);
-            }
+            // if (view == null)
+            //{
+            view = LayoutInflater.From(_context).Inflate(Resource.Layout.DefectItem, parent, false);
+            // }
             view.FindViewById<TextView>(Resource.Id.tvDC).Text = model.DefectCode;
             view.FindViewById<TextView>(Resource.Id.tvDZ).Text = model.DefectName;
-            view.FindViewById<TextView>(Resource.Id.tvOC).Text = model.OperationCode;
+            //view.FindViewById<TextView>(Resource.Id.tvOC).Text = model.OperationCode;
             view.FindViewById<TextView>(Resource.Id.tvCategory).Text = model.Category;
-            view.FindViewById<TextView>(Resource.Id.etNO).Text = model.No>0?model.No.ToString():"";
+            view.FindViewById<TextView>(Resource.Id.etNO).Text = model.No > 0 ? model.No.ToString() : "";
             view.FindViewById<TextView>(Resource.Id.etNO).TextChanged -= DefectMastAdapter_TextChanged;
             view.FindViewById<TextView>(Resource.Id.etNO).TextChanged += DefectMastAdapter_TextChanged;
             view.FindViewById<TextView>(Resource.Id.etNO).Tag = model.DefectCode;
+            view.FindViewById<Button>(Resource.Id.tvOC).Text = model.OperationCode;
+            view.FindViewById<Button>(Resource.Id.tvOC).Click += tvOC_Click;
+            view.FindViewById<Button>(Resource.Id.tvOC).Tag = model.DefectCode;
             if (position % 2 == 0)
                 view.SetBackgroundColor(Color.ParseColor("#aaaaaa"));
             else
@@ -524,14 +621,73 @@ namespace BitopiApprovalSystem
             return view;
         }
 
+        private void tvOC_Click(object sender, EventArgs e)
+        {
+            string tag = ((Button)(sender)).Tag.ToString();
+            _CallBack(tag);
+        }
+
         private void DefectMastAdapter_TextChanged(object sender, TextChangedEventArgs e)
         {
             EditText etNO = ((EditText)sender);
-            var DefectCode= etNO.Tag.ToString();
-            var item= _list.Where(t => t.DefectCode == DefectCode).FirstOrDefault() ;
+            var DefectCode = etNO.Tag.ToString();
+            var item = _list.Where(t => t.DefectCode == DefectCode).FirstOrDefault();
             if (etNO.Text != "")
                 item.No = Convert.ToInt32(etNO.Text);
 
+        }
+
+        public override long GetItemId(int position)
+        {
+            return 1;
+        }
+        public override Java.Lang.Object GetItem(int position)
+        {
+            throw new NotImplementedException();
+        }
+        public override int Count
+        {
+            get
+            {
+                if (Items == null)
+                    return 0;
+                return Items.Count;
+            }
+        }
+
+    }
+    public class OperationAdapter : BaseAdapter
+    {
+        List<Operation> _list;
+        Context _context;
+        Filter filter;
+        public OperationAdapter(List<Operation> list, Context context)
+        {
+            _list = list;
+            _context = context;
+
+        }
+        public List<Operation> Items
+        {
+            set { _list = value; }
+            get { return _list; }
+        }
+        public override View GetView(int position, View convertView, ViewGroup parent)
+        {
+            View view = convertView;
+            var model = Items[position];
+            if (view == null)
+            {
+                view = LayoutInflater.From(_context).Inflate(Resource.Layout.OperationItem, parent, false);
+            }
+            TextView tvOperationCode = view.FindViewById<TextView>(Resource.Id.lblOperationCode);
+            if (tvOperationCode != null)
+                tvOperationCode.Text = model.OperationCode;
+            TextView lblOperationName = view.FindViewById<TextView>(Resource.Id.lblOperationName);
+            if (lblOperationName != null)
+                lblOperationName.Text = model.OperationName; ;
+
+            return view;
         }
 
         public override long GetItemId(int position)

@@ -258,6 +258,8 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NotificationController.cs" />
     <Compile Include="Controllers\ProdcutionAccountingController.cs" />
+    <Compile Include="Controllers\QualityController.cs" />
+    <Compile Include="Controllers\RejectionController.cs" />
     <Compile Include="Controllers\TNAController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Encryption.cs" />
@@ -314,6 +316,7 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="Properties\PublishProfiles\BitopiApprovalWebApi.pubxml" />
+    <None Include="Properties\PublishProfiles\publish web api.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-3.1.1-vsdoc.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
@@ -383,7 +386,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>19528</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://192.168.14.236/BitopiApprovalSystemWebApi</IISUrl>
+          <IISUrl>http://192.168.13.103:8090/BitopiApprovalSystemWebApi</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

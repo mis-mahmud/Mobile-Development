@@ -53,4 +53,10 @@ namespace BitopiApprovalSystem.Model
         public string OperationCode { get; set; }
         public int No { get; set; }
     }
+    public class Operation
+    {
+        public string OperationCode { get; set; }
+        public string OperationName { get; set; }
+
+    }
 }

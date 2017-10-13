@@ -26,10 +26,10 @@ namespace BitopiApprovalSystem
         CircleImageView ivUser;
         // Button btnAll, btnRunning;
         Button btnNext;
-        Spinner spProcess, spLocation, spPr,spEntryType;
+        Spinner spProcess, spLocation, spPr, spEntryType;
         Switch swLoadLastLocation;
         bool LastLocation;
-        
+
         DDL[] ProcessName;
         DDL[] LocationName;
         string SelectedProcess;
@@ -38,7 +38,7 @@ namespace BitopiApprovalSystem
         RelativeLayout RLleft_drawer;
         private DrawerLayout mDrawerLayout;
         string RecentProces, RecentLocation, RecentEntryType;
-        public static string[] EntryTypeArray = { "Production","Quality","Rejection" };
+        public static string[] EntryTypeArray = { "Production", "Quality", "Rejection" };
         RecentHistory recentHistory;
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -57,7 +57,7 @@ namespace BitopiApprovalSystem
         {
             base.OnStart();
             recentHistory = DBAccess.Database.RecentHistory.Result;
-            if(recentHistory!=null)
+            if (recentHistory != null)
             {
                 RecentProces = recentHistory.Process;
                 RecentLocation = recentHistory.Location;
@@ -74,7 +74,7 @@ namespace BitopiApprovalSystem
             ivUser.SetImageBitmap(bitmap);
             LoadCombo();
         }
-        protected override  void InitializeControl()
+        protected override void InitializeControl()
         {
             RLleft_drawer = FindViewById<RelativeLayout>(Resource.Id.RLleft_drawer);
             mDrawerLayout = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
@@ -122,7 +122,7 @@ namespace BitopiApprovalSystem
 
         private void SpLocation_ItemSelected(object sender, AdapterView.ItemSelectedEventArgs e)
         {
-            SelectedLocation = ProcessName[e.Position].LocationName;
+            SelectedLocation = spLocation.SelectedItem.ToString();
 
         }
 
@@ -134,7 +134,7 @@ namespace BitopiApprovalSystem
             //    return;
             //}
 
-            SelectedProcess = ProcessName[e.Position].ProcessName;
+            SelectedProcess = spProcess.SelectedItem.ToString();
             string[] locationArray = LocationName
                 .Where(t => t.ProcessName == SelectedProcess).Select(t => t.LocationName).Distinct().ToArray();
             spLocation.Adapter = new ArrayAdapter<string>(this, Resource.Layout.spinner_item, locationArray);
@@ -158,7 +158,7 @@ namespace BitopiApprovalSystem
                     i = new Intent(this, typeof(ProductionRejection));
                     break;
             }
-            
+
             recentHistory.Process = SelectedProcess;
             recentHistory.Location = SelectedLocation;
             recentHistory.EntryType = SelectedEntryType;
@@ -175,16 +175,24 @@ namespace BitopiApprovalSystem
 
 
             ProcessName = bitopiApplication.DDLList.ToArray();
-              
+
             spProcess.Adapter = new ArrayAdapter<string>(this, Resource.Layout.spinner_item, ProcessName.Select(t => t.ProcessName).Distinct().ToArray());
 
-            
-            spEntryType.Adapter = new ArrayAdapter<string>(this, Resource.Layout.spinner_item, EntryTypeArray); 
+
+            spEntryType.Adapter = new ArrayAdapter<string>(this, Resource.Layout.spinner_item, EntryTypeArray);
             spLocation.Adapter = new ArrayAdapter<string>(this, Resource.Layout.spinner_item, LocationName.Select(t => t.LocationName).Distinct().ToArray());
-            spProcess.SetSelection(Array.IndexOf(ProcessName.Select(t => t.ProcessName).Distinct().ToArray(), RecentProces));
-            
+            if (RecentProces != "")
+                spProcess.SetSelection(Array.IndexOf(ProcessName.Select(t => t.ProcessName).Distinct().ToArray(), RecentProces));
+            else
+            {
+                SelectedProcess = spProcess.SelectedItem.ToString();
+                string[] locationArray = LocationName
+               .Where(t => t.ProcessName == SelectedProcess).Select(t => t.LocationName).Distinct().ToArray();
+                spLocation.Adapter = new ArrayAdapter<string>(this, Resource.Layout.spinner_item, locationArray);
+            }
+
             spEntryType.SetSelection(Array.IndexOf(EntryTypeArray, RecentEntryType));
-            
+
         }
     }
 }

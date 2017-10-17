@@ -20,6 +20,8 @@ using Android.Util;
 using Android.Views.Animations;
 using Android.Text;
 using System.Threading.Tasks;
+using Android.Views.InputMethods;
+using Android.Graphics.Drawables;
 
 namespace BitopiApprovalSystem
 {
@@ -240,7 +242,11 @@ namespace BitopiApprovalSystem
         }
         public void PopulateRecentItem()
         {
-            List<RecentPR> prs = DBAccess.Database.RecentPRs.Result.Where(t => t.EntryType == (int)EntryType.Quality).ToList();
+            GradientDrawable shape = new GradientDrawable();
+            shape.SetCornerRadius(6);
+            List<RecentPR> prs = DBAccess.Database.RecentPRs.Result.Where(t => t.EntryType == (int)EntryType.Quality &&
+            t.LocationRef == DBAccess.Database.RecentHistory.Result.Location
+            ).ToList();
             if (prs.Count == 0)
             {
                 return;
@@ -250,27 +256,37 @@ namespace BitopiApprovalSystem
                 if (i == prs.Count - 1)
                 {
                     recent1.Text = prs[i].RefID;
-                    recent1.SetBackgroundColor(Color.ParseColor("#ff5722"));
+                    shape.SetColor(Color.ParseColor("#ff5722"));
+                    recent1.Background = (shape);
+
                 }
                 if (i == prs.Count - 2)
                 {
                     recent2.Text = prs[i].RefID;
-                    recent2.SetBackgroundColor(Color.ParseColor("#ff7043"));
+                    //recent2.SetBackgroundColor(Color.ParseColor("#ff7043"));
+                    shape.SetColor(Color.ParseColor("#ff7043"));
+                    recent2.Background = (shape);
                 }
                 if (i == prs.Count - 3)
                 {
                     recent3.Text = prs[i].RefID;
-                    recent3.SetBackgroundColor(Color.ParseColor("#ff8a65"));
+                    //recent3.SetBackgroundColor(Color.ParseColor("#ff8a65"));
+                    shape.SetColor(Color.ParseColor("#ff8a65"));
+                    recent3.Background = (shape);
                 }
                 if (i == prs.Count - 4)
                 {
                     recent4.Text = prs[i].RefID;
-                    recent4.SetBackgroundColor(Color.ParseColor("#ffab91"));
+                    // recent4.SetBackgroundColor(Color.ParseColor("#ffab91"));
+                    shape.SetColor(Color.ParseColor("#ffab91"));
+                    recent4.Background = (shape);
                 }
                 if (i == prs.Count - 5)
                 {
                     recent5.Text = prs[i].RefID;
-                    recent5.SetBackgroundColor(Color.ParseColor("#ffccbc"));
+                    //recent5.SetBackgroundColor(Color.ParseColor("#ffccbc"));
+                    shape.SetColor(Color.ParseColor("#ffccbc"));
+                    recent5.Background = (shape);
                 }
             }
         }
@@ -350,11 +366,13 @@ namespace BitopiApprovalSystem
         }
         void LoadSelectedRef(string Ref)
         {
-            var progressDialog = ProgressDialog.Show(this, null, "Please Wait.", true);
+            //var progressDialog = ProgressDialog.Show(this, null, "Please Wait.", true);
             new Thread(new ThreadStart(() =>
             {
-                ProdcutionAccountingDBModel model = repo.GetProductionList(bitopiApplication.User.UserCode, DBAccess.Database.RecentHistory.Result.ProcessID,
-                      DBAccess.Database.RecentHistory.Result.LocationID, SelectedPRStatus, 2, Ref).First();
+                var list = repo.GetProductionList(bitopiApplication.User.UserCode, DBAccess.Database.RecentHistory.Result.ProcessID,
+                      DBAccess.Database.RecentHistory.Result.LocationID, SelectedPRStatus, 2, Ref);
+                if (list.Count == 0) return;
+                ProdcutionAccountingDBModel model = list.First();
                 RunOnUiThread(() =>
                 {
                     tvOrderQty.Text = model.OrderQty.ToString("N0");
@@ -363,7 +381,7 @@ namespace BitopiApprovalSystem
                     txtWIPQty.Text = model.WIP.ToString("N0");
 
                     atvReference.Text = tvRef.Text = Ref;
-                    progressDialog.Dismiss();
+                    //progressDialog.Dismiss();
                 });
             })).Start();
         }
@@ -497,10 +515,12 @@ namespace BitopiApprovalSystem
         string selectedDefectCode = "";
         public void ShowOperationPopup(string DefectCode)
         {
+            InputMethodManager inputManager = (InputMethodManager)this.GetSystemService(Context.InputMethodService);
+            inputManager.HideSoftInputFromWindow(this.CurrentFocus.WindowToken, HideSoftInputFlags.NotAlways);
             isPopupShown = true;
             selectedDefectCode = DefectCode;
             rlPOPUPOperation.Visibility = ViewStates.Visible;
-            var progressDialog = ProgressDialog.Show(this, null, "Please Wait.", true);
+            //var progressDialog = ProgressDialog.Show(this, null, "Please Wait.", true);
             new Thread(new ThreadStart(() =>
             {
                 OperationList = repo.GetOperationList(atvReference.Text);
@@ -508,7 +528,7 @@ namespace BitopiApprovalSystem
                 {
                     operationAdapter.Items = OperationList;
                     operationAdapter.NotifyDataSetChanged();
-                    progressDialog.Dismiss();
+                    //progressDialog.Dismiss();
                 });
             })).Start();
         }
@@ -562,18 +582,27 @@ namespace BitopiApprovalSystem
             tvOrderQty.Text = model.OrderQty.ToString("N0");
             tvBalanceQty.Text = model.BalanceQty.ToString("N0");
             tvProducedQty.Text = model.ProducedQty.ToString("N0");
+
             //tvLocation.Text = model.LocationName;
             isListShown = false;
 
         }
         private void LvOperation_ItemClick(object sender, AdapterView.ItemClickEventArgs e)
         {
-            string operationCode = OperationList[e.Position].OperationCode;
-            defectList.Where(t => t.DefectCode == selectedDefectCode).First().OperationCode = operationCode;
-            defectAdapter.Items = defectList;
-            defectAdapter.NotifyDataSetChanged();
-            rlPOPUPOperation.Visibility = ViewStates.Gone;
-            isPopupShown = false;
+            try
+            {
+                string operationCode = OperationList[e.Position].OperationCode;
+                defectList.Where(t => t.DefectCode == selectedDefectCode).First().OperationCode = operationCode;
+                defectAdapter.Items = defectList;
+                defectAdapter.NotifyDataSetChanged();
+                rlPOPUPOperation.Visibility = ViewStates.Gone;
+                isPopupShown = false;
+            }
+            catch(Exception ex)
+            {
+                string s = ex.Message;
+            }
+
         }
     }
 

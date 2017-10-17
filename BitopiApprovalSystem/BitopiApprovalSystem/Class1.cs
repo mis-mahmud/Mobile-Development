@@ -133,9 +133,18 @@ namespace BitopiApprovalSystem
     }
     public class CustomRunnable : Java.Lang.Object, Java.Lang.IRunnable
     {
+        Action _action;
+        Handler _mHandler;
+        public CustomRunnable(Action action, Handler mHandler=null)
+        {
+            _action = action;
+            _mHandler = mHandler;
+        }
+
         public void Run()
         {
-
+            _action();
+            _mHandler.PostDelayed(this, 50);
         }
     }
     public class CustomOnPreDrawListener : Java.Lang.Object, IOnPreDrawListener

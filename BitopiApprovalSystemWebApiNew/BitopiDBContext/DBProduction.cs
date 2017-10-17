@@ -42,6 +42,8 @@ namespace BitopiDBContext
                         _DBModel.Style = dr["Style"].ToString();
                         _DBModel.PR = dr["PR"].ToString();
                         _DBModel.EO = dr["EO"].ToString();
+                        _DBModel.Buyer = dr["Buyer"].ToString();
+                        _DBModel.DeliveryDate = dr["DeliveryDate"].ToString();
                         _DBModel.Color = dr["Color"].ToString();
                         _DBModel.BalanceQty = Convert.ToInt32(dr["BalanceQty"]);
                         _DBModel.OrderQty = Convert.ToInt32(dr["OrderQty"]);

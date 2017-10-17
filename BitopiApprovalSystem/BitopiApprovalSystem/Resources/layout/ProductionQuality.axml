@@ -113,7 +113,7 @@
             android:id="@+id/rlTop"
             android:layout_below="@id/rlRecent">
             <RelativeLayout
-                android:layout_height="85dp"
+                android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:id="@+id/rlLocation"
                 android:background="@drawable/rounded_textview_bgcolor"
@@ -132,8 +132,8 @@
                     android:textStyle="bold"
                     android:textSize="13sp" />
                 <AutoCompleteTextView
-                    android:layout_height="60dp"
-                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
                     android:id="@+id/atvReference"
                     android:layout_below="@+id/lblLocation"
                     android:textColor="#fff"
@@ -141,17 +141,18 @@
                     android:layout_marginTop="5dp"
                     android:nextFocusUp="@id/atvReference"
                     android:nextFocusLeft="@id/atvReference"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    android:hint="Please Select Reference " />
             </RelativeLayout>
             <RelativeLayout
-                android:layout_width="120dp"
+                android:layout_width="100dp"
                 android:id="@+id/rlGrade"
                 android:background="@drawable/rounded_textview_bgcolor"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="2dp"
-                android:padding="5dp"
                 android:layout_toRightOf="@id/rlLocation"
-                android:layout_height="85dp">
+                android:layout_height="60dp"
+                android:padding="5dp">
                 <TextView
                     android:text="Lot Q"
                     android:layout_height="wrap_content"
@@ -163,20 +164,22 @@
                     android:textSize="13sp" />
                 <EditText
                     android:layout_height="wrap_content"
-                    android:layout_width="match_parent"
+                    android:layout_width="150dp"
                     android:id="@+id/etLot"
                     android:inputType="numberSigned"
                     android:layout_marginRight="5dp"
                     android:textColor="#222222"
                     android:gravity="center"
                     android:layout_marginTop="5dp"
-                    android:padding="5dp"
                     android:background="@drawable/rounded_textview"
                     android:layout_alignParentBottom="true"
-                    android:layout_below="@+id/lblLot" />
+                    android:layout_below="@+id/lblLot"
+                    android:textSize="12sp"
+                    android:tag="0"
+                    android:padding="2dp" />
             </RelativeLayout>
             <RelativeLayout
-                android:layout_height="85dp"
+                android:layout_height="60dp"
                 android:layout_width="match_parent"
                 android:id="@+id/rlSKUCode"
                 android:background="@drawable/rounded_textview_bgcolor"
@@ -204,9 +207,10 @@
                     android:textColor="#222222"
                     android:gravity="center"
                     android:layout_marginTop="5dp"
-                    android:padding="5dp"
                     android:background="@drawable/rounded_textview"
-                    android:layout_alignParentBottom="true" />
+                    android:layout_alignParentBottom="true"
+                    android:textSize="12sp"
+                    android:padding="2dp" />
             </RelativeLayout>
         </RelativeLayout>
         <RelativeLayout
@@ -242,7 +246,8 @@
                     android:layout_marginTop="5dp"
                     android:background="@drawable/rounded_textview"
                     android:inputType="numberSigned"
-                    android:enabled="true" />
+                    android:enabled="true"
+                    android:textSize="11sp" />
             </RelativeLayout>
             <RelativeLayout
                 android:layout_height="wrap_content"
@@ -274,7 +279,8 @@
                     android:layout_marginTop="5dp"
                     android:padding="5dp"
                     android:background="@drawable/rounded_textview"
-                    android:enabled="true" />
+                    android:enabled="true"
+                    android:textSize="11sp" />
             </RelativeLayout>
             <RelativeLayout
                 android:layout_height="wrap_content"
@@ -306,8 +312,9 @@
                     android:textColor="#222222"
                     android:gravity="center"
                     android:layout_marginTop="5dp"
-                    android:padding="8dp"
-                    android:background="@drawable/rounded_textview" />
+                    android:padding="5dp"
+                    android:background="@drawable/rounded_textview"
+                    android:textSize="11sp" />
             </RelativeLayout>
         </RelativeLayout>
         <RelativeLayout
@@ -479,7 +486,7 @@
             android:layout_marginRight="10dp">
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="40dp"
                 android:id="@+id/rlDefectHeading"
                 android:paddingTop="10dp"
                 android:paddingLeft="20dp"
@@ -499,7 +506,9 @@
                     android:textColor="#fff"
                     android:layout_height="wrap_content"
                     android:layout_width="100dp"
-                    android:layout_marginRight="10dp" />
+                    android:layout_marginRight="10dp"
+                    android:fontFamily="sans-serif-thin"
+                    android:textStyle="bold" />
                 <TextView
                     android:id="@+id/lblNO"
                     android:text="# Unit"
@@ -507,22 +516,28 @@
                     android:layout_height="wrap_content"
                     android:layout_width="50dp"
                     android:layout_toRightOf="@id/lblDZ"
-                    android:layout_marginRight="10dp" />
+                    android:layout_marginRight="10dp"
+                    android:fontFamily="sans-serif-thin"
+                    android:textStyle="bold" />
                 <TextView
                     android:id="@+id/lblOC"
-                    android:text="Operation Code"
+                    android:text="Operation"
                     android:textColor="#fff"
                     android:layout_height="wrap_content"
                     android:layout_width="70dp"
                     android:layout_toRightOf="@id/lblNO"
-                    android:layout_marginRight="10dp" />
+                    android:layout_marginRight="10dp"
+                    android:fontFamily="sans-serif-thin"
+                    android:textStyle="bold" />
                 <TextView
                     android:id="@+id/lblCategory"
                     android:text="Category"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
                     android:textColor="#fff"
-                    android:layout_toRightOf="@id/lblOC" />
+                    android:layout_toRightOf="@id/lblOC"
+                    android:fontFamily="sans-serif-thin"
+                    android:textStyle="bold" />
             </RelativeLayout>
             <ListView xmlns:tools="http://schemas.android.com/tools"
                 android:layout_height="match_parent"

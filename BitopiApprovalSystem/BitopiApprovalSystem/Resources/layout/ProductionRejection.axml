@@ -124,7 +124,7 @@
             android:id="@+id/rlTop"
             android:layout_below="@id/rlRecent">
             <RelativeLayout
-                android:layout_height="85dp"
+                android:layout_height="60dp"
                 android:layout_width="wrap_content"
                 android:id="@+id/rlLocation"
                 android:background="@drawable/rounded_textview_bgcolor"
@@ -144,20 +144,21 @@
                     android:focusableInTouchMode="true" />
                 <AutoCompleteTextView
                     android:layout_height="60dp"
-                    android:layout_width="100dp"
+                    android:layout_width="wrap_content"
                     android:id="@+id/atvReference"
                     android:layout_below="@+id/lblLocation"
-                    android:textColor="#111"
+                    android:textColor="#fff"
                     android:padding="5dp"
                     android:textSize="12sp"
                     android:paddingBottom="0dp"
                     android:nextFocusUp="@id/atvReference"
-                    android:nextFocusLeft="@id/atvReference" />
+                    android:nextFocusLeft="@id/atvReference"
+                    android:hint="Please Select Reference " />
             <!--android:background="@drawable/gradient_spinner"-->
             </RelativeLayout>
             <RelativeLayout
-                android:layout_height="85dp"
-                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_width="wrap_content"
                 android:id="@+id/rlGrade"
                 android:background="@drawable/rounded_textview_bgcolor"
                 android:layout_marginLeft="5dp"
@@ -176,11 +177,10 @@
                     android:textStyle="bold"
                     android:textSize="13sp" />
                 <EditText
-                    android:layout_height="wrap_content"
+                    android:layout_height="60dp"
                     android:layout_width="match_parent"
                     android:id="@+id/etGrade"
                     android:layout_below="@id/lblGrade"
-                    android:inputType="number"
                     android:layout_marginRight="5dp"
                     android:background="@drawable/rounded_textview"
                     android:textColor="#222222"

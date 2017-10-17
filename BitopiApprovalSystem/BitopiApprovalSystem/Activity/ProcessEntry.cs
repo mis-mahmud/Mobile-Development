@@ -21,6 +21,8 @@ using BitopiApprovalSystem.DAL;
 using Android.Graphics;
 using System.Threading.Tasks;
 using Android.Views.Animations;
+using BitopiApprovalSystem.CustomControl;
+using System.Globalization;
 
 namespace BitopiApprovalSystem
 {
@@ -33,7 +35,8 @@ namespace BitopiApprovalSystem
         TextView tvLocation;
         TextView tvRef, tvOrderQty, tvBalanceQty, tvProducedQty, txtWIPQty;
         EditText etQty;
-        Button btnSave, btnPlus, btnMinus;
+        Button btnPlus, btnMinus;
+        Button btnSave;
         AutoCompleteTextView atvReference;
         public ProductionAccountigListAdapter adapter;
         public List<ProdcutionAccountingDBModel> list;
@@ -228,7 +231,11 @@ namespace BitopiApprovalSystem
         }
         public void PopulateRecentItem()
         {
-            List<RecentPR> prs = DBAccess.Database.RecentPRs.Result.Where(t => t.EntryType == (int)EntryType.Production).ToList();
+            GradientDrawable shape = new GradientDrawable();
+            shape.SetCornerRadius(6);
+            List<RecentPR> prs = DBAccess.Database.RecentPRs.Result.Where(t => t.EntryType == (int)EntryType.Production &&
+            t.LocationRef==DBAccess.Database.RecentHistory.Result.Location
+            ).ToList();
             if (prs.Count == 0)
             {
                 return;
@@ -238,27 +245,37 @@ namespace BitopiApprovalSystem
                 if (i == prs.Count - 1)
                 {
                     recent1.Text = prs[i].RefID;
-                    recent1.SetBackgroundColor(Color.ParseColor("#ff5722"));
+                    shape.SetColor(Color.ParseColor("#ff5722"));
+                    recent1.Background=(shape);
+                    
                 }
                 if (i == prs.Count - 2)
                 {
                     recent2.Text = prs[i].RefID;
-                    recent2.SetBackgroundColor(Color.ParseColor("#ff7043"));
+                    //recent2.SetBackgroundColor(Color.ParseColor("#ff7043"));
+                    shape.SetColor(Color.ParseColor("#ff7043"));
+                    recent2.Background = (shape);
                 }
                 if (i == prs.Count - 3)
                 {
                     recent3.Text = prs[i].RefID;
-                    recent3.SetBackgroundColor(Color.ParseColor("#ff8a65"));
+                    //recent3.SetBackgroundColor(Color.ParseColor("#ff8a65"));
+                    shape.SetColor(Color.ParseColor("#ff8a65"));
+                    recent3.Background = (shape);
                 }
                 if (i == prs.Count - 4)
                 {
                     recent4.Text = prs[i].RefID;
-                    recent4.SetBackgroundColor(Color.ParseColor("#ffab91"));
+                   // recent4.SetBackgroundColor(Color.ParseColor("#ffab91"));
+                    shape.SetColor(Color.ParseColor("#ffab91"));
+                    recent4.Background = (shape);
                 }
                 if (i == prs.Count - 5)
                 {
                     recent5.Text = prs[i].RefID;
-                    recent5.SetBackgroundColor(Color.ParseColor("#ffccbc"));
+                    //recent5.SetBackgroundColor(Color.ParseColor("#ffccbc"));
+                    shape.SetColor(Color.ParseColor("#ffccbc"));
+                    recent5.Background = (shape);
                 }
             }
         }
@@ -266,8 +283,23 @@ namespace BitopiApprovalSystem
         {
             lvProduct.ItemClick += LvProduct_ItemClick;
             btnSave.Click += BtnSave_Click;
-            btnPlus.Click += BtnPlus_Click;
-            btnMinus.Click += BtnMinus_Click;
+
+            //btnPlus.Click += BtnPlus_Click;
+            btnPlus.SetOnTouchListener(new LongPressClickListener(() =>
+            {
+                int qty = Convert.ToInt16(etQty.Text == "" ? "0" : etQty.Text);
+                qty += 10;
+                etQty.Text = qty.ToString();
+            }));
+            btnMinus.SetOnTouchListener(new LongPressClickListener(() =>
+            {
+                int qty = Convert.ToInt16(etQty.Text == "" ? "0" : etQty.Text);
+                qty -= 10;
+                if (qty >= 0)
+                    etQty.Text = qty.ToString();
+            }));
+
+            //btnMinus.Click += BtnMinus_Click;
             btnAll.Click += LoadPR_Click;
             btnRunning.Click += LoadPR_Click;
             recent1.Click += Recent_Click;
@@ -300,20 +332,22 @@ namespace BitopiApprovalSystem
         }
         void LoadSelectedRef(string Ref)
         {
-            var progressDialog = ProgressDialog.Show(this, null, "Please Wait.", true);
+            // var progressDialog = ProgressDialog.Show(this, null, "Please Wait.", true);
             new Thread(new ThreadStart(() =>
             {
-                ProdcutionAccountingDBModel model = repo.GetProductionList(bitopiApplication.User.UserCode, DBAccess.Database.RecentHistory.Result.ProcessID,
-                      DBAccess.Database.RecentHistory.Result.LocationID, SelectedPRStatus, 1, Ref).First();
+                var list = repo.GetProductionList(bitopiApplication.User.UserCode, DBAccess.Database.RecentHistory.Result.ProcessID,
+                       DBAccess.Database.RecentHistory.Result.LocationID, SelectedPRStatus, 1, Ref);
+                if (list.Count == 0) return;
+                ProdcutionAccountingDBModel model = list.First();
                 RunOnUiThread(() =>
                 {
                     tvOrderQty.Text = model.OrderQty.ToString("N0");
                     tvBalanceQty.Text = model.BalanceQty.ToString("N0");
                     tvProducedQty.Text = model.ProducedQty.ToString("N0");
-                    txtWIPQty.Text = model.WIP.ToString("N0");
+                    txtWIPQty.Text = model.WIP== -99999?"N/A":model.WIP.ToString("N0");
 
                     atvReference.Text = tvRef.Text = Ref;
-                    progressDialog.Dismiss();
+                    //progressDialog.Dismiss();
                 });
             })).Start();
         }
@@ -330,15 +364,7 @@ namespace BitopiApprovalSystem
             });
         }
 
-        //private void Ptr_view_RefreshActivated(object sender, EventArgs e)
-        //{
-        //    LoadList();
-        //    if (ptr_view != null)
-        //    {
-        //        ptr_view.OnRefreshCompleted();
-        //    }
-        //}
-
+     
         private void BtnMinus_Click(object sender, EventArgs e)
         {
             int qty = Convert.ToInt16(etQty.Text == "" ? "0" : etQty.Text);
@@ -350,20 +376,34 @@ namespace BitopiApprovalSystem
         private void BtnPlus_Click(object sender, EventArgs e)
         {
 
-            int qty = Convert.ToInt16(etQty.Text==""?"0": etQty.Text);
+            int qty = Convert.ToInt16(etQty.Text == "" ? "0" : etQty.Text);
             qty += 10;
             etQty.Text = qty.ToString();
         }
 
         private void BtnSave_Click(object sender, EventArgs e)
         {
+            var qty =  int.Parse(etQty.Text, NumberStyles.AllowThousands);
 
             if (atvReference.Text == "")
             {
                 Toast.MakeText(this, "Please Select an item first", ToastLength.Long).Show();
                 return;
             }
-
+            if (txtWIPQty.Text != "N/A")
+            {
+                var wip = int.Parse(txtWIPQty.Text, NumberStyles.AllowThousands);
+                if (qty > wip)
+                {
+                    Toast.MakeText(this, "Production Can not be greater than W.I.P", ToastLength.Long).Show();
+                    return;
+                }
+                if (wip == 0)
+                {
+                    Toast.MakeText(this, "Work in Progress is Zero", ToastLength.Long).Show();
+                    return;
+                }
+            }
             List<RecentPR> prs = DBAccess.Database.RecentPRs.Result.Where(t => t.EntryType == (int)EntryType.Production).ToList();
             if (prs.Where(t => t.RefID == atvReference.Text).Count() == 0)
             {
@@ -389,7 +429,7 @@ namespace BitopiApprovalSystem
 
             var progressDialog = ProgressDialog.Show(this, null, "Please Wait.", true);
             var refid = atvReference.Text;
-            var qty = Convert.ToInt16(etQty.Text);
+
             var userCode = bitopiApplication.User.UserCode;
             //new Thread(new ThreadStart(() =>
             //{
@@ -431,7 +471,8 @@ namespace BitopiApprovalSystem
                     tvOrderQty.Text = m.OrderQty.ToString("N0");
                     tvBalanceQty.Text = m.BalanceQty.ToString("N0");
                     tvProducedQty.Text = m.ProducedQty.ToString("N0");
-                    txtWIPQty.Text = m.WIP.ToString("N0");
+                    
+                    txtWIPQty.Text = m.WIP == -99999 ? "N/A" : m.WIP.ToString("N0");
                 });
             })).Start();
 
@@ -448,6 +489,7 @@ namespace BitopiApprovalSystem
             tvOrderQty.Text = model.OrderQty.ToString("N0");
             tvBalanceQty.Text = model.BalanceQty.ToString("N0");
             tvProducedQty.Text = model.ProducedQty.ToString("N0");
+            txtWIPQty.Text = model.WIP == -99999 ? "N/A" : model.WIP.ToString("N0");
             //tvLocation.Text = model.LocationName;
             isListShown = false;
         }
@@ -483,6 +525,8 @@ namespace BitopiApprovalSystem
             view.FindViewById<TextView>(Resource.Id.tvPR).Text = model.PR;
             view.FindViewById<TextView>(Resource.Id.tvSize).Text = model.Size;
             view.FindViewById<TextView>(Resource.Id.tvStyle).Text = model.Style;
+            view.FindViewById<TextView>(Resource.Id.tvBuyer).Text = model.Buyer;
+            view.FindViewById<TextView>(Resource.Id.tvDelivaryDate).Text = model.DeliveryDate;
 
             return view;
         }
@@ -586,5 +630,34 @@ namespace BitopiApprovalSystem
             return false;
         }
 
+    }
+    public class LongPressClickListener : Java.Lang.Object, View.IOnTouchListener
+    {
+        private Handler mHandler;
+        Action _Action;
+        CustomRunnable _mAction;
+        public LongPressClickListener(Action mAction)
+        {
+            _Action = mAction;
+        }
+        public bool OnTouch(View v, MotionEvent e)
+        {
+            switch (e.Action)
+            {
+                case MotionEventActions.Down:
+                    if (mHandler != null) return true;
+                    mHandler = new Handler();
+                    _mAction = new CustomRunnable(_Action, mHandler);
+                    mHandler.PostDelayed(_mAction, 50);
+                    break;
+                case MotionEventActions.Up:
+                    if (mHandler == null) return true;
+                    mHandler.RemoveCallbacks(_mAction);
+                    mHandler = null;
+                    break;
+            }
+            return false;
+        }
+        
     }
 }

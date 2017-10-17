@@ -7,184 +7,241 @@
     android:background="@drawable/rounded_textview_bgcolor"
     android:padding="2dp"
     android:gravity="center_horizontal">
-  <RelativeLayout
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:id="@+id/rlLeft">
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/rlRef"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginTop="5dp">
-      <TextView
-          android:layout_width="50dp"
-          android:layout_height="wrap_content"
-          android:id="@+id/lblRef"
-          android:text="Ref No"
-          android:textSize="13sp"
-          android:textStyle="bold"
-          android:textColor="#FFF"
-          android:fontFamily="sans-serif-thin" />
-      <TextView
-          android:layout_width="100dp"
-          android:layout_height="wrap_content"
-          android:id="@+id/tvRefNo"
-          android:layout_toRightOf="@+id/lblRef"
-          android:text="PR-17-758-3-1-3-2-1-1"
-          android:layout_marginLeft="5dp"
-          android:textColor="#FFF"
-          android:fontFamily="sans-serif-thin"
-          android:textSize="13sp" />
+        android:id="@+id/rlLeft">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rlRef"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp">
+            <TextView
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/lblRef"
+                android:text="Ref No"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:textColor="#FFF"
+                android:fontFamily="sans-serif-thin" />
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvRefNo"
+                android:layout_toRightOf="@+id/lblRef"
+                android:text="PR-17-758-3-1-3-2-1-1"
+                android:layout_marginLeft="5dp"
+                android:textColor="#FFF"
+                android:fontFamily="sans-serif-thin"
+                android:textSize="13sp" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rlPR"
+            android:layout_below="@id/rlRef"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp">
+            <TextView
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/lblPR"
+                android:text="PR"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:textColor="#FFF"
+                android:fontFamily="sans-serif-thin" />
+            <TextView
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvPR"
+                android:layout_toRightOf="@+id/lblPR"
+                android:text="PR-17-89"
+                android:layout_marginLeft="5dp"
+                android:textColor="#FFF"
+                android:fontFamily="sans-serif-thin"
+                android:textSize="13sp" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rlSize"
+            android:layout_below="@id/rlPR"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp">
+            <TextView
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/lblSize"
+                android:text="Size"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:textColor="#FFF"
+                android:fontFamily="sans-serif-thin" />
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvSize"
+                android:layout_toRightOf="@+id/lblSize"
+                android:layout_marginLeft="5dp"
+                android:textColor="#FFF"
+                android:fontFamily="sans-serif-thin"
+                android:text="All"
+                android:textSize="13sp" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rlBuyer"
+            android:layout_below="@id/rlSize"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp">
+            <TextView
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/lblBuyer"
+                android:text="Buyer"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:textColor="#FFF"
+                android:fontFamily="sans-serif-thin" />
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvBuyer"
+                android:layout_toRightOf="@+id/lblBuyer"
+                android:layout_marginLeft="5dp"
+                android:textColor="#FFF"
+                android:fontFamily="sans-serif-thin"
+                android:text="All"
+                android:textSize="13sp" />
+        </RelativeLayout>
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/rlPR"
-        android:layout_below="@id/rlRef"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginTop="5dp">
-      <TextView
-          android:layout_width="50dp"
-          android:layout_height="wrap_content"
-          android:id="@+id/lblPR"
-          android:text="PR"
-          android:textSize="13sp"
-          android:textStyle="bold"
-          android:textColor="#FFF"
-          android:fontFamily="sans-serif-thin" />
-      <TextView
-          android:layout_width="70dp"
-          android:layout_height="wrap_content"
-          android:id="@+id/tvPR"
-          android:layout_toRightOf="@+id/lblPR"
-          android:text="PR-17-89"
-          android:layout_marginLeft="5dp"
-          android:textColor="#FFF"
-          android:fontFamily="sans-serif-thin"
-          android:textSize="13sp" />
+        android:layout_alignParentRight="false"
+        android:id="@+id/rlRight"
+        android:layout_toRightOf="@id/rlLeft">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rlStyle"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp">
+            <TextView
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/lblStyle"
+                android:text="Style"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:textColor="#FFF"
+                android:fontFamily="sans-serif-thin" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvStyle"
+                android:layout_toRightOf="@+id/lblStyle"
+                android:text="Rhino Treggings"
+                android:layout_marginLeft="5dp"
+                android:textColor="#FFF"
+                android:fontFamily="sans-serif-thin"
+                android:textSize="13sp" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rlEO"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_below="@id/rlStyle"
+            android:layout_alignParentRight="false">
+            <TextView
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/lblEO"
+                android:text="EO"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:textColor="#FFF"
+                android:fontFamily="sans-serif-thin" />
+            <TextView
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvEO"
+                android:layout_toRightOf="@+id/lblEO"
+                android:text="TAL-17-26-95                                      "
+                android:layout_marginLeft="5dp"
+                android:textColor="#FFF"
+                android:fontFamily="sans-serif-thin"
+                android:textSize="13sp" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rlColor"
+            android:layout_below="@id/rlEO"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_alignParentRight="false">
+            <TextView
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/lblColor"
+                android:text="Color"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:textColor="#FFF"
+                android:fontFamily="sans-serif-thin" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvColor"
+                android:layout_toRightOf="@+id/lblColor"
+                android:layout_marginLeft="5dp"
+                android:text="76-102(Blue dark)"
+                android:textColor="#FFF"
+                android:fontFamily="sans-serif-thin"
+                android:textSize="13sp" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rlDelivaryDate"
+            android:layout_below="@id/rlColor"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_alignParentRight="false">
+            <TextView
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/lblDelivaryDate"
+                android:text="Delivery Date"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:textColor="#FFF"
+                android:fontFamily="sans-serif-thin" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvDelivaryDate"
+                android:layout_toRightOf="@+id/lblDelivaryDate"
+                android:layout_marginLeft="5dp"
+                android:text="Nov 12, 2017"
+                android:textColor="#FFF"
+                android:fontFamily="sans-serif-thin"
+                android:textSize="13sp" />
+        </RelativeLayout>
     </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/rlSize"
-        android:layout_below="@id/rlPR"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginTop="5dp">
-      <TextView
-          android:layout_width="50dp"
-          android:layout_height="wrap_content"
-          android:id="@+id/lblSize"
-          android:text="Size"
-          android:textSize="13sp"
-          android:textStyle="bold"
-          android:textColor="#FFF"
-          android:fontFamily="sans-serif-thin" />
-      <TextView
-          android:layout_width="100dp"
-          android:layout_height="wrap_content"
-          android:id="@+id/tvSize"
-          android:layout_toRightOf="@+id/lblSize"
-          android:layout_marginLeft="5dp"
-          android:textColor="#FFF"
-          android:fontFamily="sans-serif-thin"
-          android:text="All"
-          android:textSize="13sp" />
-    </RelativeLayout>
-  </RelativeLayout>
-  <RelativeLayout
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_alignParentRight="false"
-      android:id="@+id/rlRight"
-      android:layout_toRightOf="@id/rlLeft">
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/rlStyle"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginTop="5dp">
-      <TextView
-          android:layout_width="50dp"
-          android:layout_height="wrap_content"
-          android:id="@+id/lblStyle"
-          android:text="Style"
-          android:textSize="13sp"
-          android:textStyle="bold"
-          android:textColor="#FFF"
-          android:fontFamily="sans-serif-thin" />
-      <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:id="@+id/tvStyle"
-          android:layout_toRightOf="@+id/lblStyle"
-          android:text="Rhino Treggings"
-          android:layout_marginLeft="5dp"
-          android:textColor="#FFF"
-          android:fontFamily="sans-serif-thin"
-          android:textSize="13sp" />
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/rlEO"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_below="@id/rlStyle"
-        android:layout_alignParentRight="false">
-      <TextView
-          android:layout_width="50dp"
-          android:layout_height="wrap_content"
-          android:id="@+id/lblEO"
-          android:text="EO"
-          android:textSize="13sp"
-          android:textStyle="bold"
-          android:textColor="#FFF"
-          android:fontFamily="sans-serif-thin" />
-      <TextView
-          android:layout_width="90dp"
-          android:layout_height="wrap_content"
-          android:id="@+id/tvEO"
-          android:layout_toRightOf="@+id/lblEO"
-          android:text="TAL-17-26-95                                      "
-          android:layout_marginLeft="5dp"
-          android:textColor="#FFF"
-          android:fontFamily="sans-serif-thin"
-          android:textSize="13sp" />
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/rlColor"
-        android:layout_below="@id/rlEO"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_alignParentRight="false">
-      <TextView
-          android:layout_width="50dp"
-          android:layout_height="wrap_content"
-          android:id="@+id/lblColor"
-          android:text="Color"
-          android:textSize="13sp"
-          android:textStyle="bold"
-          android:textColor="#FFF"
-          android:fontFamily="sans-serif-thin" />
-      <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:id="@+id/tvColor"
-          android:layout_toRightOf="@+id/lblColor"
-          android:layout_marginLeft="5dp"
-          android:text="76-102(Blue dark)"
-          android:textColor="#FFF"
-          android:fontFamily="sans-serif-thin"
-          android:textSize="13sp" />
-    </RelativeLayout>
-  </RelativeLayout>
 </RelativeLayout>

@@ -145,13 +145,14 @@
                     android:textSize="13sp" />
                 <AutoCompleteTextView
                     android:layout_height="60dp"
-                    android:layout_width="100dp"
+                    android:layout_width="wrap_content"
                     android:id="@+id/atvReference"
                     android:layout_below="@+id/lblLocation"
                     android:textColor="#fff"
                     android:nextFocusUp="@id/atvReference"
                     android:nextFocusLeft="@id/atvReference"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    android:hint="Please Select Reference " />
             <!--android:background="@drawable/gradient_spinner"-->
             </RelativeLayout>
         <!--<RelativeLayout xmlns:tools="http://schemas.android.com/tools"

@@ -16,6 +16,8 @@ namespace BitopiApprovalSystem.Model
         public string EO { get; set; }
         public string Process { get; set; }
         public string Size { get; set; }
+        public string Buyer { get; set; }
+        public string DeliveryDate { get; set; }
         public string Color { get; set; }
         public int OrderQty { get; set; }
         public int ProducedQty { get; set; }
@@ -35,7 +37,7 @@ namespace BitopiApprovalSystem.Model
     }
     public class ProductionRejectionDBModel : ProdcutionAccountingDBModel
     {
-        public int Grade { get; set; }
+        public string Grade { get; set; }
         public int SKUCode { get; set; }
     }
     public class DDL

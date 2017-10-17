@@ -18,6 +18,7 @@ using Android.Graphics;
 using PullToRefresharp.Android.Views;
 using Android.Util;
 using Android.Views.Animations;
+using Android.Graphics.Drawables;
 
 namespace BitopiApprovalSystem
 {
@@ -229,7 +230,11 @@ namespace BitopiApprovalSystem
         }
         public void PopulateRecentItem()
         {
-            List<RecentPR> prs = DBAccess.Database.RecentPRs.Result.Where(t => t.EntryType == (int)EntryType.Rejection).ToList();
+            GradientDrawable shape = new GradientDrawable();
+            shape.SetCornerRadius(6);
+            List<RecentPR> prs = DBAccess.Database.RecentPRs.Result.Where(t => t.EntryType == (int)EntryType.Rejection &&
+            t.LocationRef == DBAccess.Database.RecentHistory.Result.Location
+            ).ToList();
             if (prs.Count == 0)
             {
                 return;
@@ -239,27 +244,37 @@ namespace BitopiApprovalSystem
                 if (i == prs.Count - 1)
                 {
                     recent1.Text = prs[i].RefID;
-                    recent1.SetBackgroundColor(Color.ParseColor("#ff5722"));
+                    shape.SetColor(Color.ParseColor("#ff5722"));
+                    recent1.Background = (shape);
+
                 }
                 if (i == prs.Count - 2)
                 {
                     recent2.Text = prs[i].RefID;
-                    recent2.SetBackgroundColor(Color.ParseColor("#ff7043"));
+                    //recent2.SetBackgroundColor(Color.ParseColor("#ff7043"));
+                    shape.SetColor(Color.ParseColor("#ff7043"));
+                    recent2.Background = (shape);
                 }
                 if (i == prs.Count - 3)
                 {
                     recent3.Text = prs[i].RefID;
-                    recent3.SetBackgroundColor(Color.ParseColor("#ff8a65"));
+                    //recent3.SetBackgroundColor(Color.ParseColor("#ff8a65"));
+                    shape.SetColor(Color.ParseColor("#ff8a65"));
+                    recent3.Background = (shape);
                 }
                 if (i == prs.Count - 4)
                 {
                     recent4.Text = prs[i].RefID;
-                    recent4.SetBackgroundColor(Color.ParseColor("#ffab91"));
+                    // recent4.SetBackgroundColor(Color.ParseColor("#ffab91"));
+                    shape.SetColor(Color.ParseColor("#ffab91"));
+                    recent4.Background = (shape);
                 }
                 if (i == prs.Count - 5)
                 {
                     recent5.Text = prs[i].RefID;
-                    recent5.SetBackgroundColor(Color.ParseColor("#ffccbc"));
+                    //recent5.SetBackgroundColor(Color.ParseColor("#ffccbc"));
+                    shape.SetColor(Color.ParseColor("#ffccbc"));
+                    recent5.Background = (shape);
                 }
             }
         }
@@ -267,8 +282,22 @@ namespace BitopiApprovalSystem
         {
             lvProduct.ItemClick += LvProduct_ItemClick;
             btnSave.Click += BtnSave_Click;
-            btnPlus.Click += BtnPlus_Click;
-            btnMinus.Click += BtnMinus_Click;
+            //btnPlus.Click += BtnPlus_Click;
+            btnPlus.SetOnTouchListener(new LongPressClickListener(() =>
+            {
+                int qty = Convert.ToInt16(etQty.Text == "" ? "0" : etQty.Text);
+                qty += 10;
+                etQty.Text = qty.ToString();
+            }));
+            btnMinus.SetOnTouchListener(new LongPressClickListener(() =>
+            {
+                int qty = Convert.ToInt16(etQty.Text == "" ? "0" : etQty.Text);
+                qty -= 10;
+                if (qty >= 0)
+                    etQty.Text = qty.ToString();
+            }));
+
+            //btnMinus.Click += BtnMinus_Click;
             btnAll.Click += LoadPR_Click;
             btnRunning.Click += LoadPR_Click;
             recent1.Click += Recent_Click;
@@ -302,11 +331,13 @@ namespace BitopiApprovalSystem
         }
         void LoadSelectedRef(string Ref)
         {
-            var progressDialog = ProgressDialog.Show(this, null, "Please Wait.", true);
+            //var progressDialog = ProgressDialog.Show(this, null, "Please Wait.", true);
             new Thread(new ThreadStart(() =>
             {
-                ProdcutionAccountingDBModel model = repo.GetProductionList(bitopiApplication.User.UserCode, DBAccess.Database.RecentHistory.Result.ProcessID,
-                      DBAccess.Database.RecentHistory.Result.LocationID, SelectedPRStatus, 3, Ref).First();
+                var list = repo.GetProductionList(bitopiApplication.User.UserCode, DBAccess.Database.RecentHistory.Result.ProcessID,
+                      DBAccess.Database.RecentHistory.Result.LocationID, SelectedPRStatus, 3, Ref);
+                if (list.Count == 0) return;
+                ProdcutionAccountingDBModel model = list.First();
                 RunOnUiThread(() =>
                 {
                     tvOrderQty.Text = model.OrderQty.ToString("N0");
@@ -315,7 +346,7 @@ namespace BitopiApprovalSystem
                     txtWIPQty.Text = model.WIP.ToString("N0");
 
                     atvReference.Text = tvRef.Text = Ref;
-                    progressDialog.Dismiss();
+                    //progressDialog.Dismiss();
                 });
             })).Start();
         }
@@ -399,8 +430,8 @@ namespace BitopiApprovalSystem
             ProductionRejectionDBModel dbmodel = new ProductionRejectionDBModel();
             dbmodel.RefNo = atvReference.Text;
             dbmodel.LocationRef = DBAccess.Database.RecentHistory.Result.LocationID;
-            dbmodel.Grade = Convert.ToInt16(etGrade.Text);
-            dbmodel.SKUCode = Convert.ToInt16(etSKUCode.Text);
+            dbmodel.Grade = etGrade.Text;
+            //dbmodel.SKUCode = Convert.ToInt16(etSKUCode.Text);
             dbmodel.ProducedQty = Convert.ToInt16(etQty.Text);
             dbmodel.AddedBy = bitopiApplication.User.UserCode;
             var result = repo.SetRejection(dbmodel);

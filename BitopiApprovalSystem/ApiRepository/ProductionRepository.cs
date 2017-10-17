@@ -42,7 +42,7 @@ namespace ApiRepository
         {
             
                 string url = RepositorySettings.BaseURl + "ProdcutionAccounting?RefNO="
-                    + RefNO + "&Qty=" + Qty + "&ProdDateTime=" + DateTime.Now + "&AddedBy=" + AddedBy
+                    + RefNO + "&Qty=" + Qty + "&ProdDateTime=" + DateTime.Now.ToString("yyyy-MM-dd HH:mm: ss.fff") + " &AddedBy=" + AddedBy
                     + "&LocationRef=" + LocationRef;
 
                 HttpClient client = new HttpClient();

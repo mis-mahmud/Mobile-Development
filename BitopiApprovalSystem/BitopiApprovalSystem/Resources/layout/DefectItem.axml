@@ -29,8 +29,11 @@
         android:layout_toRightOf="@id/tvDZ"
         android:layout_marginRight="10dp"
         android:inputType="number"
+        android:background="@drawable/rounded_textview"
+        android:text="50"
+        android:padding="2dp"
         android:textSize="13sp"
-        android:background="@drawable/rounded_textview" />
+        android:gravity="center" />
     <Button
         android:id="@+id/tvOC"
         android:text="T-O16-93-39"

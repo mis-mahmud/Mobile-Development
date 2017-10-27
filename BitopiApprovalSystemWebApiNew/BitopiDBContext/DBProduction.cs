@@ -14,7 +14,7 @@ namespace BitopiDBContext
 {
     public class DBProduction : DBContext
     {
-        public List<ProdcutionAccountingDBModel> Get(string UserCode, string ProcessID, string LocationID, string PRStatus, int EntryType, string RefID)
+        public List<ProductionAccountingDBModel> Get(string UserCode, string ProcessID, string LocationID, string PRStatus, int EntryType, string RefID)
         {
 
             SqlParameter[] param = new SqlParameter[] {
@@ -27,7 +27,7 @@ namespace BitopiDBContext
 
             };
             string sql = toSqlString(param, "bimob.dbo.sp_productionAccounting");
-            List<ProdcutionAccountingDBModel> _DBModelList = new List<ProdcutionAccountingDBModel>();
+            List<ProductionAccountingDBModel> _DBModelList = new List<ProductionAccountingDBModel>();
             try
             {
                 DataTable dt = ExecuteDataTable("bimob.dbo.sp_productionAccounting", param);
@@ -35,7 +35,7 @@ namespace BitopiDBContext
                 {
                     foreach (DataRow dr in dt.Rows)
                     {
-                        ProdcutionAccountingDBModel _DBModel = new ProdcutionAccountingDBModel();
+                        ProductionAccountingDBModel _DBModel = new ProductionAccountingDBModel();
                         _DBModel.RefNo = dr["RefNO"].ToString();
                         _DBModel.LocationRef = dr["LocationRef"].ToString();
                         _DBModel.LocationName = dr["LocationName"].ToString();
@@ -65,19 +65,21 @@ namespace BitopiDBContext
                 _DBModelList = null;
             }
         }
-        public int Set(string RefNO, DateTime ProdDateTime, string LocationRef, int Qty, string AddedBy)
+        public int Set(ProductionAccountingDBModel model)
         {
-
+            string xmlString = ConvertToXML(model.OperationList);
             SqlParameter[] param = new SqlParameter[] {
-                new SqlParameter("@Ref",RefNO),
-                new SqlParameter("@ProdDateTime",ProdDateTime),
-                new SqlParameter("@LocationRef",LocationRef),
-                new SqlParameter("@Qty",Qty),
-                new SqlParameter("@AddedBy",AddedBy),
+                new SqlParameter("@Ref",model.RefNo),
+                new SqlParameter("@ProdDateTime",model.ProdDateTime),
+                new SqlParameter("@LocationRef",model.LocationRef),
+                new SqlParameter("@Qty",model.ProducedQty),
+                new SqlParameter("@xmlString",xmlString),
+                new SqlParameter("@AddedBy",model.AddedBy),
             };
 
             try
             {
+                string sql = toSqlString(param, "bimob.dbo.USP_Productionentry ");
                 int count = ExecuteNonQuery(CommandType.StoredProcedure, "bimob.dbo.USP_Productionentry", param);
 
                 return count;
@@ -270,6 +272,14 @@ namespace BitopiDBContext
         public string ConvertToXML(List<DefectMaster> list)
         {
             XmlSerializer serializer = new XmlSerializer(typeof(List<DefectMaster>));
+
+            var stringwriter = new System.IO.StringWriter();
+            serializer.Serialize(stringwriter, list);
+            return stringwriter.ToString();
+        }
+        public string ConvertToXML(List<Operation> list)
+        {
+            XmlSerializer serializer = new XmlSerializer(typeof(List<Operation>));
 
             var stringwriter = new System.IO.StringWriter();
             serializer.Serialize(stringwriter, list);

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="10dp"
+    android:paddingLeft="20dp"
+    android:background="@drawable/rounded_textview_bgcolor">
+    <TextView
+        android:id="@+id/tvDC"
+        android:text="Defect Code"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:textColor="#000"
+        android:layout_marginRight="10dp"
+        android:visibility="gone" />
+    <EditText
+        android:id="@+id/etQty"
+        android:textColor="#000"
+        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_toRightOf="@id/tvDZ"
+        android:layout_marginRight="10dp"
+        android:inputType="number"
+        android:background="@drawable/rounded_textview"
+        android:text="0"
+        android:padding="5dp"
+        android:textSize="13sp"
+        android:gravity="center" />
+    <TextView
+        android:id="@+id/tvOperation"
+        android:text="Operation"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:textColor="#ffffff"
+        android:layout_toRightOf="@+id/etQty"
+        android:textSize="13sp" />
+</RelativeLayout>

@@ -36,4 +36,9 @@ namespace BitopiApprovalSystem.DAL
     {
         Production,Quality,Rejection
     }
+    public class Version
+    {
+        [PrimaryKey]
+        public int VersionCode { get; set; }
+    }
 }

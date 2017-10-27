@@ -4,11 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clipChildren="false"
-    android:clickable="true">
+    android:clickable="true"
+    android:background="@drawable/bg">
     <View
-        android:background="#43a047"
-        android:layout_height="60dp"
-        android:layout_width="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_width="2dp"
+        android:background="#a0000000"
+        android:layout_alignParentRight="true" />
     <refractored.controls.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:src="@drawable/bitopilogo"
         android:layout_width="100dp"
@@ -26,7 +28,7 @@
         android:layout_below="@id/ivUserImg"
         android:text="Test Text"
         android:textSize="20sp"
-        android:textColor="#555555"
+        android:textColor="#fff"
         android:gravity="center"
         android:id="@+id/tvUserName"
         android:background="@null" />
@@ -39,9 +41,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/rlmenuapproval"
             android:clickable="true"
-            android:background="@drawable/bottomBorder"
-            android:padding="5dp"
-            android:layout_margin="5dp">
+            android:layout_margin="5dp"
+            android:background="@drawable/abc_popup_background_mtrl_mult">
             <ImageView
                 android:src="@drawable/approval"
                 android:layout_width="40dp"
@@ -53,7 +54,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:layout_centerHorizontal="true"
-                android:textColor="#000"
+                android:textColor="#0B337B"
                 android:gravity="center_vertical"
                 android:layout_toRightOf="@id/ivmenuapproval"
                 android:layout_marginLeft="20dp" />
@@ -63,10 +64,9 @@
             android:layout_height="wrap_content"
             android:id="@+id/rlmenumytask"
             android:layout_below="@id/rlmenuapproval"
-            android:background="@drawable/bottomBorder"
-            android:padding="5dp"
             android:layout_margin="5dp"
-            android:clickable="true">
+            android:clickable="true"
+            android:background="@drawable/abc_popup_background_mtrl_mult">
             <ImageView
                 android:src="@drawable/mytask"
                 android:layout_width="40dp"
@@ -78,7 +78,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:layout_centerHorizontal="true"
-                android:textColor="#000"
+                android:textColor="#0B337B"
                 android:gravity="center_vertical"
                 android:layout_toRightOf="@id/ivmenumytask"
                 android:layout_marginLeft="20dp" />
@@ -88,10 +88,9 @@
             android:layout_height="wrap_content"
             android:id="@+id/rlmenuPA"
             android:layout_below="@id/rlmenumytask"
-            android:background="@drawable/bottomBorder"
-            android:padding="5dp"
             android:layout_margin="5dp"
-            android:clickable="true">
+            android:clickable="true"
+            android:background="@drawable/abc_popup_background_mtrl_mult">
             <ImageView
                 android:src="@drawable/pa"
                 android:layout_width="40dp"
@@ -103,11 +102,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:layout_centerHorizontal="true"
-                android:textColor="#000"
+                android:textColor="#0B337B"
                 android:gravity="center_vertical"
                 android:layout_toRightOf="@id/ivmenuPA"
                 android:layout_marginLeft="20dp" />
         </RelativeLayout>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/btnLogout"
+        android:layout_marginBottom="20dp">
+        <ImageButton
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/imgDownload"
+            android:background="@drawable/download"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="10dp" />
     </RelativeLayout>
     <Button
         android:layout_alignParentBottom="true"
@@ -115,6 +127,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Log out"
-        android:background="#43a047"
-        android:textSize="20sp" />
+        android:background="@drawable/rounded_button_recommend"
+        android:textSize="20sp"
+        android:layout_marginRight="2dp" />
 </RelativeLayout>

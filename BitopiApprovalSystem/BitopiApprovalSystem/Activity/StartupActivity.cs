@@ -25,7 +25,7 @@ using BitopiApprovalSystem.Model;
 namespace BitopiApprovalSystem
 {
     [Activity(MainLauncher = true, NoHistory = true)]
-    public class StartupActivity : AppCompatActivity
+    public class StartupActivity : BaseActivity
     {
         TextView tvMsg;
         WebView webView;
@@ -103,8 +103,10 @@ namespace BitopiApprovalSystem
         protected async override void OnStart()
         {
             base.OnStart();
+            webView.Visibility = ViewStates.Gone;
             try
             {
+               
                 try
                 {
                     CrossBadge.Current.ClearBadge();
@@ -122,8 +124,13 @@ namespace BitopiApprovalSystem
                 string UserName = pref.GetString("UserName", String.Empty);
                 string Password = pref.GetString("Password", String.Empty);
                 string Token = prefToken.GetString("Token", String.Empty);
-                AccountRepository repo = new AccountRepository();
-
+                AccountRepository repo = new AccountRepository(ShowLoader,HideLoader);
+                //if (repo.GetVersion() > bitopiApplication.CurrentVersion)
+                //{
+                //    webView.Visibility = ViewStates.Gone;
+                  // BitopiSingelton.Instance.ShowNewVersionDialog(this);
+                //    return;
+                //}
                 Intent i = new Intent(this, typeof(LoginActivity));
 
 
@@ -142,20 +149,16 @@ namespace BitopiApprovalSystem
                     }
                     else
                         bitopiApplication.MacAddress = Token;
+                  
                     UserModel user = await repo.getUser(UserName, Password, bitopiApplication.MacAddress,
                     bitopiApplication.MacAddress,
                    bitopiApplication.DeviceName,
                     "android", 1,bitopiApplication.CurrentVersion);
-                    if(user.VersionCode>bitopiApplication.CurrentVersion)
-                    {
-                        BitopiSingelton.Instance.ShowNewVersionDialog(this);
-                        return;
-                    }
-                    else if (!String.IsNullOrEmpty(user.UserCode))
+                    
+                     if (!String.IsNullOrEmpty(user.UserCode))
                     {
                         bitopiApplication.User = user;
-                        List<DDL> ddl = await new ProductionRepository().GetProductionDDL(user.UserCode);
-                        bitopiApplication.DDLList = ddl;
+                        
                         pref.Edit().PutString("UserCode", user.UserCode).Commit();
 
                         i = new Intent(this, typeof(BitopiActivity));

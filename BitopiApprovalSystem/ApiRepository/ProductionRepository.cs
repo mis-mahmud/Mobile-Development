@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,18 +13,38 @@ namespace ApiRepository
 {
     public class ProductionRepository
     {
-        public  List<ProdcutionAccountingDBModel> GetProductionList(string userid, string ProcessID,string LocationID,string PRStatus, int EntryType,
+        WebClient client;
+        public ProductionRepository()
+        {
+            client = new WebClient();
+        }
+        public ProductionRepository(Action<long?, long, double?> ProgressChanged,Action ProgressComplete)
+        {
+            client = new WebClient();
+            client.DownloadProgressChanged += (sender, e) => {
+                int length = Convert.ToInt32(e.TotalBytesToReceive.ToString());
+                int prog = Convert.ToInt32(e.BytesReceived.ToString());
+                int perc = Convert.ToInt32(e.ProgressPercentage.ToString());
+                ProgressChanged(length, prog, perc);
+            };
+            client.DownloadDataCompleted += (sender, ev) =>
+            {
+                ProgressComplete();
+            };
+        }
+        public async Task<List<ProductionAccountingDBModel>> GetProductionList(string userid, string ProcessID,string LocationID,string PRStatus, int EntryType,
             string RefID="")
         {
             userid = Cipher.Encrypt(userid);
             string url = RepositorySettings.BaseURl + "ProdcutionAccounting?UserID=" + userid + "&ProcessID=" + ProcessID + "&LocationID=" + LocationID + 
                 "&PRStatus=" + PRStatus+ "&EntryType="+ EntryType+(RefID!=""? "&RefID="+RefID:"");
 
-            HttpClient client = new HttpClient();
-            HttpResponseMessage result =  client.GetAsync(url).Result;
-            var aproves = JsonConvert.DeserializeObject<List<ProdcutionAccountingDBModel>>(result.Content.ReadAsStringAsync().Result);
+
+            var data = await client.DownloadDataTaskAsync(new Uri(url));
+            string result = System.Text.Encoding.UTF8.GetString(data);
+            var aproves = JsonConvert.DeserializeObject<List<ProductionAccountingDBModel>>(result);
             if (aproves == null)
-                aproves = new List<ProdcutionAccountingDBModel>();
+                aproves = new List<ProductionAccountingDBModel>();
             return aproves;
         }
         public async Task<List<DDL>> GetProductionDDL(string userid)
@@ -31,26 +52,47 @@ namespace ApiRepository
             userid = Cipher.Encrypt(userid);
             string url = RepositorySettings.BaseURl + "ProdcutionAccounting?UserID=" + userid;
 
-            HttpClient client = new HttpClient();
-            HttpResponseMessage result = await client.GetAsync(url);
-            var aproves = JsonConvert.DeserializeObject<List<DDL>>(result.Content.ReadAsStringAsync().Result);
+            var data = await client.DownloadDataTaskAsync(new Uri(url));
+            string result = System.Text.Encoding.UTF8.GetString(data);
+            var aproves = JsonConvert.DeserializeObject<List<DDL>>(result);
             if (aproves == null)
                 aproves = new List<DDL>();
             return aproves;
         }
-        public int SetProduction(string RefNO, int Qty, string LocationRef, string AddedBy)
+        //public int SetProduction(string RefNO, int Qty, string LocationRef, string AddedBy,List<Operation> OperationList)
+        //{
+            
+        //        string url = RepositorySettings.BaseURl + "ProdcutionAccounting?RefNO="
+        //            + RefNO + "&Qty=" + Qty + "&ProdDateTime=" + DateTime.Now.ToString("yyyy-MM-dd HH:mm: ss.fff") + " &AddedBy=" + AddedBy
+        //            + "&LocationRef=" + LocationRef;
+
+        //        HttpClient client = new HttpClient();
+        //        HttpResponseMessage result =  client.GetAsync(url).Result;
+        //        var aproves = JsonConvert.DeserializeObject<int>(result.Content.ReadAsStringAsync().Result);
+
+        //        return aproves;
+            
+        //}
+        public int SetProduction(string RefNO, int Qty, string LocationRef, string AddedBy, List<Operation> OperationList)
         {
-            
-                string url = RepositorySettings.BaseURl + "ProdcutionAccounting?RefNO="
-                    + RefNO + "&Qty=" + Qty + "&ProdDateTime=" + DateTime.Now.ToString("yyyy-MM-dd HH:mm: ss.fff") + " &AddedBy=" + AddedBy
-                    + "&LocationRef=" + LocationRef;
+            ProductionAccountingDBModel model = new ProductionAccountingDBModel
+            {
 
-                HttpClient client = new HttpClient();
-                HttpResponseMessage result =  client.GetAsync(url).Result;
-                var aproves = JsonConvert.DeserializeObject<int>(result.Content.ReadAsStringAsync().Result);
-
-                return aproves;
-            
+                RefNo = RefNO,
+                ProducedQty = Qty,
+                LocationRef = LocationRef,
+                AddedBy = AddedBy,
+                OperationList=OperationList!=null?OperationList.Where(t=>t.Qty!=0).ToList():null,
+                ProdDateTime=DateTime.Now
+                
+            };
+            string url = RepositorySettings.BaseURl + "ProdcutionAccounting";
+            HttpClient client = new HttpClient();
+            HttpContent contentPost = new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8,
+"application/json");
+            HttpResponseMessage result = client.PostAsync(url, contentPost).Result;
+            var aproves = JsonConvert.DeserializeObject<int>(result.Content.ReadAsStringAsync().Result);
+            return aproves;
         }
         public int SetQuality(ProductionQualityDBModel model)
         {
@@ -95,14 +137,13 @@ namespace ApiRepository
                 return 0;
             }
         }
-        public List<DefectMaster> GetGetDefectList()
+        public async Task<List<DefectMaster>> GetGetDefectList()
         {
             
             string url = RepositorySettings.BaseURl + "ProdcutionAccounting/GetGetDefectList";
-
-            HttpClient client = new HttpClient();
-            HttpResponseMessage result =  client.GetAsync(url).Result;
-            var aproves = JsonConvert.DeserializeObject<List<DefectMaster>>(result.Content.ReadAsStringAsync().Result);
+            var data = await client.DownloadDataTaskAsync(new Uri(url));
+            string result = System.Text.Encoding.UTF8.GetString(data);
+            var aproves = JsonConvert.DeserializeObject<List<DefectMaster>>(result);
             if (aproves == null)
                 aproves = new List<DefectMaster>();
             return aproves;
@@ -117,14 +158,14 @@ namespace ApiRepository
             var aproves = JsonConvert.DeserializeObject<string>(result.Content.ReadAsStringAsync().Result);
             return aproves;
         }
-        public List<Operation> GetOperationList(string RefID)
+        public async Task<List<Operation>> GetOperationList(string RefID)
         {
 
             string url = RepositorySettings.BaseURl + "Quality?RefID=" + RefID ;
 
-            HttpClient client = new HttpClient();
-            HttpResponseMessage result = client.GetAsync(url).Result;
-            var aproves = JsonConvert.DeserializeObject<List<Operation>>(result.Content.ReadAsStringAsync().Result);
+            var data = await client.DownloadDataTaskAsync(new Uri(url));
+            string result = System.Text.Encoding.UTF8.GetString(data);
+            var aproves = JsonConvert.DeserializeObject<List<Operation>>(result);
             if (aproves == null)
                 aproves = new List<Operation>();
             return aproves;

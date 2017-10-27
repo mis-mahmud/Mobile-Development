@@ -4,70 +4,59 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <RelativeLayout
-        android:orientation="vertical"
+        
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#eeeeee"
-        android:clipChildren="false">
-        <refractored.controls.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginBottom="0dp"
-            android:id="@+id/ivPAUserImg"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="30dp"
-            android:background="@null"
-            app:civ_border_width="2dp"
-            app:civ_border_color="#263238"
-            android:layout_centerVertical="false" />
-        <ScrollView
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/ivPAUserImg">
+            android:background="#eeeeee"
+            android:clipChildren="false"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp">
+            <refractored.controls.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginBottom="0dp"
+                android:id="@+id/ivPAUserImg"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="30dp"
+                android:background="@null"
+                app:civ_border_width="2dp"
+                app:civ_border_color="#263238"
+                android:layout_centerVertical="false" />
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:minWidth="25px"
-                android:minHeight="25px">
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_textview_bgcolor"
+                android:layout_below="@id/ivPAUserImg"
+                android:id="@+id/rlCriteria">
                 <Spinner
                     android:layout_width="match_parent"
                     android:layout_height="100px"
                     android:id="@+id/spProcess"
-                    android:layout_marginLeft="50dp"
-                    android:layout_marginRight="50dp"
                     android:prompt="@string/prompt_process"
                     android:background="@drawable/gradient_spinner"
-                    android:layout_marginTop="10dp" />
+                    android:padding="0dp" />
                 <Spinner
                     android:layout_width="match_parent"
                     android:layout_height="100px"
                     android:id="@+id/spLocation"
                     android:layout_below="@+id/spProcess"
-                    android:layout_marginLeft="50dp"
-                    android:layout_marginRight="50dp"
                     android:layout_marginTop="10dp"
                     android:prompt="@string/promp_Location"
-                    android:background="@drawable/gradient_spinner" />
+                    android:background="@drawable/gradient_spinner"
+                    android:padding="0dp" />
                 <Spinner
                     android:layout_width="match_parent"
                     android:layout_height="100px"
                     android:id="@+id/spEntryType"
                     android:layout_below="@+id/spLocation"
-                    android:layout_marginLeft="50dp"
-                    android:layout_marginRight="50dp"
                     android:layout_marginTop="10dp"
                     android:prompt="@string/promp_Location"
-                    android:background="@drawable/gradient_spinner" />
-                <Button
-                    android:layout_height="wrap_content"
-                    android:layout_width="match_parent"
-                    android:text="Next"
-                    android:layout_below="@+id/spEntryType"
-                    android:layout_marginLeft="50dp"
-                    android:layout_marginRight="50dp"
-                    android:background="@drawable/rounded_button_recommend"
-                    android:id="@+id/btnNext"
-                    android:layout_marginTop="10dp" />
+                    android:background="@drawable/gradient_spinner"
+                    android:padding="0dp" />
             <!--<Spinner
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -78,7 +67,20 @@
                 android:layout_marginTop="50dp"
                 android:background="@drawable/gradient_spinner" />-->
             </RelativeLayout>
-        </ScrollView>
+            <Button
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:text="Next"
+                android:layout_below="@+id/rlCriteria"
+                android:background="@drawable/rounded_button_recommend"
+                android:id="@+id/btnNext"
+                android:layout_marginTop="10dp" />
+        <!--<RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/rlLoaderContainer"
+            android:visibility="gone" />-->
+        </RelativeLayout>
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"

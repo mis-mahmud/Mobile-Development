@@ -1,5 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.bitopi.approvalsystem" android:versionName="2.0703.2" android:installLocation="auto" android:versionCode="2">
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.bitopi.approvalsystem" android:versionName="5.1025.5" android:installLocation="auto" android:versionCode="5">
 	<uses-sdk android:minSdkVersion="16" android:targetSdkVersion="23" />
 	<application android:label="Bitopi on the go" android:theme="@style/CustomActionBarTheme" android:icon="@drawable/bitopiLogo">
 		<!--<meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />-->

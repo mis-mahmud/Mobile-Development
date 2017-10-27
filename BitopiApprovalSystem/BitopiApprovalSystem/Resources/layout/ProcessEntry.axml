@@ -3,16 +3,6 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-<!--<pulltorefresharp.android.views.ViewWrapper xmlns:pullToRefresharpWrapper="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/ptr_wrapper"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"               
-                pullToRefresharpWrapper:pullDownTension="0.5"
-                pullToRefresharpWrapper:snapbackDuration="300">
-    <PullToRefresharp.Android.Widget.ScrollView
-                android:id="@+id/ptr"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" >-->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -313,7 +303,7 @@
                 <TextView
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
-                    android:text="0"
+                    android:text="000000"
                     android:layout_below="@id/lblBooked"
                     android:id="@+id/txtOrderQty"
                     android:fontFamily="sans-serif-thin"
@@ -340,11 +330,10 @@
                 <TextView
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
-                    android:text="0"
+                    android:text="000000"
                     android:layout_below="@id/lblProduce"
                     android:id="@+id/txtProduceQty"
                     android:layout_toRightOf="@id/txtOrderQty"
-                    android:layout_marginRight="10dp"
                     android:fontFamily="sans-serif-thin"
                     android:textColor="#FFF"
                     android:textSize="12sp" />
@@ -370,7 +359,7 @@
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
                     android:layout_below="@id/lblBalance"
-                    android:text="0"
+                    android:text="000000"
                     android:id="@+id/txtBalanceQty"
                     android:layout_toRightOf="@id/txtProduceQty"
                     android:fontFamily="sans-serif-thin"
@@ -382,8 +371,7 @@
                 android:layout_width="wrap_content"
                 android:id="@+id/rlWIP"
                 android:layout_toRightOf="@+id/rlBlQty"
-                android:backgroundTint="#ff0a64be"
-                android:layout_marginRight="20dp">
+                android:backgroundTint="#ff0a64be">
                 <TextView
                     android:text="W.I.P"
                     android:layout_height="wrap_content"
@@ -398,7 +386,7 @@
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
                     android:layout_below="@id/lblWIP"
-                    android:text="0"
+                    android:text="000000"
                     android:id="@+id/txtWIPQty"
                     android:layout_toRightOf="@id/txtProduceQty"
                     android:fontFamily="sans-serif-thin"
@@ -410,6 +398,22 @@
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:layout_below="@id/rlQty"
+            android:id="@+id/btnOperation"
+            android:text="incentive"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/approvalbutton"
+            android:fontFamily="sans-serif-thin"
+            android:textColor="#fff"
+            android:textAllCaps="true"
+            android:shadowRadius="4"
+            android:shadowColor="#ffefefef"
+            android:textStyle="bold" />
+        <Button
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_below="@id/btnOperation"
             android:id="@+id/btnSubmit"
             android:text="Submit"
             android:layout_marginLeft="10dp"
@@ -418,9 +422,11 @@
             android:background="@drawable/rounded_button_reject"
             android:fontFamily="sans-serif-thin"
             android:textColor="#fff"
-            android:textAllCaps="false"
+            android:textAllCaps="true"
             android:shadowRadius="4"
-            android:shadowColor="#ffefefef" />
+            android:shadowColor="#ffefefef"
+            android:textStyle="bold"
+            android:padding="20dp" />
     <!--<ListView xmlns:tools="http://schemas.android.com/tools"
             android:layout_height="match_parent"
             android:layout_width="match_parent"
@@ -433,18 +439,6 @@
             android:layout_marginBottom="5dp"
             android:dividerHeight="1dp"
             tools:visibility="visible" />-->
-        <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/gifview"
-            tools:visibility="gone">
-            <BitopiApprovalSystem.CustomControl.CustomGifView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="50dp" />
-        </RelativeLayout>
     </RelativeLayout>
     <RelativeLayout
         android:id="@+id/rlPRLV"
@@ -467,8 +461,29 @@
             android:layout_marginBottom="5dp"
             android:dividerHeight="1dp" />
     </RelativeLayout>
-<!--</PullToRefresharp.Android.Widget.ScrollView>
-    </pulltorefresharp.android.views.ViewWrapper>-->
+    <RelativeLayout
+        android:id="@+id/rlPROperation"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:background="#a0000000"
+        android:visibility="gone"
+        android:animateLayoutChanges="true"
+        android:addStatesFromChildren="false"
+        android:clickable="true">
+        <ListView
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:id="@+id/lvOperation"
+            android:layout_marginTop="20dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="5dp"
+            android:dividerHeight="1dp" />
+    </RelativeLayout>
+<!--<RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/rlLoaderContainer"
+        android:visibility="gone" />-->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

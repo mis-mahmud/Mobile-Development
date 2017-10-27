@@ -26,7 +26,7 @@ namespace BitopiApprovalSystem
     public class ProductionRejection : BaseActivity
     {
         PullToRefresharp.Android.Widget.ScrollView ptr;
-        ProductionRepository repo = new ProductionRepository();
+        ProductionRepository repo;
         ListView lvProduct;
         TextView tvLocation;
         TextView tvRef, tvOrderQty, tvBalanceQty, tvProducedQty, txtWIPQty;
@@ -34,7 +34,7 @@ namespace BitopiApprovalSystem
         Button btnSave, btnPlus, btnMinus;
         AutoCompleteTextView atvReference;
         public ProductionAccountigListAdapter adapter;
-        public List<ProdcutionAccountingDBModel> list;
+        public List<ProductionAccountingDBModel> list;
         RelativeLayout gifView;
         private IPullToRefresharpView ptr_view;
         RelativeLayout rlTop;
@@ -46,7 +46,7 @@ namespace BitopiApprovalSystem
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-
+            repo = new ProductionRepository(ShowLoader,HideLoader);
             SupportActionBar.SetDisplayShowCustomEnabled(true);
             SupportActionBar.SetCustomView(Resource.Layout.custom_actionbar);
             SetContentView(Resource.Layout.ProductionRejection);
@@ -71,12 +71,12 @@ namespace BitopiApprovalSystem
             gifView.Visibility = ViewStates.Gone;
 
         }
-        void LoadList(string PRStatus, Action task = null)
+      async  void LoadList(string PRStatus, Action task = null)
         {
-            var progressDialog = ProgressDialog.Show(this, null, "Please Wait.", true);
-            new Thread(new ThreadStart(() =>
-            {
-                list = repo.GetProductionList(bitopiApplication.User.UserCode, DBAccess.Database.RecentHistory.Result.ProcessID,
+            //var progressDialog = ProgressDialog.Show(this, null, "Please Wait.", true);
+            //new Thread(new ThreadStart(() =>
+            //{
+                list =await repo.GetProductionList(bitopiApplication.User.UserCode, DBAccess.Database.RecentHistory.Result.ProcessID,
                     DBAccess.Database.RecentHistory.Result.LocationID, PRStatus, 3);
                 RunOnUiThread(() =>
                 {
@@ -84,7 +84,7 @@ namespace BitopiApprovalSystem
                     atvReference.Adapter = new ArrayAdapter(this, Android.Resource.Layout.SimpleDropDownItem1Line, list.Select(t => t.RefNo).ToArray());
                     adapter.Items = list;
                     adapter.NotifyDataSetChanged();
-                    progressDialog.Dismiss();
+                    //progressDialog.Dismiss();
                     if (task != null)
                     {
                         if (list.Count > 0) task();
@@ -94,7 +94,7 @@ namespace BitopiApprovalSystem
                     //AndHUD.Shared.Dismiss();
                     Log.Debug("", list.Count().ToString());
                 });
-            })).Start();
+            //})).Start();
         }
         public override void OnBackPressed()
         {
@@ -104,7 +104,10 @@ namespace BitopiApprovalSystem
                 Resource.Animation.bottom_down);
 
                 lvProduct.StartAnimation(bottomUp);
-                rlPRLV.Visibility = (ViewStates.Gone);
+                bottomUp.AnimationEnd += (s, er) =>
+                {
+                    rlPRLV.Visibility = (ViewStates.Gone);
+                };
                 isListShown = false;
             }
             else
@@ -320,7 +323,10 @@ namespace BitopiApprovalSystem
             Resource.Animation.bottom_down);
 
             lvProduct.StartAnimation(bottomUp);
-            rlPRLV.Visibility = (ViewStates.Gone);
+            bottomUp.AnimationEnd += (s, er) =>
+            {
+                rlPRLV.Visibility = (ViewStates.Gone);
+            };
             isListShown = false;
         }
 
@@ -335,9 +341,9 @@ namespace BitopiApprovalSystem
             new Thread(new ThreadStart(() =>
             {
                 var list = repo.GetProductionList(bitopiApplication.User.UserCode, DBAccess.Database.RecentHistory.Result.ProcessID,
-                      DBAccess.Database.RecentHistory.Result.LocationID, SelectedPRStatus, 3, Ref);
+                      DBAccess.Database.RecentHistory.Result.LocationID, SelectedPRStatus, 3, Ref).Result;
                 if (list.Count == 0) return;
-                ProdcutionAccountingDBModel model = list.First();
+                ProductionAccountingDBModel model = list.First();
                 RunOnUiThread(() =>
                 {
                     tvOrderQty.Text = model.OrderQty.ToString("N0");
@@ -413,11 +419,11 @@ namespace BitopiApprovalSystem
                 }
                 PopulateRecentItem();
             }
-            ProdcutionAccountingDBModel model;
+            ProductionAccountingDBModel model;
             if (list != null)
                 model = list.Where(t => t.RefNo == atvReference.Text).First();
             else
-                model = new ProdcutionAccountingDBModel { LocationRef = DBAccess.Database.RecentPRs.Result.Where(t => t.RefID == atvReference.Text).First().LocationRef };
+                model = new ProductionAccountingDBModel { LocationRef = DBAccess.Database.RecentPRs.Result.Where(t => t.RefID == atvReference.Text).First().LocationRef };
             //gifView.Visibility = ViewStates.Visible;
 
             var progressDialog = ProgressDialog.Show(this, null, "Please Wait.", true);
@@ -463,7 +469,7 @@ namespace BitopiApprovalSystem
             new Thread(new ThreadStart(() =>
             {
                 var prodList = repo.GetProductionList(bitopiApplication.User.UserCode, DBAccess.Database.RecentHistory.Result.ProcessID,
-                     DBAccess.Database.RecentHistory.Result.LocationID, "", 3, Ref);
+                     DBAccess.Database.RecentHistory.Result.LocationID, "", 3, Ref).Result;
                 RunOnUiThread(() =>
                 {
                     var m = prodList.First();
@@ -480,7 +486,10 @@ namespace BitopiApprovalSystem
             Animation bottomUp = Android.Views.Animations.AnimationUtils.LoadAnimation(this,
             Resource.Animation.bottom_down);
             lvProduct.StartAnimation(bottomUp);
-            rlPRLV.Visibility = (ViewStates.Gone);
+            bottomUp.AnimationEnd += (s, er) =>
+            {
+                rlPRLV.Visibility = (ViewStates.Gone);
+            };
             var model = list[e.Position];
             tvRef.Text = atvReference.Text = model.RefNo;
             tvOrderQty.Text = model.OrderQty.ToString("N0");

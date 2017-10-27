@@ -3,7 +3,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#eeeeee">
+    android:background="#eeeeee"
+    android:id="@+id/rlMain">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -56,13 +57,13 @@
                     android:textColorHint="#757575"
                     android:textColor="#3f51b5"
                     android:fontFamily="sans-serif-thin"
-                    android:background="@drawable/bottomborder"
                     android:paddingLeft="10dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
                     android:layout_marginTop="5dp"
                     android:drawableLeft="@drawable/user"
-                    android:text="hassan" />
+                    android:text=""
+                    android:background="@drawable/bottomborder" />
                 <EditText
                     android:id="@+id/etPassword"
                     android:layout_width="match_parent"
@@ -79,7 +80,7 @@
                     android:drawableLeft="@drawable/pwd"
                     android:paddingLeft="10dp"
                     android:layout_marginBottom="5dp"
-                    android:text="hassan" />
+                    android:text="" />
             </RelativeLayout>
             <Button
                 android:id="@+id/ButLogInToApp"
@@ -115,4 +116,13 @@
             android:gravity="center_horizontal"
             android:layout_marginLeft="50dp" />
     </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/rlVersionMain"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+<!--<RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/rlLoaderContainer"
+        android:visibility="gone" />-->
 </RelativeLayout>

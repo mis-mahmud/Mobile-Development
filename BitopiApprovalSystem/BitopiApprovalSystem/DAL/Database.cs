@@ -36,6 +36,7 @@ namespace BitopiApprovalSystem.DAL
             db = new SQLiteAsyncConnection(Path);
             db.CreateTableAsync<RecentPR>().Wait();
             db.CreateTableAsync<RecentHistory>().Wait();
+            db.CreateTableAsync<Version>().Wait();
         }
         public Task<List<RecentPR>> RecentPRs
         {
@@ -62,6 +63,21 @@ namespace BitopiApprovalSystem.DAL
             {
                 return db.UpdateAsync(item);
             }
+        }
+        public int LastVersion()
+        {
+            var result=db.Table<Version>().FirstOrDefaultAsync().Result;
+            if (result == null)
+                return 0;
+            return result.VersionCode;
+        }
+        public int InsertVersion(int version)
+        {
+            return db.InsertAsync(new Version { VersionCode= version }).Result;
+        }
+        public int DeleteVersion(int Version)
+        {
+            return db.DeleteAsync(new Version { VersionCode = Version }).Result;
         }
         public void DropAllTable()
         {

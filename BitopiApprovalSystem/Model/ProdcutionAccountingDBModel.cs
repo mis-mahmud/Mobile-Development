@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BitopiApprovalSystem.Model
 {
-    public class ProdcutionAccountingDBModel
+    public class ProductionAccountingDBModel
     {
         public string RefNo { get; set; }
         public string LocationRef { get; set; }
@@ -25,8 +25,10 @@ namespace BitopiApprovalSystem.Model
         public int BalanceQty { get; set; }
         public int WIP { get; set; }
         public string AddedBy { get; set; }
+        public DateTime ProdDateTime { get; set; }
+        public List<Operation> OperationList{get;set;}
     }
-    public class ProductionQualityDBModel : ProdcutionAccountingDBModel
+    public class ProductionQualityDBModel : ProductionAccountingDBModel
     {
         public int LotQ { get; set; }
         public int Sample { get; set; }
@@ -35,7 +37,7 @@ namespace BitopiApprovalSystem.Model
         public string QualityStatus { get; set; }
         public List<DefectMaster> DefectList { get; set; }
     }
-    public class ProductionRejectionDBModel : ProdcutionAccountingDBModel
+    public class ProductionRejectionDBModel : ProductionAccountingDBModel
     {
         public string Grade { get; set; }
         public int SKUCode { get; set; }
@@ -59,6 +61,7 @@ namespace BitopiApprovalSystem.Model
     {
         public string OperationCode { get; set; }
         public string OperationName { get; set; }
+        public int Qty { get; set; }
 
     }
 }

@@ -63,6 +63,10 @@ namespace BitopiApprovalSystem
             
             //base.LoadDrawerView();
         }
+        protected override void OnStart()
+        {
+            base.OnStart();
+        }
         void LoadDrawerView()
         {
             //FindViewById<TextView>(Resource.Id.tvUserName).Text = BitopiSingelton.Instance.User.EmployeeName;

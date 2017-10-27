@@ -21,6 +21,7 @@ using BitopiApprovalSystem.Library;
 using BitopiApprovalSystem;
 using Model;
 using BitopiApprovalSystem.PushNotification;
+using BitopiApprovalSystem.DAL;
 
 namespace BitopiApprovalSystem.BitopiPushNotification
 {
@@ -40,6 +41,8 @@ namespace BitopiApprovalSystem.BitopiPushNotification
                 timer.Interval = 10000;
                 timer.Elapsed += (s, e) =>
                 {
+                    Intent notiIntent=null;
+                    
                     BitopiApplication bitopiApplication = (BitopiApplication)this.ApplicationContext;
                     try
                     {
@@ -57,18 +60,57 @@ namespace BitopiApprovalSystem.BitopiPushNotification
                             else
                                 bitopiApplication.MacAddress = Token;
                             if (_userCode == "")
-                                return;
-                            bitopiApplication.User = new UserModel() { UserCode = _userCode };
+                            {
+                                notiIntent = new Intent(this, typeof(LoginActivity));
+                            }
+                            else
+                            {
+                                notiIntent = new Intent(this, typeof(BitopiActivity));
+                                bitopiApplication.User = new UserModel() { UserCode = _userCode };
+                                string url = RepositorySettings.BaseURl + "Notification?UserID=" + Cipher.Encrypt(bitopiApplication.User.UserCode)
+                         + "&DeviceID=" + bitopiApplication.MacAddress;
+
+                                HttpClient client = new HttpClient();
+                                HttpResponseMessage result = client.GetAsync(url).Result;
+                                var messages = JsonConvert.DeserializeObject<List<BitopiGcmMessage>>(result.Content.ReadAsStringAsync().Result);
+                                if (messages != null && messages.Count > 0)
+                                    SendNotification(messages.First(), bitopiApplication.MacAddress);
+                            }
+                            
+                        }
+                        else
+                        {
+                            notiIntent = new Intent(this, typeof(BitopiActivity));
                         }
 
-                        string url = RepositorySettings.BaseURl + "Notification?UserID=" + Cipher.Encrypt(bitopiApplication.User.UserCode)
-                          + "&DeviceID=" + bitopiApplication.MacAddress;
+                        int UpdateVersion = new AccountRepository().GetVersion();
+                        int lastUpdateVersion = DBAccess.Database.LastVersion();
+                        if(lastUpdateVersion==0)
+                        {
+                            lastUpdateVersion = this.PackageManager.GetPackageInfo(this.PackageName,
+                Android.Content.PM.PackageInfoFlags.MetaData).VersionCode;
+                            DBAccess.Database.InsertVersion(lastUpdateVersion);
+                        }
+                        if (UpdateVersion > lastUpdateVersion)
+                        {
 
-                        HttpClient client = new HttpClient();
-                        HttpResponseMessage result = client.GetAsync(url).Result;
-                        var messages = JsonConvert.DeserializeObject<List<BitopiGcmMessage>>(result.Content.ReadAsStringAsync().Result);
-                        if (messages != null && messages.Count > 0)
-                            SendNotification(messages.First(), bitopiApplication.MacAddress);
+                            int requestID = DateTime.Now.Millisecond;
+                            DBAccess.Database.DeleteVersion(lastUpdateVersion);
+                            DBAccess.Database.InsertVersion(UpdateVersion);
+                            notiIntent.AddFlags(ActivityFlags.ClearTop);
+                            var pendingIntent = PendingIntent.GetActivity(ApplicationContext, requestID, notiIntent, 0);//requestID = DateTime.Now.Millisecond;
+                            var notificationBuilder = new NotificationCompat.Builder(this)
+                                 .SetSmallIcon(BitopiApprovalSystem.Resource.Drawable.bitopiLogo)
+                                 .SetContentTitle("Bitopi Approval System")
+                                 .SetContentText("New Version Arrived")
+                                 .SetAutoCancel(true)
+                                 .SetContentIntent(pendingIntent)
+                                 .SetDefaults(NotificationCompat.DefaultSound);
+                            var notificationManager = (NotificationManager)GetSystemService(Context.NotificationService);
+
+                            //new UserRepository().GetNotificationCacheAsCompleted(gcmMsg.NotificationExecId);
+                            notificationManager.Notify(requestID, notificationBuilder.Build());
+                        }
 
                     }
                     catch (Exception ex)
@@ -77,6 +119,7 @@ namespace BitopiApprovalSystem.BitopiPushNotification
                         //CustomLogger.CustomLog("From Activity: " + Line + "\nMessage: " + ex.Message + "\nStack Trace: " + ex.StackTrace + "\n\n", "", bitopiApplication.User != null ?
                         //   bitopiApplication.User.UserName : "");
                     }
+                   
                 };
                 timer.Enabled = true;
             }).Start();

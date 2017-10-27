@@ -17,6 +17,7 @@ using Refractored.Controls;
 using BitopiApprovalSystem.Model;
 using Android.Support.V4.Widget;
 using BitopiApprovalSystem.DAL;
+using ApiRepository;
 
 namespace BitopiApprovalSystem
 {
@@ -29,7 +30,7 @@ namespace BitopiApprovalSystem
         Spinner spProcess, spLocation, spPr, spEntryType;
         Switch swLoadLastLocation;
         bool LastLocation;
-
+        ProductionRepository repo ;
         DDL[] ProcessName;
         DDL[] LocationName;
         string SelectedProcess;
@@ -44,6 +45,7 @@ namespace BitopiApprovalSystem
         {
             ISharedPreferences pref = Application.Context.GetSharedPreferences
                 ("_bitopi_UserInfo", FileCreationMode.Private);
+            repo = new ProductionRepository(ShowLoader,HideLoader);
             LastLocation = pref.GetBoolean("IsLastLocation", false);
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.ProcessList);
@@ -53,9 +55,13 @@ namespace BitopiApprovalSystem
             InitializeEvent();
             base.LoadDrawerView();
         }
-        protected override void OnStart()
+        protected async override void OnStart()
         {
             base.OnStart();
+
+            List<DDL> ddl = await repo.GetProductionDDL(bitopiApplication.User.UserCode);
+            bitopiApplication.DDLList = ddl;
+
             recentHistory = DBAccess.Database.RecentHistory.Result;
             if (recentHistory != null)
             {

@@ -22,17 +22,19 @@ using BitopiApprovalSystem.PushNotification;
 namespace BitopiApprovalSystem
 {
     [Activity(Label = "LoginActivity", Theme = "@style/MyTheme", NoHistory = true)]
-    public class LoginActivity : AppCompatActivity
+    public class LoginActivity : BaseActivity
     {
         EditText etUserName, etPwd;
         TextView tvMsg;
         Button btnLogin;
         AVLoadingIndicatorView indRotator;
         BitopiApplication bitopiApplication;
+        AccountRepository repo;
         protected override void OnCreate(Bundle savedInstanceState)
         {
             //BitopiSingelton.Instance.CurrentActivity = "Login Activity";
             base.OnCreate(savedInstanceState);
+            repo = new AccountRepository(ShowLoader,HideLoader);
             bitopiApplication = (BitopiApplication)this.ApplicationContext;
             bitopiApplication.CurrentActivity = "Login Activity";
             SetContentView(Resource.Layout.layout_login);
@@ -50,7 +52,17 @@ namespace BitopiApprovalSystem
         protected override void OnStart()
         {
             base.OnStart();
-            
+            if (!bitopiApplication.IsInternetConnectionAvailable(this))
+            {
+                tvMsg.Visibility = ViewStates.Visible;
+                tvMsg.Text = "No Internet Connection Available.";
+                return;
+            }
+            //if (repo.GetVersion() > bitopiApplication.CurrentVersion)
+            //{
+            //    BitopiSingelton.Instance.ShowNewVersionDialog(this);
+            //    return;
+            //}
             btnLogin.Click += onLoginClick;
             etPwd.TextChanged += (s, e) =>
             {
@@ -68,16 +80,16 @@ namespace BitopiApprovalSystem
         }
         public async void onLoginClick(object sender, EventArgs er)
         {
-            if(!bitopiApplication.IsInternetConnectionAvailable(this))
+            
+           // var progressDialog = ProgressDialog.Show(this, null, "Please Wait.", true);
+
+            if (!bitopiApplication.IsInternetConnectionAvailable(this))
             {
                 tvMsg.Visibility = ViewStates.Visible;
                 tvMsg.Text = "No Internet Connection Available.";
                 return;
             }
-            var progressDialog = ProgressDialog.Show(this, null, "Please Wait.", true);
-            AccountRepository repo = new AccountRepository();
 
-        
 
             string encryptedUser = Cipher.Encrypt(etUserName.Text);
             string encryptedPwd = Cipher.Encrypt(etPwd.Text);
@@ -102,14 +114,14 @@ namespace BitopiApprovalSystem
                 bitopiApplication.DeviceName,
                 "android", 1,bitopiApplication.CurrentVersion);
             user.PermittedApproval = new List<int> { 1, 3, 4 };
-            if (user.VersionCode > bitopiApplication.CurrentVersion)
-            {
-                BitopiSingelton.Instance.ShowNewVersionDialog(this);
-                return;
-            }
+            //if (user.VersionCode > bitopiApplication.CurrentVersion)
+            //{
+            //    BitopiSingelton.Instance.ShowNewVersionDialog(this);
+            //    return;
+            //}
             if (String.IsNullOrEmpty(user.UserCode))
             {
-                progressDialog.Dismiss();
+                //progressDialog.Dismiss();
                 etUserName.SetBackgroundResource(Resource.Drawable.rounded_textview_error);
                 etPwd.SetBackgroundResource(Resource.Drawable.rounded_textview_error);
                 tvMsg.Visibility = ViewStates.Visible;
@@ -117,13 +129,13 @@ namespace BitopiApprovalSystem
             }
             else
             {
-                progressDialog.Dismiss();
+                //progressDialog.Dismiss();
                 tvMsg.Visibility = ViewStates.Gone;
                 //BitopiSingelton.Instance.User = user;
                 bitopiApplication.User = user;
-                List<DDL> ddl = await new ProductionRepository().GetProductionDDL(user.UserCode);
+                //List<DDL> ddl = await new ProductionRepository().GetProductionDDL(user.UserCode);
                 
-                bitopiApplication.DDLList = ddl;
+                //bitopiApplication.DDLList = ddl;
                 ISharedPreferences pref = Application.Context.GetSharedPreferences ("_bitopi_UserInfo", FileCreationMode.Private);
                 
                 pref.Edit().PutString("UserName", encryptedUser).Commit();

@@ -60,6 +60,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RepositorySettings.cs" />
     <Compile Include="TNARepository.cs" />
+    <Compile Include="WebClientExt.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Model\Model.csproj">

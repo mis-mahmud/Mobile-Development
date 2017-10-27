@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipChildren="false"
+    android:clickable="true">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipChildren="false"
+        android:clickable="true"
+        android:id="@+id/rlVersionContainer"
+        android:visibility="visible"
+        android:background="#a0000000">
+        <RelativeLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:id="@+id/rlVersion"
+            android:clipChildren="false"
+            android:clickable="true"
+            android:gravity="center"
+            android:clipToPadding="false"
+            android:layout_centerInParent="false"
+            android:layout_marginRight="30dp"
+            android:layout_marginLeft="0dp"
+            android:layout_centerVertical="true"
+            android:background="#d33d33">
+            <Button
+                android:id="@+id/btnDownLoad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="New Version Arrived! Click Here to Downlaod."
+                android:textSize="18sp"
+                android:gravity="center"
+                android:textColor="#ffffff"
+                android:layout_centerInParent="true"
+                android:layout_centerHorizontal="true"
+                android:background="@null"
+                android:textAllCaps="false"
+                android:textStyle="bold"
+                android:padding="20dp"
+                android:typeface="sans"
+                android:fontFamily="sans-serif-thin" />
+            <Button
+                android:id="@+id/btnCancel"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="-10dp"
+                android:background="@drawable/blue"
+                android:layout_marginRight="-10dp"
+                android:text="X"
+                android:textStyle="bold"
+                android:textColor="#ffffff"
+                android:gravity="center"
+                android:textSize="16sp" />
+        </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>

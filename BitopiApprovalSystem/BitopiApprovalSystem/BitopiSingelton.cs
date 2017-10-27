@@ -14,6 +14,8 @@ using BitopiApprovalSystem.Model;
 using Newtonsoft.Json;
 using Android.Text;
 using Android.Text.Util;
+using System.Net;
+using System.IO;
 
 namespace BitopiApprovalSystem
 {
@@ -33,12 +35,12 @@ namespace BitopiApprovalSystem
         public MyTaskType MyTaskType;
         public string MacAddress
         {
-            get;set;
+            get; set;
             //get
             //{
             //    //WifiManager wifiMan = (WifiManager)this.GetSystemService(Context.WifiService);
             //    //WifiInfo wifiInf = wifiMan.ConnectionInfo;
-                
+
             //    //return UID.id(this);
             //    //// return wifiInf.MacAddress;
             //    ////return "";
@@ -52,11 +54,11 @@ namespace BitopiApprovalSystem
             builder.SetTitle(" About ");
             var version = activity.PackageManager.GetPackageInfo(activity.PackageName,
                 Android.Content.PM.PackageInfoFlags.MetaData);
-            builder.SetMessage("Version:" + version.VersionName+"\nVersionCode: "+ version.VersionCode + "\n© " + DateTime.Now.Year + " Bitopi Group.\nAll Rights Reserved.");
+            builder.SetMessage("Version:" + version.VersionName + "\nVersionCode: " + version.VersionCode + "\n© " + DateTime.Now.Year + " Bitopi Group.\nAll Rights Reserved.");
 
             builder.SetCancelable(false);
             builder.SetPositiveButton("OK", delegate { builder.Dispose(); });
-            
+
 
             builder.Show();
 
@@ -67,17 +69,63 @@ namespace BitopiApprovalSystem
             builder.SetTitle(" New Version Available ");
             var version = activity.PackageManager.GetPackageInfo(activity.PackageName,
                 Android.Content.PM.PackageInfoFlags.MetaData);
-            SpannableString s = new SpannableString(String.Format("Please download the new version of this app from" 
-                + System.Environment.NewLine +"http://apps.bitopibd.com/bimobapps"));
+            SpannableString s = new SpannableString(String.Format("Please download the new version of this app from"));
             Linkify.AddLinks(s, MatchOptions.WebUrls);
-            builder.SetMessage(s);
+            //builder.SetMessage(s);
 
             builder.SetCancelable(false);
-            builder.SetPositiveButton("OK", delegate { builder.Dispose();Android.OS.Process.KillProcess(Android.OS.Process.MyPid()); });
+            builder.SetPositiveButton("Download", delegate
+            {
+                builder.Dispose();
+
+                DownloadFile(activity);
+
+            });
+
 
 
             builder.Show();
 
+        }
+        public void DownloadFile(Activity activity, string m_uri = "http://apps.bitopibd.com/BitopiApps/bitopiOTG.apk")
+        {
+            var webClient = new WebClient();
+            ProgressDialog pbProgress;
+            pbProgress = new ProgressDialog(activity);
+            pbProgress.Indeterminate = false;
+            pbProgress.SetProgressNumberFormat("%1d MB / %2d MB");
+            if (System.IO.File.Exists(Android.OS.Environment.ExternalStorageDirectory + "/download/bitopiOTG.apk"))
+             System.IO.File.Delete(Android.OS.Environment.ExternalStorageDirectory + "/download/bitopiOTG.apk");
+            
+            webClient.DownloadFileCompleted += (s, e) =>
+            {
+
+                Intent promptInstall = new Intent(Intent.ActionView).SetDataAndType(Android.Net.Uri.FromFile(new Java.IO.File(Android.OS.Environment.ExternalStorageDirectory + "/download/" + "bitopiOTG.apk")), "application/vnd.android.package-archive");
+                promptInstall.AddFlags(ActivityFlags.NewTask);
+                activity.StartActivity(promptInstall);
+                pbProgress.Dismiss();
+                //Android.OS.Process.KillProcess(Android.OS.Process.MyPid());
+
+            };
+
+            var url = new System.Uri(m_uri);
+
+            string directory = Path.Combine(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath, Android.OS.Environment.DirectoryDownloads);
+            string file = Path.Combine(directory, "/bitopiOTG.apk");
+            WebClient client = new WebClient();
+
+            webClient.DownloadProgressChanged += (sender, e) =>
+            {
+                int length = (Convert.ToInt32(e.TotalBytesToReceive.ToString()) / 1024) / 1024;
+                int prog = (Convert.ToInt32(e.BytesReceived.ToString()) / 1024) / 1024;
+                int perc = Convert.ToInt32(e.ProgressPercentage.ToString());
+                pbProgress.Max = length;
+                pbProgress.Progress = prog;
+            };
+            webClient.DownloadFileAsync(url, Android.OS.Environment.ExternalStorageDirectory + "/download/bitopiOTG.apk");
+            pbProgress.SetProgressStyle(ProgressDialogStyle.Horizontal);
+            pbProgress.Progress = 0;
+            pbProgress.Show();
         }
         public void ClearData()
         {
@@ -103,10 +151,10 @@ namespace BitopiApprovalSystem
 
         public Dictionary<string, List<string>> ReceivingMessages { get; set; }
     }
-    [Application(Debuggable =false)]
+    [Application(Debuggable = false)]
     public class BitopiApplication : Application
     {
-        
+
         public UserModel User;
         public int ApprovalId;
         public ApprovalType ApprovalType;
@@ -204,7 +252,7 @@ namespace BitopiApprovalSystem
             set
             {
                 DDL[] _locList = this.LocationList;
-                _locList[0] = _locList[1]!=null? _locList[1]:new DDL { LocationName="",ProcessName=""};
+                _locList[0] = _locList[1] != null ? _locList[1] : new DDL { LocationName = "", ProcessName = "" };
                 _locList[1] = _locList[2] != null ? _locList[2] : new DDL { LocationName = "", ProcessName = "" };
                 _locList[2] = value;
                 this.LocationList = _locList;
@@ -239,7 +287,8 @@ namespace BitopiApprovalSystem
                     System.IO.File.WriteAllText(filename, text);
                     ;
                 }
-                catch(Exception ex) {
+                catch (Exception ex)
+                {
                     string msg = ex.Message;
                 }
             }

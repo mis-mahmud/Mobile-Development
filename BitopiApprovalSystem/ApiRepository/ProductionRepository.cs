@@ -73,7 +73,7 @@ namespace ApiRepository
         //        return aproves;
             
         //}
-        public int SetProduction(string RefNO, int Qty, string LocationRef, string AddedBy, List<Operation> OperationList)
+        public async Task<int> SetProduction(string RefNO, int Qty, string LocationRef, string AddedBy, List<Operation> OperationList)
         {
             ProductionAccountingDBModel model = new ProductionAccountingDBModel
             {
@@ -90,7 +90,7 @@ namespace ApiRepository
             HttpClient client = new HttpClient();
             HttpContent contentPost = new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8,
 "application/json");
-            HttpResponseMessage result = client.PostAsync(url, contentPost).Result;
+            HttpResponseMessage result =await client.PostAsync(url, contentPost);
             var aproves = JsonConvert.DeserializeObject<int>(result.Content.ReadAsStringAsync().Result);
             return aproves;
         }

@@ -59,8 +59,7 @@ namespace BitopiApprovalSystem
         {
             base.OnStart();
 
-            List<DDL> ddl = await repo.GetProductionDDL(bitopiApplication.User.UserCode);
-            bitopiApplication.DDLList = ddl;
+            
 
             recentHistory = DBAccess.Database.RecentHistory.Result;
             if (recentHistory != null)

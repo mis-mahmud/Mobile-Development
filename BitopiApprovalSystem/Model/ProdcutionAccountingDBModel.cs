@@ -27,6 +27,8 @@ namespace BitopiApprovalSystem.Model
         public string AddedBy { get; set; }
         public DateTime ProdDateTime { get; set; }
         public List<Operation> OperationList{get;set;}
+        public HourlyProduction HourlyProduction { get; set; }
+        public string Period { get; set; }
     }
     public class ProductionQualityDBModel : ProductionAccountingDBModel
     {
@@ -63,5 +65,24 @@ namespace BitopiApprovalSystem.Model
         public string OperationName { get; set; }
         public int Qty { get; set; }
 
+    }
+    public class HourlyProduction
+    {
+        public int one { get; set; }
+        public int two { get; set; }
+        public int three { get; set; }
+        public int four { get; set; }
+        public int five { get; set; }
+        public int six { get; set; }
+        public int seven { get; set; }
+        public int eight { get; set; }
+        public int nine { get; set; }
+        public int ten { get; set; }
+        public int eleven { get; set; }
+        public int tweleve { get; set; }
+        public int thirteen { get; set; }
+        public int fourteen { get; set; }
+        public int fifteen { get; set; }
+        public int sixteen { get; set; }
     }
 }

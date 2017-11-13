@@ -23,6 +23,7 @@ using System.Threading.Tasks;
 using Android.Views.Animations;
 using BitopiApprovalSystem.CustomControl;
 using System.Globalization;
+using Android.Text;
 
 namespace BitopiApprovalSystem
 {
@@ -33,7 +34,7 @@ namespace BitopiApprovalSystem
         ProductionRepository repo;
         ListView lvProduct, lvOperation;
         TextView tvLocation;
-        TextView tvRef, tvOrderQty, tvBalanceQty, tvProducedQty, txtWIPQty;
+        TextView tvRef, tvOrderQty, tvBalanceQty, tvProducedQty, txtWIPQty, txtPeriod;
         EditText etQty;
         Button btnPlus, btnMinus;
         Button btnSave, btnIncentive;
@@ -114,8 +115,8 @@ namespace BitopiApprovalSystem
             //{
             list = await repo.GetProductionList(bitopiApplication.User.UserCode, DBAccess.Database.RecentHistory.Result.ProcessID,
                 DBAccess.Database.RecentHistory.Result.LocationID, PRStatus, 1);
-            RunOnUiThread(() =>
-            {
+            //RunOnUiThread(() =>
+            //{
                 atvReference.Adapter = new ArrayAdapter(this, Android.Resource.Layout.SimpleDropDownItem1Line, list.Select(t => t.RefNo).ToArray());
                 adapter.Items = list;
                 adapter.NotifyDataSetChanged();
@@ -128,7 +129,7 @@ namespace BitopiApprovalSystem
                         Toast.MakeText(this, "No Data Found", ToastLength.Long).Show();
                 }
 
-            });
+            //});
             // })).Start();
         }
         async void LoadOperation(string Ref, Action task)
@@ -246,6 +247,7 @@ namespace BitopiApprovalSystem
             tvBalanceQty = FindViewById<TextView>(Resource.Id.txtBalanceQty);
             tvProducedQty = FindViewById<TextView>(Resource.Id.txtProduceQty);
             txtWIPQty = FindViewById<TextView>(Resource.Id.txtWIPQty);
+            txtPeriod = FindViewById<TextView>(Resource.Id.txtPeriod);
             etQty = FindViewById<EditText>(Resource.Id.etQty);
             btnSave = FindViewById<Button>(Resource.Id.btnSubmit);
             btnIncentive = FindViewById<Button>(Resource.Id.btnOperation);
@@ -389,26 +391,47 @@ namespace BitopiApprovalSystem
             string Ref = ((Button)sender).Text;
             LoadSelectedRef(Ref);
         }
-        void LoadSelectedRef(string Ref)
+       async void LoadSelectedRef(string Ref)
         {
             // var progressDialog = ProgressDialog.Show(this, null, "Please Wait.", true);
-            new Thread(new ThreadStart(() =>
-            {
-                var list = repo.GetProductionList(bitopiApplication.User.UserCode, DBAccess.Database.RecentHistory.Result.ProcessID,
-                       DBAccess.Database.RecentHistory.Result.LocationID, SelectedPRStatus, 1, Ref).Result;
+           // new Thread(new ThreadStart(() =>
+            //{
+                var list =await repo.GetProductionList(bitopiApplication.User.UserCode, DBAccess.Database.RecentHistory.Result.ProcessID,
+                       DBAccess.Database.RecentHistory.Result.LocationID, SelectedPRStatus, 1, Ref);
                 if (list.Count == 0) return;
                 ProductionAccountingDBModel model = list.First();
-                RunOnUiThread(() =>
-                {
+                //RunOnUiThread(() =>
+                //{
                     tvOrderQty.Text = model.OrderQty.ToString("N0");
                     tvBalanceQty.Text = model.BalanceQty.ToString("N0");
                     tvProducedQty.Text = model.ProducedQty.ToString("N0");
                     txtWIPQty.Text = model.WIP == -99999 ? "N/A" : model.WIP.ToString("N0");
-
+                    txtPeriod.Text = model.Period;
                     atvReference.Text = tvRef.Text = Ref;
                     //progressDialog.Dismiss();
-                });
-            })).Start();
+                    if (model.HourlyProduction == null) model.HourlyProduction = new HourlyProduction();
+                    LoadHourlyProduction(model.HourlyProduction);
+                //});
+            //})).Start();
+        }
+        public async void LoadSelectedList(string Ref)
+        {
+            //new Thread(new ThreadStart(() =>
+            //{
+            var prodList = await repo.GetProductionList(bitopiApplication.User.UserCode, DBAccess.Database.RecentHistory.Result.ProcessID,
+                 DBAccess.Database.RecentHistory.Result.LocationID, "", 1, Ref);
+            //RunOnUiThread(() =>
+            //{
+            var m = prodList.First();
+            tvOrderQty.Text = m.OrderQty.ToString("N0");
+            tvBalanceQty.Text = m.BalanceQty.ToString("N0");
+            tvProducedQty.Text = m.ProducedQty.ToString("N0");
+            txtWIPQty.Text = m.WIP == -99999 ? "N/A" : m.WIP.ToString("N0");
+            if (m.HourlyProduction == null) m.HourlyProduction = new HourlyProduction();
+            LoadHourlyProduction(m.HourlyProduction);
+            //});
+            //})).Start();
+
         }
         private void LoadPR_Click(object sender, EventArgs e)
         {
@@ -440,7 +463,7 @@ namespace BitopiApprovalSystem
             etQty.Text = qty.ToString();
         }
 
-        private void BtnSave_Click(object sender, EventArgs e)
+        private async void BtnSave_Click(object sender, EventArgs e)
         {
             var qty = int.Parse(etQty.Text, NumberStyles.AllowThousands);
 
@@ -466,15 +489,15 @@ namespace BitopiApprovalSystem
             List<RecentPR> prs = DBAccess.Database.RecentPRs.Result.Where(t => t.EntryType == (int)EntryType.Production).ToList();
             if (prs.Where(t => t.RefID == atvReference.Text).Count() == 0)
             {
-                DBAccess.Database.SaveRecentPR(new DAL.RecentPR { RefID = atvReference.Text, LocationRef = tvLocation.Text, EntryType = (int)EntryType.Production });
+               await DBAccess.Database.SaveRecentPR(new DAL.RecentPR { RefID = atvReference.Text, LocationRef = tvLocation.Text, EntryType = (int)EntryType.Production });
                 prs = DBAccess.Database.RecentPRs.Result.Where(t => t.EntryType == (int)EntryType.Production).ToList();
                 if (prs.Count == 6)
                 {
-                    DBAccess.Database.DeleteItemAsync(prs.Where(t => t.ID == 1).FirstOrDefault());
+                  await  DBAccess.Database.DeleteItemAsync(prs.Where(t => t.ID == 1).FirstOrDefault());
                     foreach (var pr in prs)
                     {
                         pr.ID = pr.ID - 1;
-                        DBAccess.Database.SaveRecentPR(pr);
+                      await  DBAccess.Database.SaveRecentPR(pr);
                     }
                 }
                 PopulateRecentItem();
@@ -490,70 +513,82 @@ namespace BitopiApprovalSystem
             var refid = atvReference.Text;
 
             var userCode = bitopiApplication.User.UserCode;
+
+            var location = DBAccess.Database.RecentHistory.Result.LocationID;
             //new Thread(new ThreadStart(() =>
             //{
-            var location = DBAccess.Database.RecentHistory.Result.LocationID;
-            var result = repo.SetProduction(refid,
+                int result =await repo.SetProduction(refid,
             qty, location, userCode, operationList);
 
-            RunOnUiThread(() =>
-            {
-                if (result > 0)
-                {
-                   
-                    if (SelectedPRStatus != "")
+                //RunOnUiThread(() =>
+                //{
+                    if (result > 0)
                     {
-                        LoadList(SelectedPRStatus);
+
+                        if (SelectedPRStatus != "")
+                        {
+                            LoadList(SelectedPRStatus);
+                        }
+                        LoadSelectedList(atvReference.Text);
+                        progressDialog.Dismiss();
+                        Toast.MakeText(this, "Successfully Saved", ToastLength.Long).Show();
+
                     }
-                    LoadSelectedList(atvReference.Text);
-                    progressDialog.Dismiss();
-                    Toast.MakeText(this, "Successfully Saved", ToastLength.Long).Show();
+                    else
+                    {
+                        progressDialog.Dismiss();
+                        Toast.MakeText(this, "Unsuccessfull operation", ToastLength.Long).Show();
+                    }
 
-                }
-                else
-                {
-                    progressDialog.Dismiss();
-                    Toast.MakeText(this, "Unsuccessfull operation", ToastLength.Long).Show();
-                }
-
-            });
+               // });
             //})).Start();
         }
-        public void LoadSelectedList(string Ref)
+     
+        public void LoadHourlyProduction(HourlyProduction HourlyProduction)
         {
-            new Thread(new ThreadStart(() =>
+            for (int i = 1; i <= 15; i++)
             {
-                var prodList = repo.GetProductionList(bitopiApplication.User.UserCode, DBAccess.Database.RecentHistory.Result.ProcessID,
-                     DBAccess.Database.RecentHistory.Result.LocationID, "", 1, Ref).Result;
-                RunOnUiThread(() =>
+
+                switch (i)
                 {
-                    var m = prodList.First();
-                    tvOrderQty.Text = m.OrderQty.ToString("N0");
-                    tvBalanceQty.Text = m.BalanceQty.ToString("N0");
-                    tvProducedQty.Text = m.ProducedQty.ToString("N0");
 
-                    txtWIPQty.Text = m.WIP == -99999 ? "N/A" : m.WIP.ToString("N0");
-                });
-            })).Start();
-
+                    case 1: FindViewById<TextView>(Resource.Id.period1).Text = Html.FromHtml("1st<br/>" + HourlyProduction.one.ToString()).ToString(); break;
+                    case 2: FindViewById<TextView>(Resource.Id.period2).Text = Html.FromHtml("2nd<br/>" + HourlyProduction.two.ToString()).ToString(); break;
+                    case 3: FindViewById<TextView>(Resource.Id.period3).Text = Html.FromHtml("3rd<br/>" + HourlyProduction.three.ToString()).ToString(); break;
+                    case 4: FindViewById<TextView>(Resource.Id.period4).Text = Html.FromHtml("4th<br/>" + HourlyProduction.four.ToString()).ToString(); break;
+                    case 5: FindViewById<TextView>(Resource.Id.period5).Text = Html.FromHtml("5th<br/>" + HourlyProduction.five.ToString()).ToString(); break;
+                    case 6: FindViewById<TextView>(Resource.Id.period6).Text = Html.FromHtml("6th<br/>" + HourlyProduction.six.ToString()).ToString(); break;
+                    case 7: FindViewById<TextView>(Resource.Id.period7).Text = Html.FromHtml("7th<br/>" + HourlyProduction.seven.ToString()).ToString(); break;
+                    case 8: FindViewById<TextView>(Resource.Id.period8).Text = Html.FromHtml("8th<br/>" + HourlyProduction.eight.ToString()).ToString(); break;
+                    case 9: FindViewById<TextView>(Resource.Id.period9).Text = Html.FromHtml("9th<br/>" + HourlyProduction.nine.ToString()).ToString(); break;
+                    case 10: FindViewById<TextView>(Resource.Id.period10).Text = Html.FromHtml("10th<br/>" + HourlyProduction.ten.ToString()).ToString(); break;
+                    case 11: FindViewById<TextView>(Resource.Id.period11).Text = Html.FromHtml("11th<br/>" + HourlyProduction.eleven.ToString()).ToString(); break;
+                    case 12: FindViewById<TextView>(Resource.Id.period12).Text = Html.FromHtml("12th<br/>" + HourlyProduction.tweleve.ToString()).ToString(); break;
+                    case 13: FindViewById<TextView>(Resource.Id.period13).Text = Html.FromHtml("13th<br/>" + HourlyProduction.thirteen.ToString()).ToString(); break;
+                    case 14: FindViewById<TextView>(Resource.Id.period14).Text = Html.FromHtml("14th<br/>" + HourlyProduction.fourteen.ToString()).ToString(); break;
+                    case 15: FindViewById<TextView>(Resource.Id.period15).Text = Html.FromHtml("15th<br/>" + HourlyProduction.fifteen.ToString()).ToString(); break;
+                }
+            }
         }
         private void LvProduct_ItemClick(object sender, AdapterView.ItemClickEventArgs e)
         {
             Animation bottomUp = Android.Views.Animations.AnimationUtils.LoadAnimation(this,
             Resource.Animation.bottom_down);
-
+            string tag = e.View.Tag.ToString();
             lvProduct.StartAnimation(bottomUp);
             bottomUp.AnimationEnd += (s, er) =>
             {
                 rlPRLV.Visibility = (ViewStates.Gone);
             };
-
-            var model = list[e.Position];
+            // var model = list[e.Position];
+            var model = list.Where(t => t.RefNo == tag).FirstOrDefault();
             tvRef.Text = atvReference.Text = model.RefNo;
-            tvOrderQty.Text = model.OrderQty.ToString("N0");
-            tvBalanceQty.Text = model.BalanceQty.ToString("N0");
-            tvProducedQty.Text = model.ProducedQty.ToString("N0");
-            txtWIPQty.Text = model.WIP == -99999 ? "N/A" : model.WIP.ToString("N0");
+            LoadSelectedRef(tvRef.Text);
+
+            //tvOrderQty.Text = model.OrderQty.ToString("N0");
+            //tvBalanceQty.Text = model.BalanceQty.ToString("N0");
+            //tvProducedQty.Text = model.ProducedQty.ToString("N0");
+            //txtWIPQty.Text = model.WIP == -99999 ? "N/A" : model.WIP.ToString("N0");
             //tvLocation.Text = model.LocationName;
             isListShown = false;
         }
@@ -591,7 +626,7 @@ namespace BitopiApprovalSystem
             view.FindViewById<TextView>(Resource.Id.tvStyle).Text = model.Style;
             view.FindViewById<TextView>(Resource.Id.tvBuyer).Text = model.Buyer;
             view.FindViewById<TextView>(Resource.Id.tvDelivaryDate).Text = model.DeliveryDate;
-
+            view.Tag = model.RefNo;
             return view;
         }
         public override long GetItemId(int position)

@@ -84,21 +84,21 @@ namespace BitopiApprovalSystem.DAL
             db.DropTableAsync<RecentHistory>();
             db.DropTableAsync<RecentPR>();
         }
-        public Task<int> SaveRecentPR(RecentPR item)
+        public async Task<int> SaveRecentPR(RecentPR item)
         {
             if (item.ID == 0)
             {
                 item.ID = this.RecentPRs.Result.Where(t=>t.EntryType==item.EntryType).Count()+1;
-                return db.InsertAsync(item);
+                return await db.InsertAsync(item);
             }
             else
             {
-                return db.UpdateAsync(item);
+                return await db.UpdateAsync(item);
             }
         }
-        public Task<int> DeleteItemAsync(RecentPR item)
+        public async Task<int> DeleteItemAsync(RecentPR item)
         {
-            return db.DeleteAsync(item);
+            return await db.DeleteAsync(item);
         }
         
     }

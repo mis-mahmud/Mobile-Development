@@ -15,6 +15,7 @@ using ApiRepository;
 using Android.Support.V7.App;
 using Android.Support.V4.Widget;
 using BitopiApprovalSystem.DAL;
+using BitopiApprovalSystem.Model;
 
 namespace BitopiApprovalSystem
 {
@@ -41,10 +42,21 @@ namespace BitopiApprovalSystem
                 Intent i = new Intent(this, typeof(MyTaskMenu));
                 StartActivity(i);
             };
-            FindViewById<RelativeLayout>(Resource.Id.rlPA).Click += (s, e) =>
+            FindViewById<RelativeLayout>(Resource.Id.rlPA).Click += async (s, e) =>
             {
-                Intent i = new Intent(this, typeof(ProcessListActivity));
-                StartActivity(i);
+                ProductionRepository repo = new ProductionRepository(ShowLoader, HideLoader);
+                List<DDL> ddl = await repo.GetProductionDDL(bitopiApplication.User.UserCode);
+                if (ddl != null && ddl.Count > 0)
+                {
+                    bitopiApplication.DDLList = ddl;
+
+                    Intent i = new Intent(this, typeof(ProcessListActivity));
+                    StartActivity(i);
+                }
+                else
+                {
+                    Toast.MakeText(this, "You Do not have any Production Location Attached!!!!",ToastLength.Long).Show();
+                }
             };
             RLleft_drawer = FindViewById<RelativeLayout>(Resource.Id.RLleft_drawer);
             mDrawerLayout = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
@@ -60,7 +72,7 @@ namespace BitopiApprovalSystem
                     mDrawerLayout.OpenDrawer(RLleft_drawer);
                 }
             };
-            
+
             //base.LoadDrawerView();
         }
         protected override void OnStart()
@@ -90,7 +102,7 @@ namespace BitopiApprovalSystem
                      bitopiApplication.MacAddress,
                      "",
                      "",
-                     "android", 2, bitopiApplication.CurrentVersion,bitopiApplication.User.UserCode).Result;
+                     "android", 2, bitopiApplication.CurrentVersion, bitopiApplication.User.UserCode).Result;
 
                     ISharedPreferences pref =
                     Application.Context.GetSharedPreferences("_bitopi_UserInfo", FileCreationMode.Private);

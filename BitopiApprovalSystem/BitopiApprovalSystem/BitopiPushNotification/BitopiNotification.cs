@@ -97,6 +97,7 @@ namespace BitopiApprovalSystem.BitopiPushNotification
                             int requestID = DateTime.Now.Millisecond;
                             DBAccess.Database.DeleteVersion(lastUpdateVersion);
                             DBAccess.Database.InsertVersion(UpdateVersion);
+                            notiIntent= new Intent(this, typeof(DownloadNewVersionActivity));
                             notiIntent.AddFlags(ActivityFlags.ClearTop);
                             var pendingIntent = PendingIntent.GetActivity(ApplicationContext, requestID, notiIntent, 0);//requestID = DateTime.Now.Millisecond;
                             var notificationBuilder = new NotificationCompat.Builder(this)

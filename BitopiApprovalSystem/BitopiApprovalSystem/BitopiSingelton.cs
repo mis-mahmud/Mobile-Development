@@ -17,6 +17,7 @@ using Android.Text.Util;
 using System.Net;
 using System.IO;
 
+
 namespace BitopiApprovalSystem
 {
     public class BitopiSingelton
@@ -63,7 +64,7 @@ namespace BitopiApprovalSystem
             builder.Show();
 
         }
-        public void ShowNewVersionDialog(Activity activity)
+        public void ShowNewVersionDialog(Android.Support.V7.App.AppCompatActivity activity)
         {
             AlertDialog.Builder builder = new AlertDialog.Builder(activity);
             builder.SetTitle(" New Version Available ");
@@ -89,14 +90,24 @@ namespace BitopiApprovalSystem
         }
         public void DownloadFile(Activity activity, string m_uri = "http://apps.bitopibd.com/BitopiApps/bitopiOTG.apk")
         {
+
             var webClient = new WebClient();
             ProgressDialog pbProgress;
             pbProgress = new ProgressDialog(activity);
             pbProgress.Indeterminate = false;
             pbProgress.SetProgressNumberFormat("%1d MB / %2d MB");
+            if ((int)Build.VERSION.SdkInt >= 23)
+            {
+                if (activity.CheckSelfPermission(Android.Manifest.Permission.WriteExternalStorage) != Android.Content.PM.Permission.Granted)
+                {
+                    activity.RequestPermissions(new String[] { Android.Manifest.Permission.WriteExternalStorage },
+                     101);
+                }
+            }
+
             if (System.IO.File.Exists(Android.OS.Environment.ExternalStorageDirectory + "/download/bitopiOTG.apk"))
-             System.IO.File.Delete(Android.OS.Environment.ExternalStorageDirectory + "/download/bitopiOTG.apk");
-            
+                System.IO.File.Delete(Android.OS.Environment.ExternalStorageDirectory + "/download/bitopiOTG.apk");
+
             webClient.DownloadFileCompleted += (s, e) =>
             {
 
@@ -104,9 +115,9 @@ namespace BitopiApprovalSystem
                 promptInstall.AddFlags(ActivityFlags.NewTask);
                 activity.StartActivity(promptInstall);
                 pbProgress.Dismiss();
-                //Android.OS.Process.KillProcess(Android.OS.Process.MyPid());
+                    //Android.OS.Process.KillProcess(Android.OS.Process.MyPid());
 
-            };
+                };
 
             var url = new System.Uri(m_uri);
 
@@ -126,7 +137,9 @@ namespace BitopiApprovalSystem
             pbProgress.SetProgressStyle(ProgressDialogStyle.Horizontal);
             pbProgress.Progress = 0;
             pbProgress.Show();
+
         }
+
         public void ClearData()
         {
             _instance.User = null;

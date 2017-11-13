@@ -3,6 +3,9 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+<!--<ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">-->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -371,7 +374,8 @@
                 android:layout_width="wrap_content"
                 android:id="@+id/rlWIP"
                 android:layout_toRightOf="@+id/rlBlQty"
-                android:backgroundTint="#ff0a64be">
+                android:backgroundTint="#ff0a64be"
+                android:layout_marginRight="20dp">
                 <TextView
                     android:text="W.I.P"
                     android:layout_height="wrap_content"
@@ -392,6 +396,33 @@
                     android:fontFamily="sans-serif-thin"
                     android:textColor="#FFF"
                     android:textSize="12sp" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:id="@+id/rlPeriod"
+                android:layout_toRightOf="@+id/rlWIP"
+                android:backgroundTint="#ff0a64be">
+                <TextView
+                    android:text="Period"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:id="@+id/lblPeriod"
+                    android:layout_toRightOf="@id/lblProduce"
+                    android:fontFamily="sans-serif-thin"
+                    android:textColor="#FFF"
+                    android:textStyle="bold"
+                    android:textSize="12sp" />
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_below="@id/lblPeriod"
+                    android:id="@+id/txtPeriod"
+                    android:layout_toRightOf="@id/txtProduceQty"
+                    android:fontFamily="sans-serif-thin"
+                    android:textColor="#FFF"
+                    android:textSize="12sp"
+                    android:text="None" />
             </RelativeLayout>
         </RelativeLayout>
         <Button
@@ -427,19 +458,213 @@
             android:shadowColor="#ffefefef"
             android:textStyle="bold"
             android:padding="20dp" />
-    <!--<ListView xmlns:tools="http://schemas.android.com/tools"
-            android:layout_height="match_parent"
+        <RelativeLayout
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/rlPeriod1"
             android:layout_below="@id/btnSubmit"
-            android:id="@+id/lvProduct"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_marginTop="5dp"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="5dp"
-            android:dividerHeight="1dp"
-            tools:visibility="visible" />-->
+            android:layout_marginTop="10dp"
+            android:gravity="center">
+            <TextView
+                android:layout_width="70dp"
+                android:layout_height="50dp"
+                android:background="@drawable/border_textview"
+                android:textColor="#000"
+                android:id="@+id/period1"
+                android:hint="1st"
+                android:textColorHint="#000"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-thin" />
+            <TextView
+                android:layout_width="70dp"
+                android:layout_height="50dp"
+                android:background="@drawable/border_textview"
+                android:textColor="#000"
+                android:id="@+id/period2"
+                android:layout_toRightOf="@+id/period1"
+                android:hint="2nd"
+                android:textColorHint="#000"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-thin" />
+            <TextView
+                android:layout_width="70dp"
+                android:layout_height="50dp"
+                android:background="@drawable/border_textview"
+                android:textColor="#000"
+                android:layout_toRightOf="@+id/period2"
+                android:id="@+id/period3"
+                android:textColorHint="#000"
+                android:hint="3rd"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-thin" />
+            <TextView
+                android:layout_width="70dp"
+                android:layout_height="50dp"
+                android:background="@drawable/border_textview"
+                android:textColor="#000"
+                android:id="@+id/period4"
+                android:layout_toRightOf="@+id/period3"
+                android:textColorHint="#000"
+                android:hint="4th"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-thin" />
+            <TextView
+                android:layout_width="70dp"
+                android:layout_height="50dp"
+                android:background="@drawable/border_textview"
+                android:textColor="#000"
+                android:id="@+id/period5"
+                android:layout_toRightOf="@+id/period4"
+                android:textColorHint="#000"
+                android:hint="5th"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-thin" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/rlPeriod2"
+            android:layout_below="@id/rlPeriod1"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:gravity="center">
+            <TextView
+                android:layout_width="70dp"
+                android:layout_height="50dp"
+                android:background="@drawable/border_textview"
+                android:textColor="#000"
+                android:id="@+id/period6"
+                android:textColorHint="#000"
+                android:hint="6th"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-thin" />
+            <TextView
+                android:layout_width="70dp"
+                android:layout_height="50dp"
+                android:background="@drawable/border_textview"
+                android:textColor="#000"
+                android:id="@+id/period7"
+                android:layout_toRightOf="@+id/period6"
+                android:textColorHint="#000"
+                android:hint="7th"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-thin" />
+            <TextView
+                android:layout_width="70dp"
+                android:layout_height="50dp"
+                android:background="@drawable/border_textview"
+                android:textColor="#000"
+                android:layout_toRightOf="@+id/period7"
+                android:id="@+id/period8"
+                android:textColorHint="#000"
+                android:hint="8th"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-thin" />
+            <TextView
+                android:layout_width="70dp"
+                android:layout_height="50dp"
+                android:background="@drawable/border_textview"
+                android:textColor="#000"
+                android:id="@+id/period9"
+                android:layout_toRightOf="@+id/period8"
+                android:textColorHint="#000"
+                android:hint="9th"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-thin" />
+            <TextView
+                android:layout_width="70dp"
+                android:layout_height="50dp"
+                android:background="@drawable/border_textview"
+                android:textColor="#000"
+                android:id="@+id/period10"
+                android:layout_toRightOf="@+id/period9"
+                android:textColorHint="#000"
+                android:hint="10th"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-thin" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/rlPeriod3"
+            android:layout_below="@id/rlPeriod2"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:gravity="center">
+            <TextView
+                android:layout_width="70dp"
+                android:layout_height="50dp"
+                android:background="@drawable/border_textview"
+                android:textColor="#000"
+                android:id="@+id/period11"
+                android:textColorHint="#000"
+                android:hint="11th"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-thin" />
+            <TextView
+                android:layout_width="70dp"
+                android:layout_height="50dp"
+                android:background="@drawable/border_textview"
+                android:textColor="#000"
+                android:id="@+id/period12"
+                android:layout_toRightOf="@+id/period11"
+                android:textColorHint="#000"
+                android:hint="12th"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-thin" />
+            <TextView
+                android:layout_width="70dp"
+                android:layout_height="50dp"
+                android:background="@drawable/border_textview"
+                android:textColor="#000"
+                android:layout_toRightOf="@+id/period12"
+                android:id="@+id/period13"
+                android:textColorHint="#000"
+                android:hint="13th"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-thin" />
+            <TextView
+                android:layout_width="70dp"
+                android:layout_height="50dp"
+                android:background="@drawable/border_textview"
+                android:textColor="#000"
+                android:id="@+id/period14"
+                android:layout_toRightOf="@+id/period13"
+                android:textColorHint="#000"
+                android:hint="14th"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-thin" />
+            <TextView
+                android:layout_width="70dp"
+                android:layout_height="50dp"
+                android:background="@drawable/border_textview"
+                android:textColor="#000"
+                android:id="@+id/period15"
+                android:layout_toRightOf="@+id/period14"
+                android:textColorHint="#000"
+                android:hint="15th"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-thin" />
+        </RelativeLayout>
     </RelativeLayout>
+<!--</ScrollView>-->
     <RelativeLayout
         android:id="@+id/rlPRLV"
         android:layout_height="match_parent"

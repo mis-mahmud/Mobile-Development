@@ -32,6 +32,25 @@ namespace BitopiApprovalSystem
             SetContentView(Resource.Layout.MenuLayout);
             SupportActionBar.SetDisplayShowCustomEnabled(true);
             SupportActionBar.SetCustomView(Resource.Layout.custom_actionbar);
+
+            var rlSample = FindViewById<RelativeLayout>(Resource.Id.rlSample);
+            rlSample.Click += (s, e) =>
+            {
+                PopupMenu menu = new PopupMenu(this, rlSample);
+                menu.Inflate(Resource.Menu.PopupMenu);
+                menu.MenuItemClick += (s1, arg1) => {
+                    switch(arg1.Item.TitleFormatted.ToString())
+                    {
+                        case "Sample Process":
+                            Intent i = new Intent(this, typeof(SampleProcessActivity));
+                            StartActivity(i);
+                            break;
+                        case "Sample Planning":
+                            break;
+                    }
+                };
+                menu.Show();
+            };
             FindViewById<RelativeLayout>(Resource.Id.rlApproval).Click += (s, e) =>
             {
                 Intent i = new Intent(this, typeof(ApprovalActivity));

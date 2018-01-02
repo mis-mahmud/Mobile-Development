@@ -465,83 +465,90 @@ namespace BitopiApprovalSystem
 
         private async void BtnSave_Click(object sender, EventArgs e)
         {
-            var qty = int.Parse(etQty.Text, NumberStyles.AllowThousands);
+            try
+            {
+                var qty = int.Parse(etQty.Text, NumberStyles.AllowThousands);
 
-            if (atvReference.Text == "")
-            {
-                Toast.MakeText(this, "Please Select an item first", ToastLength.Long).Show();
-                return;
-            }
-            if (txtWIPQty.Text != "N/A")
-            {
-                var wip = int.Parse(txtWIPQty.Text, NumberStyles.AllowThousands);
-                if (qty > wip)
+                if (atvReference.Text == "")
                 {
-                    Toast.MakeText(this, "Production Can not be greater than W.I.P", ToastLength.Long).Show();
+                    Toast.MakeText(this, "Please Select an item first", ToastLength.Long).Show();
                     return;
                 }
-                if (wip == 0)
+                if (txtWIPQty.Text != "N/A")
                 {
-                    Toast.MakeText(this, "Work in Progress is Zero", ToastLength.Long).Show();
-                    return;
-                }
-            }
-            List<RecentPR> prs = DBAccess.Database.RecentPRs.Result.Where(t => t.EntryType == (int)EntryType.Production).ToList();
-            if (prs.Where(t => t.RefID == atvReference.Text).Count() == 0)
-            {
-               await DBAccess.Database.SaveRecentPR(new DAL.RecentPR { RefID = atvReference.Text, LocationRef = tvLocation.Text, EntryType = (int)EntryType.Production });
-                prs = DBAccess.Database.RecentPRs.Result.Where(t => t.EntryType == (int)EntryType.Production).ToList();
-                if (prs.Count == 6)
-                {
-                  await  DBAccess.Database.DeleteItemAsync(prs.Where(t => t.ID == 1).FirstOrDefault());
-                    foreach (var pr in prs)
+                    var wip = int.Parse(txtWIPQty.Text, NumberStyles.AllowThousands);
+                    if (qty > wip)
                     {
-                        pr.ID = pr.ID - 1;
-                      await  DBAccess.Database.SaveRecentPR(pr);
+                        Toast.MakeText(this, "Production Can not be greater than W.I.P", ToastLength.Long).Show();
+                        return;
+                    }
+                    if (wip == 0)
+                    {
+                        Toast.MakeText(this, "Work in Progress is Zero", ToastLength.Long).Show();
+                        return;
                     }
                 }
-                PopulateRecentItem();
-            }
-            //ProdcutionAccountingDBModel model;
-            //if (list != null)
-            //    model = list.Where(t => t.RefNo == atvReference.Text).First();
-            //else
-            //    model = new ProdcutionAccountingDBModel { LocationRef = DBAccess.Database.RecentPRs.Result.Where(t => t.RefID == atvReference.Text).First().LocationRef };
-            ////gifView.Visibility = ViewStates.Visible;
+                List<RecentPR> prs = DBAccess.Database.RecentPRs.Result.Where(t => t.EntryType == (int)EntryType.Production).ToList();
+                if (prs.Where(t => t.RefID == atvReference.Text).Count() == 0)
+                {
+                    await DBAccess.Database.SaveRecentPR(new DAL.RecentPR { RefID = atvReference.Text, LocationRef = tvLocation.Text, EntryType = (int)EntryType.Production });
+                    prs = DBAccess.Database.RecentPRs.Result.Where(t => t.EntryType == (int)EntryType.Production).ToList();
+                    if (prs.Count == 6)
+                    {
+                        await DBAccess.Database.DeleteItemAsync(prs.Where(t => t.ID == 1).FirstOrDefault());
+                        foreach (var pr in prs)
+                        {
+                            pr.ID = pr.ID - 1;
+                            await DBAccess.Database.SaveRecentPR(pr);
+                        }
+                    }
+                    PopulateRecentItem();
+                }
+                //ProdcutionAccountingDBModel model;
+                //if (list != null)
+                //    model = list.Where(t => t.RefNo == atvReference.Text).First();
+                //else
+                //    model = new ProdcutionAccountingDBModel { LocationRef = DBAccess.Database.RecentPRs.Result.Where(t => t.RefID == atvReference.Text).First().LocationRef };
+                ////gifView.Visibility = ViewStates.Visible;
 
-            var progressDialog = ProgressDialog.Show(this, null, "Please Wait.", true);
-            var refid = atvReference.Text;
+                var progressDialog = ProgressDialog.Show(this, null, "Please Wait.", true);
+                var refid = atvReference.Text;
 
-            var userCode = bitopiApplication.User.UserCode;
+                var userCode = bitopiApplication.User.UserCode;
 
-            var location = DBAccess.Database.RecentHistory.Result.LocationID;
-            //new Thread(new ThreadStart(() =>
-            //{
-                int result =await repo.SetProduction(refid,
+                var location = DBAccess.Database.RecentHistory.Result.LocationID;
+                //new Thread(new ThreadStart(() =>
+                //{
+                int result = await repo.SetProduction(refid,
             qty, location, userCode, operationList);
 
                 //RunOnUiThread(() =>
                 //{
-                    if (result > 0)
+                if (result > 0)
+                {
+
+                    if (SelectedPRStatus != "")
                     {
-
-                        if (SelectedPRStatus != "")
-                        {
-                            LoadList(SelectedPRStatus);
-                        }
-                        LoadSelectedList(atvReference.Text);
-                        progressDialog.Dismiss();
-                        Toast.MakeText(this, "Successfully Saved", ToastLength.Long).Show();
-
+                        LoadList(SelectedPRStatus);
                     }
-                    else
-                    {
-                        progressDialog.Dismiss();
-                        Toast.MakeText(this, "Unsuccessfull operation", ToastLength.Long).Show();
-                    }
+                    LoadSelectedList(atvReference.Text);
+                    progressDialog.Dismiss();
+                    Toast.MakeText(this, "Successfully Saved", ToastLength.Long).Show();
 
-               // });
-            //})).Start();
+                }
+                else
+                {
+                    progressDialog.Dismiss();
+                    Toast.MakeText(this, "Unsuccessfull operation", ToastLength.Long).Show();
+                }
+
+                // });
+                //})).Start();
+            }
+            catch(Exception ex)
+            {
+                string s = ex.Message;
+            }
         }
      
         public void LoadHourlyProduction(HourlyProduction HourlyProduction)

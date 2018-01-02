@@ -9,12 +9,14 @@ using BitopiApprovalSystemWebApiModels;
 using System.Globalization;
 using System.Configuration;
 using System.Xml.Serialization;
+using System.Xml.Linq;
 
 namespace BitopiDBContext
 {
     public class DBProduction : DBContext
     {
-        public List<ProductionAccountingDBModel> Get(string UserCode, string ProcessID, string LocationID, string PRStatus, int EntryType, string RefID)
+        public List<ProductionAccountingDBModel> Get(string UserCode, string ProcessID, string LocationID, 
+            string PRStatus, int EntryType, string RefID)
         {
 
             SqlParameter[] param = new SqlParameter[] {
@@ -50,6 +52,13 @@ namespace BitopiDBContext
                         _DBModel.ProducedQty = Convert.ToInt32(dr["ProducedQty"]);
                         _DBModel.WIP = Convert.ToInt32(dr["WIP"]);
                         _DBModel.Size = dr["Size"].ToString();
+                        _DBModel.Period = dr["Period"].ToString();
+                        string hourly = dr["Hourly"].ToString();
+                        if (!String.IsNullOrEmpty(hourly))
+                        {
+                            
+                            _DBModel.HourlyProduction = DesrializeFromXml<HourlyProduction>(hourly, new HourlyProduction(), "HourlyProduction");
+                        }
                         _DBModelList.Add(_DBModel);
                     }
                 }
@@ -58,7 +67,7 @@ namespace BitopiDBContext
             catch (Exception ex)
             {
                 //ErrorSignal.FromCurrentContext().Raise(ex);
-                throw ex;
+                return _DBModelList;
             }
             finally
             {
@@ -285,7 +294,17 @@ namespace BitopiDBContext
             serializer.Serialize(stringwriter, list);
             return stringwriter.ToString();
         }
-        public string  toSqlString(SqlParameter[] param,string sql)
+        public T DesrializeFromXml<T>(string xml, T toDesirialize, string xmlRoot)
+        {
+            var doc = XDocument.Parse(xml);
+            var reader = doc.Root.CreateReader();
+            XmlSerializer deserializer = new XmlSerializer(toDesirialize.GetType(), new XmlRootAttribute(xmlRoot));
+            //TextReader textReader = new StreamReader(@"C:\test.xml");
+            toDesirialize = (T)deserializer.Deserialize(reader);
+            reader.Close();
+            return toDesirialize;
+        }
+        public static string  toSqlString(SqlParameter[] param,string sql)
         {
             
             foreach (var p in param)

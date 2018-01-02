@@ -194,6 +194,7 @@
     <Compile Include="Activity\ProcessListActivity.cs" />
     <Compile Include="Activity\ProductionQuality.cs" />
     <Compile Include="Activity\ProductionRejection.cs" />
+    <Compile Include="Activity\SampleProcessActivity.cs" />
     <Compile Include="Activity\StartupActivity.cs" />
     <Compile Include="Activity\TNAMyTask.cs" />
     <Compile Include="AnimatedExpandableListView.cs" />
@@ -303,6 +304,15 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\OperationIncentiveItem.axml" />
+    <AndroidResource Include="Resources\menu\PopupMenu.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\SampleProcessLayout.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\SampleProcessListItem.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\values\Strings.xml" />
@@ -537,6 +547,9 @@
     <AndroidResource Include="Resources\drawable\border_textview.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\sample.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\packages\Xamarin.GooglePlayServices.Basement.29.0.0.2\build\Xamarin.GooglePlayServices.Basement.targets" Condition="Exists('..\packages\Xamarin.GooglePlayServices.Basement.29.0.0.2\build\Xamarin.GooglePlayServices.Basement.targets')" />

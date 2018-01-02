@@ -13,14 +13,15 @@ namespace ApiRepository
 {
     public class ProductionRepository
     {
-        WebClient client;
+        
         public ProductionRepository()
         {
-            client = new WebClient();
+           
         }
         public ProductionRepository(Action<long?, long, double?> ProgressChanged,Action ProgressComplete)
         {
-            client = new WebClient();
+            WebClient client = new WebClient();
+             
             client.DownloadProgressChanged += (sender, e) => {
                 int length = Convert.ToInt32(e.TotalBytesToReceive.ToString());
                 int prog = Convert.ToInt32(e.BytesReceived.ToString());
@@ -35,11 +36,10 @@ namespace ApiRepository
         public async Task<List<ProductionAccountingDBModel>> GetProductionList(string userid, string ProcessID,string LocationID,string PRStatus, int EntryType,
             string RefID="")
         {
+            WebClient client = new WebClient();
             userid = Cipher.Encrypt(userid);
             string url = RepositorySettings.BaseURl + "ProdcutionAccounting?UserID=" + userid + "&ProcessID=" + ProcessID + "&LocationID=" + LocationID + 
                 "&PRStatus=" + PRStatus+ "&EntryType="+ EntryType+(RefID!=""? "&RefID="+RefID:"");
-
-
             var data = await client.DownloadDataTaskAsync(new Uri(url));
             string result = System.Text.Encoding.UTF8.GetString(data);
             var aproves = JsonConvert.DeserializeObject<List<ProductionAccountingDBModel>>(result);
@@ -49,6 +49,7 @@ namespace ApiRepository
         }
         public async Task<List<DDL>> GetProductionDDL(string userid)
         {
+            WebClient client = new WebClient();
             userid = Cipher.Encrypt(userid);
             string url = RepositorySettings.BaseURl + "ProdcutionAccounting?UserID=" + userid;
 
@@ -139,7 +140,7 @@ namespace ApiRepository
         }
         public async Task<List<DefectMaster>> GetGetDefectList()
         {
-            
+            WebClient client = new WebClient();
             string url = RepositorySettings.BaseURl + "ProdcutionAccounting/GetGetDefectList";
             var data = await client.DownloadDataTaskAsync(new Uri(url));
             string result = System.Text.Encoding.UTF8.GetString(data);
@@ -160,7 +161,7 @@ namespace ApiRepository
         }
         public async Task<List<Operation>> GetOperationList(string RefID)
         {
-
+            WebClient client = new WebClient();
             string url = RepositorySettings.BaseURl + "Quality?RefID=" + RefID ;
 
             var data = await client.DownloadDataTaskAsync(new Uri(url));

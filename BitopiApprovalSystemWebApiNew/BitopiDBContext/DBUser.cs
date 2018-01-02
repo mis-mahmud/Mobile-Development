@@ -40,8 +40,8 @@ namespace BitopiDBContext
             if (QryOption == 1)
             {
                 DataTable dt = ExecuteDataTable("BIMOB_MVC..Sp_Get_LogInInfo_mobile2", param);
-
-                UserModel user = null;
+                string sql = DBProduction.toSqlString(param, "BIMOB_MVC..Sp_Get_LogInInfo_mobile2 ");
+                UserModel user = new UserModel();
                 foreach (DataRow row in dt.Rows)
                 {
                     user = new UserModel

@@ -42,7 +42,7 @@ namespace ApiRepository
             }
             return aproves;
         }
-        public async Task<int> UpdateOrderRcvd(string SampleID, string ActualSewingDt, string UserSewingDt)
+        public async Task<string> UpdateOrderRcvd(string SampleID, string ActualSewingDt, string UserSewingDt)
         {
             var formContent = new FormUrlEncodedContent(new[]
             {
@@ -57,10 +57,10 @@ namespace ApiRepository
 
             var response = await client.PostAsync(url, formContent);
 
-            var aproves = JsonConvert.DeserializeObject<int>(response.Content.ReadAsStringAsync().Result);
-            return aproves;
+            var aproves = JsonConvert.DeserializeObject<Response>(response.Content.ReadAsStringAsync().Result);
+            return aproves.Result;
         }
-        public async Task<int> UpdateMaterialRcvd(string SampleID)
+        public async Task<string> UpdateMaterialRcvd(string SampleID)
         {
             var formContent = new FormUrlEncodedContent(new[]
             {
@@ -73,59 +73,69 @@ namespace ApiRepository
 
             var response = await client.PostAsync(url, formContent);
 
-            var aproves = JsonConvert.DeserializeObject<int>(response.Content.ReadAsStringAsync().Result);
+            var aproves = JsonConvert.DeserializeObject<Response>(response.Content.ReadAsStringAsync().Result);
+            return aproves.Result;
+        }
+
+        public async Task<List<DDLList>> LoadddlProductionProcess()
+        {
+
+            string url = RepositorySettings.BimobAppsBaseURl + "SampleProcess/GetProductionProcessList";
+            HttpClient client = new HttpClient();
+            HttpContent contentPost = new StringContent(JsonConvert.SerializeObject(""), Encoding.UTF8,
+"application/json");
+
+            var response = await client.GetAsync(url);
+
+            var aproves = JsonConvert.DeserializeObject<List<DDLList>>(response.Content.ReadAsStringAsync().Result);
             return aproves;
         }
-        public async Task<List<BitopiGcmMessage>> GetNotification(string UserID, string DeviceID)
+        public async Task<List<SampleFollowupModel>> GetProcessFollowUpList(string ProdProcess, string ProdProcessStatus)
         {
-            UserID = Cipher.Encrypt(UserID);
-            string url = RepositorySettings.BaseURl + "Notification?UserID=" + UserID + "&DeviceID=" + DeviceID;
-
+            string url = RepositorySettings.BimobAppsBaseURl + "SampleProcess/GetProcessFollowUpList?ProdProcess=" + ProdProcess + "&ProdProcessStatus=" + ProdProcessStatus;
             HttpClient client = new HttpClient();
-            HttpResponseMessage result = await client.GetAsync(url);
-            var aproves = JsonConvert.DeserializeObject<List<BitopiGcmMessage>>(result.Content.ReadAsStringAsync().Result);
-            if (aproves == null)
-                aproves = new List<BitopiGcmMessage>();
+            var response = await client.GetAsync(url);
+
+            var aproves = JsonConvert.DeserializeObject<List<SampleFollowupModel>>(response.Content.ReadAsStringAsync().Result);
             return aproves;
         }
-
-        public async Task<List<ApprovalDetailsModel>> GetPOApprovalDetails(string userid, ApprovalRoleType roleType, ApprovalType approvalType)
+        public async Task<List<SampleUpcommingModel>> GetProcessFollowUp_Upcoming(int ProductionProcessId)
         {
-            userid = Cipher.Encrypt(userid);
-            string url = RepositorySettings.BaseURl + "Approval?userid=" + userid + "&roleType=" + roleType + "&approvalType=" + approvalType;
-
+            string url = RepositorySettings.BimobAppsBaseURl + "SampleProcess/GetProcessFollowUp_Upcoming?ProductionProcessId=" + ProductionProcessId;
             HttpClient client = new HttpClient();
-            HttpResponseMessage result = await client.GetAsync(url);
-            return JsonConvert.DeserializeObject<List<ApprovalDetailsModel>>(result.Content.ReadAsStringAsync().Result);
+            var response = await client.GetAsync(url);
+
+            var aproves = JsonConvert.DeserializeObject<List<SampleUpcommingModel>>(response.Content.ReadAsStringAsync().Result);
+            return aproves;
         }
-        public async Task<int> SavePOApprovalDetails(string ApprovalID, string ApproveByID, string ApprovedBy, string ApprovaStatus, ApprovalType approvalType,
-           ApprovalRoleType approvalRoleType, string Remarks = "")
+        public async Task<string> MakeDelivered(string EntityId, string productionProcess)
         {
-            ApproveByID = Cipher.Encrypt(ApproveByID);
-            string url = RepositorySettings.BaseURl + "Approval?ApprovalID=" + ApprovalID + "&ApproveByID=" + ApproveByID
-                + "&ApprovedBy=" + ApprovedBy + "&ApprovaStatus="
-                + ApprovaStatus + "&approvalType=" + approvalType + "&approvalRoleType=" + approvalRoleType + "&Remarks=" + Remarks;
-
+            string url = RepositorySettings.BimobAppsBaseURl + "SampleProcess/MakeDelivered?EntityId=" + EntityId+ "&productionProcess="+ productionProcess;
             HttpClient client = new HttpClient();
+            var response = await client.GetAsync(url);
 
-            HttpResponseMessage result = await client.PostAsync(url, null);
-            return JsonConvert.DeserializeObject<int>(result.Content.ReadAsStringAsync().Result);
+            var aproves = JsonConvert.DeserializeObject<Response>(response.Content.ReadAsStringAsync().Result);
+            return aproves.Result;
         }
-        public async Task<int> ReceiveNotification(string userId, string deviceId, ApprovalType approvalType, string ApprovalName, string requisitioId)
+        public async Task<string> MakeReceived(string EntityId, string productionProcess)
         {
-            userId = Cipher.Encrypt(userId);
-            string approval = (approvalType == ApprovalType.PurchaseOrderApproval) ? "PO" :
-                (approvalType == ApprovalType.CashRequisition) ? "Cash Requisition" :
-                (approvalType == ApprovalType.LeaveApplication) ? "Leave Application" :
-                (approvalType == ApprovalType.ChequeRequisitionInformation) ? "ChequeRequisition" : "";
-            string url = RepositorySettings.BaseURl + "Notification?userId=" + userId + "&deviceId=" + deviceId
-                + "&approval=" + ApprovalName + "&requisitioId="
-                + requisitioId;
-
+            string url = RepositorySettings.BimobAppsBaseURl + "SampleProcess/MakeReceived?EntityId=" + EntityId + "&productionProcess=" + productionProcess;
             HttpClient client = new HttpClient();
+            var response = await client.GetAsync(url);
 
-            HttpResponseMessage result = await client.GetAsync(url);
-            return JsonConvert.DeserializeObject<int>(result.Content.ReadAsStringAsync().Result);
+            var aproves = JsonConvert.DeserializeObject< Response>(response.Content.ReadAsStringAsync().Result);
+            return aproves.Result;
         }
     }
+    public class Response
+    {
+        public string ResponseMsg { get; set; }
+        public string Result { get; set; }
+    }
+    public class DDLList
+    {
+        public string DrpValue { get; set; }
+        public string DrpText { get; set; }
+    }
+
 }

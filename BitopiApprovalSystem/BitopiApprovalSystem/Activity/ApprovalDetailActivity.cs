@@ -241,22 +241,14 @@ namespace BitopiApprovalSystem
             _searchView = searchView.JavaCast<SearchView>();
 
             setSearchIcons(_searchView);
-            //_searchView.SetBackgroundColor(Color.White);
-            //_searchView.SetOnClickListener(new SearchViewOnClickListener(_searchListView));
-            //_searchView.Click += (s, e) =>
-            //{
-
-            //    _adapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleListItem1,
-            //        truckList.Select(t => t.TruckName).ToArray());
-            //    _searchListView.Adapter = _adapter;
-            //};
+             
             _searchView.QueryTextChange += (s, e) =>
             {
                 var searchFor = e.NewText.ToLower();
                 if (!String.IsNullOrEmpty(searchFor))
                 {
                     //Console.System.Diagnostics.Debug.WriteLine("searchFor:" + searchFor);
-                    // var matchList = new List<TruckModel>();
+                     
                     // find matches, IndexOf means look for the input anywhere in the items
                     // but it isn't case-sensitive by default!
                     var matches = (from i in _approvalList where i.POID.ToLower().Contains(searchFor) select i).ToList();

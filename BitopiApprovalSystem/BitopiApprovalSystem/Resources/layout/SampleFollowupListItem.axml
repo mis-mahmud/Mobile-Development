@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="match_parent"
-    android:padding="2dp"
     android:clickable="true"
-    android:gravity="center_horizontal"
     android:background="#DFEFF7">
     <RelativeLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/rlLeft">
         <RelativeLayout
@@ -16,10 +14,9 @@
             android:layout_height="wrap_content"
             android:id="@+id/rlRef"
             android:layout_marginLeft="7dp"
-            android:layout_marginRight="5dp"
             android:layout_marginTop="5dp">
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/lblSample"
                 android:text="Sample"
@@ -43,8 +40,9 @@
             android:id="@+id/rlBuyer"
             android:layout_marginRight="5dp"
             android:layout_marginTop="5dp"
-            android:layout_centerInParent="true"
-            android:layout_centerHorizontal="true">
+            android:layout_centerInParent="false"
+            android:layout_centerHorizontal="false"
+            android:layout_toRightOf="@+id/rlRef">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -58,7 +56,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/tvBuyer"
-                android:text="PR-17-89"
+                android:text="H&amp;m"
                 android:textColor="#000"
                 android:fontFamily="sans-serif-thin"
                 android:textSize="13sp"
@@ -71,12 +69,12 @@
             android:layout_marginLeft="7dp"
             android:layout_marginRight="5dp"
             android:layout_marginTop="5dp"
-            android:layout_alignParentRight="true">
+            android:layout_toRightOf="@+id/rlBuyer">
             <TextView
-                android:layout_width="110dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/lblStyle"
-                android:text="Style"
+                android:text="Product"
                 android:textSize="13sp"
                 android:textStyle="bold"
                 android:textColor="#000"
@@ -87,30 +85,31 @@
                 android:id="@+id/tvStyle"
                 android:textColor="#000"
                 android:fontFamily="sans-serif-thin"
-                android:text="All"
+                android:text="Shirt"
                 android:textSize="13sp"
                 android:layout_below="@+id/lblStyle" />
         </RelativeLayout>
     </RelativeLayout>
     <RelativeLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/rlMiddle"
         android:minWidth="25px"
         android:minHeight="25px"
-        android:layout_below="@+id/rlLeft">
+        android:layout_below="@+id/rlLeft"
+        android:gravity=" ">
         <RelativeLayout
-            android:layout_width="160dp"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:id="@+id/rlMerDate"
             android:layout_marginLeft="5dp"
             android:layout_marginTop="5dp"
             android:layout_alignParentRight="false">
             <TextView
-                android:layout_width="160dp"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/lblMerReqDate"
-                android:text="Merchandiser  Date"
+                android:text="Total Qty"
                 android:textSize="13sp"
                 android:textStyle="bold"
                 android:textColor="#000"
@@ -118,12 +117,12 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/tvMerReqDate"
+                android:id="@+id/tvTotalQty"
                 android:textColor="#000"
                 android:fontFamily="sans-serif-thin"
                 android:textSize="13sp"
-                android:text="02-Jan-18"
-                android:layout_below="@+id/lblMerReqDate" />
+                android:text="48"
+                android:layout_below="@id/lblMerReqDate" />
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -135,7 +134,7 @@
                 android:layout_width="90dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/lblDeliveryDate"
-                android:text="Delivery Date"
+                android:text="Required Days"
                 android:textSize="13sp"
                 android:textStyle="bold"
                 android:textColor="#000"
@@ -143,8 +142,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/DeliveryDate"
-                android:text="02-Jan-18"
+                android:id="@+id/ReqDate"
+                android:text="1"
                 android:textColor="#000"
                 android:fontFamily="sans-serif-thin"
                 android:textSize="13sp"
@@ -152,7 +151,7 @@
         </RelativeLayout>
     </RelativeLayout>
     <RelativeLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/rlBottom"
         android:layout_below="@+id/rlMiddle">
@@ -165,10 +164,10 @@
             android:layout_marginTop="5dp"
             android:layout_alignParentRight="false">
             <TextView
-                android:layout_width="160dp"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/lblSewingCompleteDate"
-                android:text="Sewing Complete Date"
+                android:text="Buyer Delivery Dt"
                 android:textSize="13sp"
                 android:textStyle="bold"
                 android:textColor="#000"
@@ -176,7 +175,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/tvSewingCompleteDate"
+                android:id="@+id/tvBuyerDeliveryDt"
                 android:text="02-Jan-18"
                 android:textColor="#000"
                 android:fontFamily="sans-serif-thin"
@@ -207,7 +206,7 @@
                 android:layout_width="110dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/lblReqType"
-                android:text="Requisition Type"
+                android:text="Planning Date"
                 android:textSize="13sp"
                 android:textStyle="bold"
                 android:textColor="#000"
@@ -215,10 +214,10 @@
             <TextView
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
-                android:id="@+id/tvReqType"
+                android:id="@+id/tvPlanningDate"
                 android:textColor="#000"
                 android:fontFamily="sans-serif-thin"
-                android:text="All"
+                android:text="02-Jan-18"
                 android:textSize="13sp"
                 android:layout_below="@+id/lblReqType" />
         </RelativeLayout>
@@ -229,7 +228,7 @@
         android:layout_width="match_parent"
         android:layout_below="@+id/rlBottom"
         android:layout_marginTop="5dp"
-        android:gravity="center_horizontal"
+        android:gravity="center"
         android:layout_marginLeft="25dp"
         android:layout_marginStart="5dp"
         android:layout_marginRight="25dp"
@@ -237,8 +236,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/lblOrderPlanned"
-            android:text="Order Planned"
+            android:id="@+id/lblSampleFollowup"
+            android:text="Received"
             android:textSize="12sp"
             android:textStyle="bold"
             android:textColor="#FFF"
@@ -253,28 +252,7 @@
             android:layout_marginTop="-0dp"
             android:layout_marginLeft="-5dp"
             android:buttonTint="#ffffffff"
-            android:layout_toRightOf="@+id/lblOrderPlanned"
+            android:layout_toRightOf="@+id/lblSampleFollowup"
             android:layout_marginRight="50dp" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/lblMaterialReceived"
-            android:text="Material Received"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            android:textColor="#FFF"
-            android:fontFamily="sans-serif-thin"
-            android:layout_toRightOf="@+id/chckOrderPlanned"
-            android:layout_marginRight="5dp"
-            android:layout_marginTop="8dp" />
-        <CheckBox
-            android:id="@+id/chckMaterialReceived"
-            android:checked="false"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:layout_marginLeft="-5dp"
-            android:buttonTint="#ffffffff"
-            android:layout_toRightOf="@+id/lblMaterialReceived"
-            android:drawableTint="#ffffffff" />
     </RelativeLayout>
 </RelativeLayout>

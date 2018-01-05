@@ -396,18 +396,7 @@ namespace BitopiApprovalSystem
                 {
                     holder.ckbox = view.FindViewById<CheckBox>(Resource.Id.chckApprove);
                 }
-                //}
-                //else
-                //{
-                //    holder = convertView.Tag as Holder;
-                //    if (!(holder is Holder2))
-                //    {
-                //        holder.ckbox.SetOnClickListener(null);
-                //        holder.ckbox.Checked = false;
-                //        holder.commitedDate.Click += null;
-                //        holder.remarks.KeyPress += null;
-                //    }
-                //}
+                
                 if (model.IsDisabled)
                 {
                     holder.ckbox.Enabled = false;
@@ -545,14 +534,6 @@ namespace BitopiApprovalSystem
                     holder.remarks.OnFocusChangeListener = new CustomOnFocusChangeListener(this, groupPosition, lvMyTask);
                 }
 
-
-                //(view.FindViewById<EditText>(Resource.Id.etCommitedDate)).Click += (s, e) =>
-                //{
-                //    sender = s;
-                //    _context.ShowDialog();
-                //};
-
-                //view.Tag = groupPosition;
                 holder.GroupPostiion = groupPosition;
 
                 view.Tag = holder;

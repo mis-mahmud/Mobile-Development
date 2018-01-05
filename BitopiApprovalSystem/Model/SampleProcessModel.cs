@@ -22,4 +22,28 @@ namespace Model
         public bool OrderPlanned { get; set; }
         public bool MaterialReceived { get; set; }
     }
+    public class SampleUpcommingModel
+    {
+        public Int64 RowSL { get; set; }
+        public string SampleID { get; set; }
+        public string Buyer { get; set; }
+        public string ProductName { get; set; }
+        public int ReqQty { get; set; }
+        public string BuyerDeliveryDt { get; set; }
+        public string PlanningDate { get; set; }
+        public string StatusColor { get; set; }
+        public string DevelopmentStatus { get; set; }
+    }
+    public class SampleFollowupModel
+    {
+        public int tblSampleRequestEntityId { get; set; }
+        public string SampleID { get; set; }
+        public string Buyer { get; set; }
+        public string ProductName { get; set; }
+        public int ReqQty { get; set; }
+        public string BuyerDeliveryDt { get; set; }
+        public int RequiredDays { get; set; }
+        public string PlanningDate { get; set; }
+        public string StatusColor { get; set; }
+    }
 }

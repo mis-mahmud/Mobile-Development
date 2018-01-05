@@ -42,10 +42,12 @@ namespace BitopiApprovalSystem
                     switch(arg1.Item.TitleFormatted.ToString())
                     {
                         case "Sample Process":
-                            Intent i = new Intent(this, typeof(SampleProcessActivity));
-                            StartActivity(i);
+                            Intent i1 = new Intent(this, typeof(SampleProcessActivity));
+                            StartActivity(i1);
                             break;
                         case "Sample Planning":
+                            Intent i = new Intent(this, typeof(SamplePlanningActivity));
+                            StartActivity(i);
                             break;
                     }
                 };

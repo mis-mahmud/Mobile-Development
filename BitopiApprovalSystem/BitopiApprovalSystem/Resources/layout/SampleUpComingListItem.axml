@@ -10,16 +10,17 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/rlLeft">
+        android:id="@+id/rlLeft"
+        android:layout_marginLeft="5dp">
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/rlRef"
             android:layout_marginLeft="7dp"
-            android:layout_marginRight="5dp"
+            
             android:layout_marginTop="5dp">
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/lblSample"
                 android:text="Sample"
@@ -43,8 +44,9 @@
             android:id="@+id/rlBuyer"
             android:layout_marginRight="5dp"
             android:layout_marginTop="5dp"
-            android:layout_centerInParent="true"
-            android:layout_centerHorizontal="true">
+            android:layout_centerInParent="false"
+            android:layout_centerHorizontal="false"
+            android:layout_toRightOf="@+id/rlRef">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -58,7 +60,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/tvBuyer"
-                android:text="PR-17-89"
+                android:text="H&amp;m"
                 android:textColor="#000"
                 android:fontFamily="sans-serif-thin"
                 android:textSize="13sp"
@@ -76,7 +78,7 @@
                 android:layout_width="110dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/lblStyle"
-                android:text="Style"
+                android:text="Product"
                 android:textSize="13sp"
                 android:textStyle="bold"
                 android:textColor="#000"
@@ -87,7 +89,7 @@
                 android:id="@+id/tvStyle"
                 android:textColor="#000"
                 android:fontFamily="sans-serif-thin"
-                android:text="All"
+                android:text="Shirt"
                 android:textSize="13sp"
                 android:layout_below="@+id/lblStyle" />
         </RelativeLayout>
@@ -98,19 +100,20 @@
         android:id="@+id/rlMiddle"
         android:minWidth="25px"
         android:minHeight="25px"
-        android:layout_below="@+id/rlLeft">
+        android:layout_below="@+id/rlLeft"
+        android:layout_marginLeft="5dp">
         <RelativeLayout
-            android:layout_width="160dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/rlMerDate"
             android:layout_marginLeft="5dp"
             android:layout_marginTop="5dp"
             android:layout_alignParentRight="false">
             <TextView
-                android:layout_width="160dp"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/lblMerReqDate"
-                android:text="Merchandiser  Date"
+                android:text="Total Qty"
                 android:textSize="13sp"
                 android:textStyle="bold"
                 android:textColor="#000"
@@ -118,11 +121,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/tvMerReqDate"
+                android:id="@+id/tvTotalQty"
                 android:textColor="#000"
                 android:fontFamily="sans-serif-thin"
                 android:textSize="13sp"
-                android:text="02-Jan-18"
+                android:text="48"
                 android:layout_below="@+id/lblMerReqDate" />
         </RelativeLayout>
         <RelativeLayout
@@ -132,10 +135,10 @@
             android:layout_marginTop="5dp"
             android:layout_toRightOf="@+id/rlMerDate">
             <TextView
-                android:layout_width="90dp"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/lblDeliveryDate"
-                android:text="Delivery Date"
+                android:text="Merchandiser Request Dt"
                 android:textSize="13sp"
                 android:textStyle="bold"
                 android:textColor="#000"
@@ -143,8 +146,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/DeliveryDate"
-                android:text="02-Jan-18"
+                android:id="@+id/etMerReqDt"
+                android:text="102-Jan-18"
                 android:textColor="#000"
                 android:fontFamily="sans-serif-thin"
                 android:textSize="13sp"
@@ -155,20 +158,48 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/rlBottom"
-        android:layout_below="@+id/rlMiddle">
+        android:layout_below="@+id/rlMiddle"
+        android:layout_marginLeft="5dp">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rlReqType"
+            android:layout_marginTop="5dp"
+            android:layout_alignParentRight="false"
+            
+            android:layout_marginLeft="5dp">
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/lblReqType"
+                android:text="Planning Date"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:textColor="#000"
+                android:fontFamily="sans-serif-thin" />
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvPlanningDate"
+                android:textColor="#000"
+                android:fontFamily="sans-serif-thin"
+                android:text="02-Jan-18"
+                android:textSize="13sp"
+                android:layout_below="@+id/lblReqType" />
+        </RelativeLayout>
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/rlDelivaryDate"
             android:layout_below="@+id/rlSize"
-            android:layout_marginLeft="5dp"
             android:layout_marginTop="5dp"
-            android:layout_alignParentRight="false">
+            android:layout_alignParentRight="false"
+            android:layout_toRightOf="@+id/rlReqType">
             <TextView
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/lblSewingCompleteDate"
-                android:text="Sewing Complete Date"
+                android:text="Current Status"
                 android:textSize="13sp"
                 android:textStyle="bold"
                 android:textColor="#000"
@@ -176,7 +207,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/tvSewingCompleteDate"
+                android:id="@+id/tvCurrentStatus"
                 android:text="02-Jan-18"
                 android:textColor="#000"
                 android:fontFamily="sans-serif-thin"
@@ -195,86 +226,18 @@
                 android:background="@drawable/rounded_textview"
                 android:layout_below="@+id/lblSewingCompleteDate" />
         </RelativeLayout>
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/rlReqType"
-            android:layout_marginRight="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_alignParentRight="false"
-            android:layout_toRightOf="@+id/rlDelivaryDate">
-            <TextView
-                android:layout_width="110dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/lblReqType"
-                android:text="Requisition Type"
-                android:textSize="13sp"
-                android:textStyle="bold"
-                android:textColor="#000"
-                android:fontFamily="sans-serif-thin" />
-            <TextView
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/tvReqType"
-                android:textColor="#000"
-                android:fontFamily="sans-serif-thin"
-                android:text="All"
-                android:textSize="13sp"
-                android:layout_below="@+id/lblReqType" />
-        </RelativeLayout>
     </RelativeLayout>
     <RelativeLayout
         android:id="@+id/rlPanel"
-        android:layout_height="wrap_content"
+        android:layout_height="5dp"
         android:layout_width="match_parent"
         android:layout_below="@+id/rlBottom"
         android:layout_marginTop="5dp"
-        android:gravity="center_horizontal"
+        android:gravity="center"
         android:layout_marginLeft="25dp"
         android:layout_marginStart="5dp"
         android:layout_marginRight="25dp"
-        android:background="#23a25f">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/lblOrderPlanned"
-            android:text="Order Planned"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            android:textColor="#FFF"
-            android:fontFamily="sans-serif-thin"
-            android:layout_marginRight="5dp"
-            android:layout_marginTop="8dp" />
-        <CheckBox
-            android:id="@+id/chckOrderPlanned"
-            android:checked="false"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:layout_marginTop="-0dp"
-            android:layout_marginLeft="-5dp"
-            android:buttonTint="#ffffffff"
-            android:layout_toRightOf="@+id/lblOrderPlanned"
-            android:layout_marginRight="50dp" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/lblMaterialReceived"
-            android:text="Material Received"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            android:textColor="#FFF"
-            android:fontFamily="sans-serif-thin"
-            android:layout_toRightOf="@+id/chckOrderPlanned"
-            android:layout_marginRight="5dp"
-            android:layout_marginTop="8dp" />
-        <CheckBox
-            android:id="@+id/chckMaterialReceived"
-            android:checked="false"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:layout_marginLeft="-5dp"
-            android:buttonTint="#ffffffff"
-            android:layout_toRightOf="@+id/lblMaterialReceived"
-            android:drawableTint="#ffffffff" />
-    </RelativeLayout>
+        android:background="#23a25f"
+        android:minWidth="25px"
+        android:minHeight="25px" />
 </RelativeLayout>

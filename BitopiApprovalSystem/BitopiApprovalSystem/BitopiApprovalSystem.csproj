@@ -194,9 +194,12 @@
     <Compile Include="Activity\ProcessListActivity.cs" />
     <Compile Include="Activity\ProductionQuality.cs" />
     <Compile Include="Activity\ProductionRejection.cs" />
+    <Compile Include="Activity\SamplePlanningActivity.cs" />
+    <Compile Include="Activity\SamplePLanningActivitybkp.cs" />
     <Compile Include="Activity\SampleProcessActivity.cs" />
     <Compile Include="Activity\StartupActivity.cs" />
     <Compile Include="Activity\TNAMyTask.cs" />
+    <Compile Include="Adapter\SampleAdapter.cs" />
     <Compile Include="AnimatedExpandableListView.cs" />
     <Compile Include="BitopiPushNotification\BitopiNotification.cs" />
     <Compile Include="BitopiPushNotification\BitopiPushNotificationService.cs" />
@@ -214,6 +217,9 @@
     <Compile Include="DAL\SQLite.cs" />
     <Compile Include="DAL\SQLiteAsync.cs" />
     <Compile Include="enum.cs" />
+    <Compile Include="Fragment\SampleUpcomoing.cs" />
+    <Compile Include="Fragment\SampleNotDelivered.cs" />
+    <Compile Include="Fragment\SampleNotReceived.cs" />
     <Compile Include="Indicator.cs" />
     <Compile Include="CustomControl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -311,6 +317,27 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\SampleProcessListItem.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\SamplePlanningLayout.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\tab_frag_notreceived.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\tab_frag_notdelivered.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\tab_frag_upcoming.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\SamplePlanningLayoutbkp.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\SampleFollowupListItem.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\SampleUpComingListItem.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
@@ -550,6 +577,15 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\sample.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\upcoming.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\notdelivered.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\notreceived.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\packages\Xamarin.GooglePlayServices.Basement.29.0.0.2\build\Xamarin.GooglePlayServices.Basement.targets" Condition="Exists('..\packages\Xamarin.GooglePlayServices.Basement.29.0.0.2\build\Xamarin.GooglePlayServices.Basement.targets')" />

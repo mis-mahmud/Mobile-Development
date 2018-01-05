@@ -190,33 +190,15 @@ namespace BitopiApprovalSystem
                 arg1
                     .SetActionView(test)
                     .SetShowAsAction(ShowAsAction.Always);
-                var searchView = MenuItemCompat.GetActionView(arg1);
-                //_searchView = searchView.JavaCast<Android.Support.V7.Widget.SearchView>();
+                var searchView = MenuItemCompat.GetActionView(arg1);      
                 var _searchView = searchView.JavaCast<SearchView>();
                 setSearchIcons(_searchView);
-                //_searchView.SetBackgroundColor(Color.White);
-                //_searchView.SetOnClickListener(new SearchViewOnClickListener(_searchListView));
-                //_searchView.Click += (s, e) =>
-                //{
-
-                //    _adapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleListItem1,
-                //        truckList.Select(t => t.TruckName).ToArray());
-                //    _searchListView.Adapter = _adapter;
-                //};
-
                 _searchView.QueryTextChange += (s, e) =>
                 {
-
-                    adapter.Filter.InvokeFilter(e.NewText);
-                    //_searchListView.Visibility = ViewStates.Visible;
+                    adapter.Filter.InvokeFilter(e.NewText);   
                 };
-
-                _searchView.SetOnCloseListener(new TruckSearchViewOnCloseListenter(rltitle, this));
-                _searchView.SetOnSearchClickListener(new TruckSearchviewclicklistener(rltitle));
-
-                //ImageView searchIcon = (ImageView)_searchView.FindViewById();
-                //searchIcon.setImageResource(R.drawable.abc_ic_search);
-
+                _searchView.SetOnCloseListener(new ProductionSearchViewOnCloseListenter(rltitle, this));
+                _searchView.SetOnSearchClickListener(new ProductionSearchviewclicklistener(rltitle));
             }
             catch (System.Exception ex)
             {
@@ -676,7 +658,7 @@ namespace BitopiApprovalSystem
                 {
                     var searchFor = constraint.ToString().ToLower();
                     //Console.System.Diagnostics.Debug.WriteLine("searchFor:" + searchFor);
-                    // var matchList = new List<TruckModel>();
+                    
                     // find matches, IndexOf means look for the input anywhere in the items
                     // but it isn't case-sensitive by default!
                     var matches = from i in customAdapter._list where i.RefNo.ToLower().Contains(searchFor) select i;
@@ -765,11 +747,11 @@ namespace BitopiApprovalSystem
 
 
     }
-    class TruckSearchviewclicklistener : Java.Lang.Object, Android.Views.View.IOnClickListener
+    class ProductionSearchviewclicklistener : Java.Lang.Object, Android.Views.View.IOnClickListener
     {
         private bool extended = false;
         RelativeLayout _rltitle;
-        public TruckSearchviewclicklistener(RelativeLayout rltitle)
+        public ProductionSearchviewclicklistener(RelativeLayout rltitle)
         {
             _rltitle = rltitle;
         }
@@ -778,13 +760,13 @@ namespace BitopiApprovalSystem
             _rltitle.Visibility = ViewStates.Gone;
         }
     }
-    class TruckSearchViewOnCloseListenter : Java.Lang.Object, Android.Widget.SearchView.IOnCloseListener
+    class ProductionSearchViewOnCloseListenter : Java.Lang.Object, Android.Widget.SearchView.IOnCloseListener
     {
         SearchView _searchView;
         ListView _searchListView;
         RelativeLayout _rltitle;
         ProcessEntry _activity;
-        public TruckSearchViewOnCloseListenter(RelativeLayout rltitle, ProcessEntry activity)
+        public ProductionSearchViewOnCloseListenter(RelativeLayout rltitle, ProcessEntry activity)
         {
             _rltitle = rltitle;
             this._activity = activity;

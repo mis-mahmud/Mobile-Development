@@ -21,26 +21,7 @@ namespace BitopiApprovalSystem.PushNotification
     {
         public override void OnReceive(Context context, Intent intent)
         {
-            ////TytMoblieApplication applicaiton = (TytMoblieApplication)context.ApplicationContext;
-            ////var currentActivity = applicaiton.ActiveActivity;
-            //if(applicaiton.ActiveActivity is TruckListActivity)
-            //{
-            //    currentActivity=(TruckListActivity)applicaiton.ActiveActivity;
-            //}
-            //else if(applicaiton.ActiveActivity is LastFiveLocationActivity)
-            //{
-            //    currentActivity=(LastFiveLocationActivity)applicaiton.ActiveActivity;
-            //}
-            //else if(applicaiton.ActiveActivity is ReportListActivity)
-            //{
-            //    currentActivity=(ReportListActivity)applicaiton.ActiveActivity;
-            //}
-            //if(applicaiton.ActiveActivity is MapReplayActivity)
-            //{
-            //    currentActivity=(MapReplayActivity)applicaiton.ActiveActivity;
-            //}
-            //if (currentActivity != null)
-            //    currentActivity.ApplyRoles();
+             
             context.StartService(new Intent(context, typeof(BitopiNotificationService)));
         }
     }
@@ -49,9 +30,7 @@ namespace BitopiApprovalSystem.PushNotification
     {
         public override void OnReceive(Context context, Intent intent)
         {
-            //TytMoblieApplication applicaiton = (TytMoblieApplication)context.ApplicationContext;
-            //UserRepository repo = new UserRepository();
-            //repo.ActiveDeactiveNotificaion(0, applicaiton.MacAddress, "D");
+            
 
         }
     }

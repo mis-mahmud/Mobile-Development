@@ -159,31 +159,21 @@ namespace BitopiApprovalSystem
                     .SetActionView(test)
                     .SetShowAsAction(ShowAsAction.Always);
                 var searchView = MenuItemCompat.GetActionView(arg1);
-                //_searchView = searchView.JavaCast<Android.Support.V7.Widget.SearchView>();
+                 
                 var _searchView = searchView.JavaCast<SearchView>();
                 setSearchIcons(_searchView);
-                //_searchView.SetBackgroundColor(Color.White);
-                //_searchView.SetOnClickListener(new SearchViewOnClickListener(_searchListView));
-                //_searchView.Click += (s, e) =>
-                //{
-
-                //    _adapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleListItem1,
-                //        truckList.Select(t => t.TruckName).ToArray());
-                //    _searchListView.Adapter = _adapter;
-                //};
-
+                 
                 _searchView.QueryTextChange += (s, e) =>
                 {
 
                     adapter.Filter.InvokeFilter(e.NewText);
-                    //_searchListView.Visibility = ViewStates.Visible;
+                    
                 };
 
-                // _searchView.SetOnCloseListener(new TruckSearchViewOnCloseListenter(rltitle, this));
-                _searchView.SetOnSearchClickListener(new TruckSearchviewclicklistener(rltitle));
+                 
+                _searchView.SetOnSearchClickListener(new ProductionSearchviewclicklistener(rltitle));
 
-                //ImageView searchIcon = (ImageView)_searchView.FindViewById();
-                //searchIcon.setImageResource(R.drawable.abc_ic_search);
+                
 
             }
             catch (System.Exception ex)

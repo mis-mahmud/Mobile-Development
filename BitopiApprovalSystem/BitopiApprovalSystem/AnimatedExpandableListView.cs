@@ -61,9 +61,7 @@ namespace BitopiApprovalSystem.Widget
 
         public void SetContent()
         {
-            //this.SetAdapter(new AnimatedExpandableListAdapter(activity));
-            //this.adapter.TruckList = trucks;
-            //this.adapter.NotifyDataSetChanged();
+             
         }
         int lastExpandedGroupPosition = 0;
         public bool expandGroupWithAnimation(int groupPos, Action onAnimationEnd = null, bool lastGroupAnimated = false)
@@ -246,10 +244,7 @@ namespace BitopiApprovalSystem.Widget
             {
                 return null;
             }
-            //void ShowMapModalEvent(object sender, EventArgs e)
-            //{
-            //    ((TruckListActivity)_activity).ShowMapModal(currentSelectedItem);
-            //}
+             
             public virtual int getRealChildrenCount(int groupPosition)
             {
                 return 1;

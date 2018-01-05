@@ -18,6 +18,7 @@ using Android.Views.Animations;
 using System.Threading;
 using Android.Animation;
 using System.Threading.Tasks;
+using BitopiApprovalSystem.Model;
 
 namespace BitopiApprovalSystem
 {
@@ -132,12 +133,22 @@ namespace BitopiApprovalSystem
 
                 StartActivity(i);
             };
-            Context.FindViewById<RelativeLayout>(Resource.Id.rlmenuPA).Click += (s, e) =>
+            Context.FindViewById<RelativeLayout>(Resource.Id.rlmenuPA).Click += async (s, e) =>
             {
                 FindViewById<DrawerLayout>(Resource.Id.drawer_layout).CloseDrawer(DrawerMenuParent);
-                Intent i = new Intent(Context, typeof(ProcessListActivity));
+                ProductionRepository repo = new ProductionRepository(ShowLoader, HideLoader);
+                List<DDL> ddl = await repo.GetProductionDDL(bitopiApplication.User.UserCode);
+                if (ddl != null && ddl.Count > 0)
+                {
+                    bitopiApplication.DDLList = ddl;
 
-                StartActivity(i);
+                    Intent i = new Intent(this, typeof(ProcessListActivity));
+                    StartActivity(i);
+                }
+                else
+                {
+                    Toast.MakeText(this, "You Do not have any Production Location Attached!!!!", ToastLength.Long).Show();
+                }
             };
         }
         protected virtual void InitializeControl()

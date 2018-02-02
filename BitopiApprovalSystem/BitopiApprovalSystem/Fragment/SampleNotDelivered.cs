@@ -22,6 +22,7 @@ namespace BitopiApprovalSystem
         ListView lvSampleNotDelivered;
         SampleFollowupListAdapter adapter;
         List<SampleFollowupModel> _list;
+        TextView tvMsg;
         public override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -31,6 +32,7 @@ namespace BitopiApprovalSystem
             stringData = Arguments.GetString("ProcessID", string.Empty);
             View view = inflater.Inflate(Resource.Layout.tab_frag_notdelivered, null);
             lvSampleNotDelivered = view.FindViewById<ListView>(Resource.Id.lvSampleNotDelivered);
+            tvMsg = view.FindViewById<TextView>(Resource.Id.tvMsg);
             _list = new List<SampleFollowupModel>();
             adapter = new Adapter.SampleFollowupListAdapter(_list, this);
             adapter.ProcessID = stringData;
@@ -41,18 +43,28 @@ namespace BitopiApprovalSystem
         {
             base.OnStart();
             SampleRepository repo = new SampleRepository();
+            var progressDialog = ProgressDialog.Show(this.Activity, null, "Please Wait.", true);
             _list = await repo.GetProcessFollowUpList(stringData, "Not Delivered");
+            
             adapter.ProcessID = stringData;
             adapter.Items = _list;
             adapter.NotifyDataSetChanged();
+            progressDialog.Dismiss();
+            if (_list.Count == 0) tvMsg.Visibility = ViewStates.Visible;
+            else tvMsg.Visibility = ViewStates.Gone;
         }
         public async override void RefreshGrid()
         {
             SampleRepository repo = new SampleRepository();
+            var progressDialog = ProgressDialog.Show(this.Activity, null, "Please Wait.", true);
             _list = await repo.GetProcessFollowUpList(stringData, "Not Delivered");
+            
             adapter.ProcessID = stringData;
             adapter.Items = _list;
             adapter.NotifyDataSetChanged();
+            progressDialog.Dismiss();
+            if (_list.Count == 0) tvMsg.Visibility = ViewStates.Visible;
+            else tvMsg.Visibility = ViewStates.Gone;
         }
     }
 }

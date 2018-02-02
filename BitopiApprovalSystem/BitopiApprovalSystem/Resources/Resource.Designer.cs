@@ -3617,17 +3617,17 @@ namespace BitopiApprovalSystem
 			// aapt resource value: 0x7f090075
 			public const int RLleft_drawer = 2131296373;
 			
-			// aapt resource value: 0x7f090154
-			public const int ReqDate = 2131296596;
+			// aapt resource value: 0x7f090157
+			public const int ReqDate = 2131296599;
+			
+			// aapt resource value: 0x7f09017a
+			public const int SamplePlanning = 2131296634;
 			
 			// aapt resource value: 0x7f090179
-			public const int SamplePlanning = 2131296633;
+			public const int SampleProcess = 2131296633;
 			
 			// aapt resource value: 0x7f090178
-			public const int SampleProcess = 2131296632;
-			
-			// aapt resource value: 0x7f090177
-			public const int about = 2131296631;
+			public const int about = 2131296632;
 			
 			// aapt resource value: 0x7f0900f5
 			public const int action0 = 2131296501;
@@ -3674,8 +3674,8 @@ namespace BitopiApprovalSystem
 			// aapt resource value: 0x7f090040
 			public const int action_mode_close_button = 2131296320;
 			
-			// aapt resource value: 0x7f090174
-			public const int action_search = 2131296628;
+			// aapt resource value: 0x7f090175
+			public const int action_search = 2131296629;
 			
 			// aapt resource value: 0x7f090041
 			public const int activity_chooser_view_content = 2131296321;
@@ -3878,8 +3878,8 @@ namespace BitopiApprovalSystem
 			// aapt resource value: 0x7f090135
 			public const int etSample = 2131296565;
 			
-			// aapt resource value: 0x7f090157
-			public const int etSewingCompleteDate = 2131296599;
+			// aapt resource value: 0x7f090150
+			public const int etSewingCompleteDate = 2131296592;
 			
 			// aapt resource value: 0x7f0900c9
 			public const int etUserName = 2131296457;
@@ -3995,8 +3995,8 @@ namespace BitopiApprovalSystem
 			// aapt resource value: 0x7f0900c3
 			public const int lblDelivaryDate = 2131296451;
 			
-			// aapt resource value: 0x7f090153
-			public const int lblDeliveryDate = 2131296595;
+			// aapt resource value: 0x7f090156
+			public const int lblDeliveryDate = 2131296598;
 			
 			// aapt resource value: 0x7f0900bd
 			public const int lblEO = 2131296445;
@@ -4013,8 +4013,8 @@ namespace BitopiApprovalSystem
 			// aapt resource value: 0x7f090168
 			public const int lblMaterialReceived = 2131296616;
 			
-			// aapt resource value: 0x7f090150
-			public const int lblMerReqDate = 2131296592;
+			// aapt resource value: 0x7f090153
+			public const int lblMerReqDate = 2131296595;
 			
 			// aapt resource value: 0x7f090141
 			public const int lblNO = 2131296577;
@@ -4061,8 +4061,8 @@ namespace BitopiApprovalSystem
 			// aapt resource value: 0x7f09015c
 			public const int lblSampleFollowup = 2131296604;
 			
-			// aapt resource value: 0x7f090155
-			public const int lblSewingCompleteDate = 2131296597;
+			// aapt resource value: 0x7f09014e
+			public const int lblSewingCompleteDate = 2131296590;
 			
 			// aapt resource value: 0x7f0900eb
 			public const int lblShimpentDate = 2131296491;
@@ -4100,8 +4100,8 @@ namespace BitopiApprovalSystem
 			// aapt resource value: 0x7f090144
 			public const int lvDefect = 2131296580;
 			
-			// aapt resource value: 0x7f090170
-			public const int lvMyTask = 2131296624;
+			// aapt resource value: 0x7f090171
+			public const int lvMyTask = 2131296625;
 			
 			// aapt resource value: 0x7f090129
 			public const int lvOperation = 2131296553;
@@ -4109,17 +4109,17 @@ namespace BitopiApprovalSystem
 			// aapt resource value: 0x7f0900a8
 			public const int lvProduct = 2131296424;
 			
-			// aapt resource value: 0x7f09016d
-			public const int lvSampleNotDelivered = 2131296621;
-			
 			// aapt resource value: 0x7f09016e
-			public const int lvSampleNotReceived = 2131296622;
+			public const int lvSampleNotDelivered = 2131296622;
+			
+			// aapt resource value: 0x7f09016f
+			public const int lvSampleNotReceived = 2131296623;
 			
 			// aapt resource value: 0x7f090162
 			public const int lvSampleProcess = 2131296610;
 			
-			// aapt resource value: 0x7f09016f
-			public const int lvSampleUpcoming = 2131296623;
+			// aapt resource value: 0x7f090170
+			public const int lvSampleUpcoming = 2131296624;
 			
 			// aapt resource value: 0x7f090013
 			public const int match_parent = 2131296275;
@@ -4139,11 +4139,11 @@ namespace BitopiApprovalSystem
 			// aapt resource value: 0x7f0900e3
 			public const int media_route_volume_slider = 2131296483;
 			
-			// aapt resource value: 0x7f090172
-			public const int menu_item_action_provider_action_bar = 2131296626;
-			
 			// aapt resource value: 0x7f090173
-			public const int menu_item_action_provider_overflow = 2131296627;
+			public const int menu_item_action_provider_action_bar = 2131296627;
+			
+			// aapt resource value: 0x7f090174
+			public const int menu_item_action_provider_overflow = 2131296628;
 			
 			// aapt resource value: 0x7f09002e
 			public const int middle = 2131296302;
@@ -4262,8 +4262,8 @@ namespace BitopiApprovalSystem
 			// aapt resource value: 0x7f09010c
 			public const int recent5 = 2131296524;
 			
-			// aapt resource value: 0x7f090176
-			public const int refresh = 2131296630;
+			// aapt resource value: 0x7f090177
+			public const int refresh = 2131296631;
 			
 			// aapt resource value: 0x7f09003d
 			public const int repeat = 2131296317;
@@ -4304,8 +4304,8 @@ namespace BitopiApprovalSystem
 			// aapt resource value: 0x7f0900c2
 			public const int rlDelivaryDate = 2131296450;
 			
-			// aapt resource value: 0x7f090152
-			public const int rlDeliveryDate = 2131296594;
+			// aapt resource value: 0x7f090155
+			public const int rlDeliveryDate = 2131296597;
 			
 			// aapt resource value: 0x7f0900bc
 			public const int rlEO = 2131296444;
@@ -4325,14 +4325,14 @@ namespace BitopiApprovalSystem
 			// aapt resource value: 0x7f0900c7
 			public const int rlMain = 2131296455;
 			
-			// aapt resource value: 0x7f09014f
-			public const int rlMerDate = 2131296591;
+			// aapt resource value: 0x7f090152
+			public const int rlMerDate = 2131296594;
 			
 			// aapt resource value: 0x7f090136
 			public const int rlMid = 2131296566;
 			
-			// aapt resource value: 0x7f09014e
-			public const int rlMiddle = 2131296590;
+			// aapt resource value: 0x7f090151
+			public const int rlMiddle = 2131296593;
 			
 			// aapt resource value: 0x7f09006f
 			public const int rlMsg = 2131296367;
@@ -4405,6 +4405,9 @@ namespace BitopiApprovalSystem
 			
 			// aapt resource value: 0x7f0900f1
 			public const int rlSeenTask = 2131296497;
+			
+			// aapt resource value: 0x7f09016b
+			public const int rlSewingComleteDate = 2131296619;
 			
 			// aapt resource value: 0x7f0900b2
 			public const int rlSize = 2131296434;
@@ -4514,8 +4517,8 @@ namespace BitopiApprovalSystem
 			// aapt resource value: 0x7f09002a
 			public const int showTitle = 2131296298;
 			
-			// aapt resource value: 0x7f090175
-			public const int simple_item = 2131296629;
+			// aapt resource value: 0x7f090176
+			public const int simple_item = 2131296630;
 			
 			// aapt resource value: 0x7f09001d
 			public const int slide = 2131296285;
@@ -4595,8 +4598,8 @@ namespace BitopiApprovalSystem
 			// aapt resource value: 0x7f09004a
 			public const int title_template = 2131296330;
 			
-			// aapt resource value: 0x7f090171
-			public const int toolbar = 2131296625;
+			// aapt resource value: 0x7f090172
+			public const int toolbar = 2131296626;
 			
 			// aapt resource value: 0x7f09015f
 			public const int top = 2131296607;
@@ -4616,8 +4619,8 @@ namespace BitopiApprovalSystem
 			// aapt resource value: 0x7f0900b7
 			public const int tvBuyer = 2131296439;
 			
-			// aapt resource value: 0x7f090156
-			public const int tvBuyerDeliveryDt = 2131296598;
+			// aapt resource value: 0x7f09014f
+			public const int tvBuyerDeliveryDt = 2131296591;
 			
 			// aapt resource value: 0x7f090091
 			public const int tvCategory = 2131296401;
@@ -4625,8 +4628,8 @@ namespace BitopiApprovalSystem
 			// aapt resource value: 0x7f0900c1
 			public const int tvColor = 2131296449;
 			
-			// aapt resource value: 0x7f09016b
-			public const int tvCurrentStatus = 2131296619;
+			// aapt resource value: 0x7f09016c
+			public const int tvCurrentStatus = 2131296620;
 			
 			// aapt resource value: 0x7f09008d
 			public const int tvDC = 2131296397;
@@ -4691,8 +4694,8 @@ namespace BitopiApprovalSystem
 			// aapt resource value: 0x7f0900b4
 			public const int tvSize = 2131296436;
 			
-			// aapt resource value: 0x7f09016c
-			public const int tvSpinner = 2131296620;
+			// aapt resource value: 0x7f09016d
+			public const int tvSpinner = 2131296621;
 			
 			// aapt resource value: 0x7f0900bb
 			public const int tvStyle = 2131296443;
@@ -4700,8 +4703,8 @@ namespace BitopiApprovalSystem
 			// aapt resource value: 0x7f0900e8
 			public const int tvTask = 2131296488;
 			
-			// aapt resource value: 0x7f090151
-			public const int tvTotalQty = 2131296593;
+			// aapt resource value: 0x7f090154
+			public const int tvTotalQty = 2131296596;
 			
 			// aapt resource value: 0x7f090077
 			public const int tvUserName = 2131296375;

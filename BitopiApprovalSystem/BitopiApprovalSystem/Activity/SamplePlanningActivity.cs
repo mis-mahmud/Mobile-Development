@@ -26,7 +26,7 @@ namespace BitopiApprovalSystem
         SampleRepository repo;
         List<DDLList> ddlList;
         string[] proceeArray;
-        string ProcessID= "12";
+        string ProcessID = "12";
         protected override void OnCreate(Bundle savedInstanceState)
         {
             repo = new SampleRepository();
@@ -58,6 +58,8 @@ namespace BitopiApprovalSystem
         {
             string processName = proceeArray[e.Position];
             ProcessID = ddlList.Where(t => t.DrpText == processName).First().DrpValue;
+            if (mTabHost.CurrentTabTag != null)
+                this.OnTabChanged(mTabHost.CurrentTabTag.ToString());
         }
 
         protected async override void OnStart()
@@ -80,7 +82,7 @@ namespace BitopiApprovalSystem
             mTabHost.Setup();
             TabInfo tabInfo = null;
             SamplePlanningActivity.addTab(this, this.mTabHost, this.mTabHost.NewTabSpec("Tab1").SetIndicator("Not Received"),
-                (tabInfo = new TabInfo("Tab1", typeof(SampleNotReceived), args!=null?args:new Bundle())));
+                (tabInfo = new TabInfo("Tab1", typeof(SampleNotReceived), args != null ? args : new Bundle())));
 
             this.mapTabInfo.Add(tabInfo.tag, tabInfo);
 
@@ -117,11 +119,12 @@ namespace BitopiApprovalSystem
         }
         public void OnTabChanged(string tabId)
         {
+
             TabInfo newTab = this.mapTabInfo[tabId];
-            
-                newTab.args.PutString("ProcessID", ProcessID);
-            if (mLastTab != newTab)
-            {
+
+            newTab.args.PutString("ProcessID", ProcessID);
+            //if (mLastTab != newTab)
+            //{
                 Android.Support.V4.App.FragmentTransaction ft = this.SupportFragmentManager.BeginTransaction();
                 if (mLastTab != null)
                 {
@@ -149,12 +152,12 @@ namespace BitopiApprovalSystem
                 mLastTab = newTab;
                 ft.Commit();
                 this.SupportFragmentManager.ExecutePendingTransactions();
-            }
+            //}
         }
 
         internal class TabInfo
         {
-            internal string tag;
+            public string tag;
             internal Type clss;
             internal Bundle args;
             internal Android.Support.V4.App.Fragment fragment;

@@ -90,10 +90,12 @@ namespace BitopiApprovalSystem.Adapter
 
         private async void OrderPlanned_CheckedChange(object sender, CompoundButton.CheckedChangeEventArgs e)
         {
+            var progressDialog = ProgressDialog.Show(_context.Activity, null, "Please Wait.", true);
             CheckBox senderCheckBox = ((CheckBox)sender);
             var entityId = senderCheckBox.Tag.ToString();
 
             SampleRepository repo = new SampleRepository();
+
             var result = "";
             if (_status == "Delivered")
                 result = await repo.MakeDelivered(entityId, ProcessID);
@@ -103,6 +105,7 @@ namespace BitopiApprovalSystem.Adapter
             {
                 _context.RefreshGrid();
             }
+            progressDialog.Dismiss();
 
         }
 
@@ -214,16 +217,24 @@ namespace BitopiApprovalSystem.Adapter
             view.FindViewById<TextView>(Resource.Id.etMerReqDt).Text = model.BuyerDeliveryDt;
             //view.FindViewById<TextView>(Resource.Id.tvBuyerDeliveryDt).Text = model.BuyerDeliveryDt;
             view.FindViewById<TextView>(Resource.Id.tvPlanningDate).Text = model.PlanningDate;
+            view.FindViewById<TextView>(Resource.Id.tvCurrentStatus).Text = model.DevelopmentStatus;
+            if (model.StatusColor == null)
+            {
 
-            if (model.StatusColor == null) model.StatusColor = "#ffffff";
-            if (model.StatusColor.ToLower() == "orange") model.StatusColor = "#FFA500";
-            if (model.StatusColor.ToLower() == "green") model.StatusColor = "#23a25f";
+                view.FindViewById<RelativeLayout>(Resource.Id.rlPanel).Visibility = ViewStates.Gone;
+            }
+            else
+            {
+                view.FindViewById<RelativeLayout>(Resource.Id.rlPanel).Visibility = ViewStates.Visible;
+                if (model.StatusColor.ToLower() == "orange") model.StatusColor = "#FFA500";
+                if (model.StatusColor.ToLower() == "green") model.StatusColor = "#23a25f";
 
-            GradientDrawable shape = new GradientDrawable();
-            shape.SetCornerRadius(8);
-            shape.SetColor(Color.ParseColor(model.StatusColor));
-            //view.FindViewById<RelativeLayout>(Resource.Id.rlPanel).SetBackgroundColor(Color.ParseColor(model.StatusColor));
-            view.FindViewById<RelativeLayout>(Resource.Id.rlPanel).Background = shape;
+                GradientDrawable shape = new GradientDrawable();
+                shape.SetCornerRadius(8);
+                shape.SetColor(Color.ParseColor(model.StatusColor));
+                //view.FindViewById<RelativeLayout>(Resource.Id.rlPanel).SetBackgroundColor(Color.ParseColor(model.StatusColor));
+                view.FindViewById<RelativeLayout>(Resource.Id.rlPanel).Background = shape;
+            }
 
             if ((position & 1) == 1)
             {

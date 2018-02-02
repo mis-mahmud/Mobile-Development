@@ -22,6 +22,7 @@ namespace BitopiApprovalSystem
         ListView lvSampleUpcoming;
         SampleUpCommingListAdapter adapter;
         List<SampleUpcommingModel> _list;
+        TextView tvMsg;
         public override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -31,6 +32,7 @@ namespace BitopiApprovalSystem
             stringData = Arguments.GetString("ProcessID", string.Empty);
             View view = inflater.Inflate(Resource.Layout.tab_frag_upcoming, null);
             lvSampleUpcoming = view.FindViewById<ListView>(Resource.Id.lvSampleUpcoming);
+            tvMsg = view.FindViewById<TextView>(Resource.Id.tvMsg);
             _list = new List<SampleUpcommingModel>();
             adapter = new SampleUpCommingListAdapter(_list, this);
             lvSampleUpcoming.Adapter = adapter;
@@ -39,15 +41,28 @@ namespace BitopiApprovalSystem
         public async override void OnStart()
         {
             base.OnStart();
-            SampleRepository repo = new SampleRepository();
+            SampleRepository repo = new SampleRepository();        
+            var progressDialog = ProgressDialog.Show(this.Activity, null, "Please Wait.", true);
             _list = await repo.GetProcessFollowUp_Upcoming(Convert.ToInt16(stringData));
+            
             adapter.Items = _list;
             adapter.NotifyDataSetChanged();
+            progressDialog.Dismiss();
+            if (_list.Count == 0) tvMsg.Visibility = ViewStates.Visible;
+            else tvMsg.Visibility = ViewStates.Gone;
         }
 
-        public override void RefreshGrid()
+        public async override void RefreshGrid()
         {
+            SampleRepository repo = new SampleRepository();
+            var progressDialog = ProgressDialog.Show(this.Activity, null, "Please Wait.", true);
+            _list = await repo.GetProcessFollowUp_Upcoming(Convert.ToInt16(stringData));
+            
+            adapter.Items = _list;
             adapter.NotifyDataSetChanged();
+            progressDialog.Dismiss();
+            if (_list.Count == 0) tvMsg.Visibility = ViewStates.Visible;
+            else tvMsg.Visibility = ViewStates.Gone;
         }
     }
 }

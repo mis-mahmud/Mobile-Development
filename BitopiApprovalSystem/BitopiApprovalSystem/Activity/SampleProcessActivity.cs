@@ -25,6 +25,7 @@ namespace BitopiApprovalSystem
         public List<SampleProcessModel> list = new List<SampleProcessModel>();
         public ListView listView;
         RelativeLayout rltitle;
+        TextView tvMsg;
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -32,6 +33,7 @@ namespace BitopiApprovalSystem
             SupportActionBar.SetCustomView(Resource.Layout.custom_actionbar);
             SetContentView(Resource.Layout.SampleProcessLayout);
             listView = FindViewById<ListView>(Resource.Id.lvSampleProcess);
+            tvMsg = FindViewById<TextView>(Resource.Id.tvMsg);
             rltitle = FindViewById<RelativeLayout>(Resource.Id.rltitle);
             rltitle.FindViewById<TextView>(Resource.Id.tvHeaderName).Text = "Sample Process";
             InitializeControl();
@@ -39,12 +41,16 @@ namespace BitopiApprovalSystem
         protected async override void OnStart()
         {
             base.OnStart();
+            var progressDialog = ProgressDialog.Show(this, null, "Please Wait.", true);
             InitializeEvent();
             var SampleRepo = new SampleRepository();
             list = await SampleRepo.GetSampleRequisition();
             adapter = new SampleProcessListAdapter(list, this);
             listView.Adapter = (adapter);
             adapter.NotifyDataSetChanged();
+            progressDialog.Dismiss();
+            if (list.Count == 0) tvMsg.Visibility = ViewStates.Visible;
+            else tvMsg.Visibility = ViewStates.Gone;
         }
         public override bool OnCreateOptionsMenu(IMenu menu)
         {
@@ -99,10 +105,14 @@ namespace BitopiApprovalSystem
         }
         public async void RefreshGrid()
         {
+            var progressDialog = ProgressDialog.Show(this, null, "Please Wait.", true);
             var SampleRepo = new SampleRepository();
             list = await SampleRepo.GetSampleRequisition();
             adapter.Items = list;
             adapter.NotifyDataSetChanged();
+            progressDialog.Dismiss();
+            if (list.Count == 0) tvMsg.Visibility = ViewStates.Visible;
+            else tvMsg.Visibility = ViewStates.Gone;
         }
         protected override void InitializeEvent()
         {

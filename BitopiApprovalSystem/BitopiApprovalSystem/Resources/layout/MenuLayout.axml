@@ -61,7 +61,7 @@
             </RelativeLayout>
             <RelativeLayout
                 android:layout_width="140dp"
-                android:layout_height="150dp"
+                android:layout_height="wrap_content"
                 android:layout_below="@id/rlApproval"
                 android:background="@drawable/rounded_textview"
                 android:layout_marginTop="50dp"
@@ -85,7 +85,7 @@
             </RelativeLayout>
             <RelativeLayout
                 android:layout_width="140dp"
-                android:layout_height="150dp"
+                android:layout_height="wrap_content"
                 android:layout_below="@id/rlApproval"
                 android:layout_toRightOf="@id/rlPA"
                 android:background="@drawable/rounded_textview"
@@ -101,7 +101,7 @@
                     android:layout_centerHorizontal="true" />
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="35dp"
                     android:layout_below="@+id/ivPA"
                     android:layout_centerInParent="true"
                     android:textColor="#555"

@@ -13,4 +13,13 @@
         android:addStatesFromChildren="false"
         android:descendantFocusability="afterDescendants"
         android:layout_margin="5dp" />
+  <TextView
+        android:layout_centerInParent="true"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="No Data Found"
+        android:textSize="20sp"
+        android:textColor="#007ACC"
+        android:id="@+id/tvMsg"
+        android:visibility="gone" />
 </RelativeLayout>

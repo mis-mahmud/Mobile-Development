@@ -188,6 +188,8 @@
     <Compile Include="Activity\BaseActivity.cs" />
     <Compile Include="Activity\BitopiActivity.cs" />
     <Compile Include="Activity\DownloadNewVersionActivity.cs" />
+    <Compile Include="Activity\FabricRoll\FabricSupplierRollinfoInsert.cs" />
+    <Compile Include="Activity\FabricRoll\FabricSupplierRollinfo.cs" />
     <Compile Include="Activity\LoginActivity.cs" />
     <Compile Include="Activity\MyTaskMenu.cs" />
     <Compile Include="Activity\ProcessEntry.cs" />
@@ -199,6 +201,7 @@
     <Compile Include="Activity\SampleProcessActivity.cs" />
     <Compile Include="Activity\StartupActivity.cs" />
     <Compile Include="Activity\TNAMyTask.cs" />
+    <Compile Include="Adapter\FabricSupplierRollAdapter.cs" />
     <Compile Include="Adapter\SampleAdapter.cs" />
     <Compile Include="AnimatedExpandableListView.cs" />
     <Compile Include="BitopiPushNotification\BitopiNotification.cs" />
@@ -338,6 +341,18 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\SampleUpComingListItem.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\FabricSupplierRollInfoLayout.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\SupplierRollListItem.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\FabricSupplierRollInfoInsertLayout.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\menu\PopupFabricRollMenu.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
@@ -586,6 +601,9 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\notreceived.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\rightBorder.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\packages\Xamarin.GooglePlayServices.Basement.29.0.0.2\build\Xamarin.GooglePlayServices.Basement.targets" Condition="Exists('..\packages\Xamarin.GooglePlayServices.Basement.29.0.0.2\build\Xamarin.GooglePlayServices.Basement.targets')" />

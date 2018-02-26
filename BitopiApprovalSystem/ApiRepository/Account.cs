@@ -55,13 +55,14 @@ namespace ApiRepository
             
             return user;
         }
-        public int GetVersion()
+        public async Task<int> GetVersion()
         {
 
             string url = RepositorySettings.BaseURl + "AppVersion";
 
             HttpClient client = new HttpClient();
-            HttpResponseMessage result = client.GetAsync(url).Result;
+            HttpResponseMessage result = await client.GetAsync(url);
+            
             return JsonConvert.DeserializeObject<int>(result.Content.ReadAsStringAsync().Result);
         }
         

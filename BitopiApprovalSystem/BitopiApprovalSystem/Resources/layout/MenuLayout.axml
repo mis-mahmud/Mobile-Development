@@ -7,109 +7,139 @@
         android:id="@+id/rlMain"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <RelativeLayout
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#eeeeee"
-            android:gravity="center_horizontal">
+            android:fillViewport="true">
             <RelativeLayout
-                android:layout_width="140dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/rounded_textview"
-                android:gravity="center"
-                android:clickable="true"
-                android:id="@+id/rlApproval"
-                android:layout_marginTop="50dp">
-                <ImageView
-                    android:src="@drawable/approval"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:id="@+id/ivApproval"
-                    android:layout_centerHorizontal="true" />
-                <TextView
-                    android:text="Approvals"
-                    android:layout_width="wrap_content"
+                android:background="#eeeeee"
+                android:gravity="center">
+                <RelativeLayout
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/ivApproval"
-                    android:layout_centerInParent="true"
-                    android:textColor="#555"
-                    android:textStyle="bold" />
-            </RelativeLayout>
-            <RelativeLayout
-                android:layout_width="140dp"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/rlApproval"
-                android:background="@drawable/rounded_textview"
-                android:layout_marginTop="50dp"
-                android:layout_marginLeft="50dp"
-                android:clickable="true"
-                android:id="@+id/rlMyTask">
-                <ImageView
-                    android:src="@drawable/mytask"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:id="@+id/ivMyTask"
-                    android:layout_centerHorizontal="true" />
-                <TextView
-                    android:text="MyTask"
-                    android:layout_width="wrap_content"
+                    android:background="@drawable/rounded_textview"
+                    android:clickable="true"
+                    android:id="@+id/rlApproval"
+                    android:layout_marginTop="30dp"
+                    android:layout_width="140dp"
+                    android:gravity="center">
+                    <ImageView
+                        android:src="@drawable/approval"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:id="@+id/ivApproval"
+                        android:layout_centerHorizontal="true" />
+                    <TextView
+                        android:text="Approvals"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/ivApproval"
+                        android:layout_centerInParent="true"
+                        android:textColor="#555"
+                        android:textStyle="bold" />
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="140dp"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/ivMyTask"
-                    android:layout_centerInParent="true"
-                    android:textColor="#555"
-                    android:textStyle="bold" />
-            </RelativeLayout>
-            <RelativeLayout
-                android:layout_width="140dp"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/rlApproval"
-                android:background="@drawable/rounded_textview"
-                android:layout_marginTop="50dp"
-                android:clickable="true"
-                android:id="@+id/rlPA">
-                <ImageView
-                    android:src="@drawable/pa"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:id="@+id/ivPA"
-                    android:layout_centerHorizontal="true" />
-                <TextView
-                    android:text="Production Accounting"
-                    android:layout_width="wrap_content"
+                    android:layout_toRightOf="@id/rlApproval"
+                    android:background="@drawable/rounded_textview"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginLeft="50dp"
+                    android:clickable="true"
+                    android:id="@+id/rlMyTask">
+                    <ImageView
+                        android:src="@drawable/mytask"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:id="@+id/ivMyTask"
+                        android:layout_centerHorizontal="true" />
+                    <TextView
+                        android:text="MyTask"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/ivMyTask"
+                        android:layout_centerInParent="true"
+                        android:textColor="#555"
+                        android:textStyle="bold" />
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="140dp"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/ivPA"
-                    android:layout_centerInParent="true"
-                    android:textColor="#555"
-                    android:textStyle="bold"
-                    android:gravity="center" />
+                    android:layout_below="@id/rlApproval"
+                    android:background="@drawable/rounded_textview"
+                    android:layout_marginTop="30dp"
+                    android:clickable="true"
+                    android:id="@+id/rlPA">
+                    <ImageView
+                        android:src="@drawable/pa"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:id="@+id/ivPA"
+                        android:layout_centerHorizontal="true" />
+                    <TextView
+                        android:text="Production Accounting"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/ivPA"
+                        android:layout_centerInParent="true"
+                        android:textColor="#555"
+                        android:textStyle="bold"
+                        android:gravity="center" />
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="140dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/rlApproval"
+                    android:layout_toRightOf="@id/rlPA"
+                    android:background="@drawable/rounded_textview"
+                    android:layout_marginTop="30dp"
+                    android:clickable="true"
+                    android:id="@+id/rlSample"
+                    android:layout_marginLeft="50dp">
+                    <ImageView
+                        android:src="@drawable/sample"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:id="@+id/ivPA"
+                        android:layout_centerHorizontal="true" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="35dp"
+                        android:layout_below="@+id/ivPA"
+                        android:layout_centerInParent="true"
+                        android:textColor="#555"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        android:text="Sample" />
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="140dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/rlPA"
+                    android:background="@drawable/rounded_textview"
+                    android:layout_marginTop="30dp"
+                    android:clickable="true"
+                    android:id="@+id/rlFabric">
+                    <ImageView
+                        android:src="@drawable/sample"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:id="@+id/ivPA"
+                        android:layout_centerHorizontal="true"
+                        android:background="@drawable/blue" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="35dp"
+                        android:layout_below="@+id/ivPA"
+                        android:layout_centerInParent="true"
+                        android:textColor="#555"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        android:text="Supplier Roll info" />
+                </RelativeLayout>
             </RelativeLayout>
-            <RelativeLayout
-                android:layout_width="140dp"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/rlApproval"
-                android:layout_toRightOf="@id/rlPA"
-                android:background="@drawable/rounded_textview"
-                android:layout_marginTop="50dp"
-                android:clickable="true"
-                android:id="@+id/rlSample"
-                android:layout_marginLeft="50dp">
-                <ImageView
-                    android:src="@drawable/sample"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:id="@+id/ivPA"
-                    android:layout_centerHorizontal="true" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="35dp"
-                    android:layout_below="@+id/ivPA"
-                    android:layout_centerInParent="true"
-                    android:textColor="#555"
-                    android:textStyle="bold"
-                    android:gravity="center"
-                    android:text="Sample" />
-            </RelativeLayout>
-        </RelativeLayout>
+        </ScrollView>
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"

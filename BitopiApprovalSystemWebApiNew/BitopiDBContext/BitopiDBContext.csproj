@@ -56,11 +56,13 @@
     <Compile Include="DBApproval.cs" />
     <Compile Include="DBContext.cs" />
     <Compile Include="DBProduction.cs" />
+    <Compile Include="DBFabricRoll.cs" />
     <Compile Include="DBTNA.cs" />
     <Compile Include="DBUser.cs" />
     <Compile Include="NotificationSingleton.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserDataCollection.cs" />
+    <Compile Include="UtilityOption.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BitopiApprovalSystemWebApiModels\BitopiApprovalSystemWebApiModels.csproj">

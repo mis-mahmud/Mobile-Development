@@ -54,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="RollSettingsDBModel.cs" />
     <Compile Include="Enum.cs" />
     <Compile Include="ApprovalModel.cs" />
     <Compile Include="MyTaskDBModel.cs" />

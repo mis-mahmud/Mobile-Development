@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtRollId"
+        android:text="1"
+        android:background="@drawable/rounded_textview"
+        android:textSize="12sp"
+        android:textColor="#111"
+        android:backgroundTint="#05e69ec0" />
+    <EditText
+        android:layout_toRightOf="@+id/txtRollId"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:text="3"
+        android:background="@drawable/rounded_textview"
+        android:textColor="#111"
+        android:textSize="12sp"
+        android:id="@+id/etSuppRollNo"
+        android:backgroundTint="#05e69ec0"
+        android:inputType="number" />
+    <EditText
+        android:layout_toRightOf="@+id/etSuppRollNo"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:text="3"
+        android:background="@drawable/rounded_textview"
+        android:textColor="#111"
+        android:textSize="12sp"
+        android:id="@+id/etOwnWidth"
+        android:inputType="numberDecimal"
+        android:backgroundTint="#05e69ec0" />
+    <EditText
+        android:layout_toRightOf="@+id/etOwnWidth"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:text="3"
+        android:background="@drawable/rounded_textview"
+        android:textColor="#111"
+        android:textSize="12sp"
+        android:id="@+id/etWidthBW"
+        android:backgroundTint="#05e69ec0"
+        android:inputType="numberDecimal" />
+    <EditText
+        android:layout_toRightOf="@+id/etWidthBW"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:text="3"
+        android:background="@drawable/rounded_textview"
+        android:textColor="#111"
+        android:textSize="12sp"
+        android:id="@+id/etLengthBW"
+        android:backgroundTint="#05e69ec0"
+        android:inputType="numberDecimal" />
+</RelativeLayout>

@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:background="#eee">
+        <RelativeLayout
+            android:id="@+id/rlSP"
+            android:layout_below="@+id/spColor"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp">
+            <Spinner
+                android:layout_width="180dp"
+                android:layout_height="match_parent"
+                android:id="@+id/spGRN"
+                android:prompt="@string/prompt_process"
+                android:background="@drawable/gradient_spinner"
+                android:padding="0dp" />
+            <Spinner
+                android:layout_width="180dp"
+                android:layout_height="match_parent"
+                android:id="@+id/spColor"
+                android:prompt="@string/promp_Location"
+                android:background="@drawable/gradient_spinner"
+                android:padding="0dp"
+                android:layout_toRightOf="@id/spGRN"
+                android:layout_marginLeft="5dp" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/rlHeader"
+            android:layout_below="@+id/rlSP"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="2dp">
+            <RelativeLayout
+                android:layout_height="50dp"
+                android:layout_width="wrap_content"
+                android:id="@+id/rlRollNo"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp">
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txtRollNo"
+                    android:text="Roll No"
+                    android:layout_marginRight="10dp"
+                    android:textColor="#111"
+                    android:padding="7dp" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/txtRollNoValue"
+                    android:layout_toRightOf="@+id/txtRollNo"
+                    android:background="@drawable/rounded_textview"
+                    android:padding="5dp"
+                    android:textColor="#111" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_height="50dp"
+                android:layout_width="wrap_content"
+                android:id="@+id/rlSupRollNo"
+                android:layout_below="@+id/rlRollNo"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:layout_marginTop="5dp">
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txtSupRollNo"
+                    android:text="Supplier Roll No"
+                    android:layout_marginRight="10dp"
+                    android:textColor="#111"
+                    android:padding="7dp" />
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/etSupRollNo"
+                    android:layout_toRightOf="@+id/txtSupRollNo"
+                    android:background="@drawable/rounded_textview"
+                    android:padding="5dp"
+                    android:textColor="#111"
+                    android:inputType="number" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_height="50dp"
+                android:layout_width="wrap_content"
+                android:id="@+id/rlWidth"
+                android:layout_below="@+id/rlSupRollNo"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:layout_marginTop="5dp">
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:id="@+id/txtWidth"
+                    android:text="Width"
+                    android:layout_marginRight="10dp"
+                    android:textColor="#111"
+                    android:padding="7dp" />
+                <EditText
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:id="@+id/etOwnWidth"
+                    android:layout_toRightOf="@+id/txtWidth"
+                    android:background="@drawable/rounded_textview"
+                    android:padding="5dp"
+                    android:textColor="#111"
+                    android:inputType="numberDecimal" />
+                <TextView
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:id="@+id/txtUOM"
+                    android:text="UOM"
+                    android:layout_marginRight="2dp"
+                    android:layout_marginLeft="5dp"
+                    android:textColor="#111"
+                    android:padding="7dp"
+                    android:layout_toRightOf="@+id/etOwnWidth" />
+                <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/spUOMValue"
+                    android:text="inch"
+                    android:background="@drawable/gradient_spinner"
+                    android:textColor="#111"
+                    android:layout_toRightOf="@+id/txtUOM"
+                    android:padding="0dp" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_height="65dp"
+                android:layout_width="wrap_content"
+                android:id="@+id/rlWidthBW"
+                android:layout_below="@+id/rlWidth"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:layout_marginTop="5dp">
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txtWidthBW"
+                    android:text="Shrinkage Width Before wash"
+                    android:layout_marginRight="10dp"
+                    android:textColor="#111"
+                    android:padding="7dp" />
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/etWidthBW"
+                    android:layout_toRightOf="@+id/txtWidthBW"
+                    android:background="@drawable/rounded_textview"
+                    android:padding="5dp"
+                    android:textColor="#111"
+                    android:inputType="number" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_height="65dp"
+                android:layout_width="wrap_content"
+                android:id="@+id/rlWidthAW"
+                android:layout_below="@+id/rlWidthBW"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:layout_marginTop="5dp">
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txtWidthAW"
+                    android:text="Shrinkage Length Before wash"
+                    android:layout_marginRight="10dp"
+                    android:textColor="#111"
+                    android:padding="7dp" />
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/etLengthBW"
+                    android:layout_toRightOf="@+id/txtWidthAW"
+                    android:background="@drawable/rounded_textview"
+                    android:padding="5dp"
+                    android:textColor="#111"
+                    android:inputType="number" />
+            </RelativeLayout>
+        </RelativeLayout>
+        <Button
+            android:layout_height="60dp"
+            android:layout_width="match_parent"
+            android:id="@+id/btnSave"
+            android:text="Submit"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/rounded_button_reject"
+            android:layout_margin="10dp" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="left|start"
+        android:background="#fff"
+        android:layout_marginRight="50dp"
+        android:id="@+id/RLleft_drawer">
+        <View
+            android:background="#43a047"
+            android:layout_height="60dp"
+            android:layout_width="match_parent" />
+        <refractored.controls.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:src="@drawable/bitopilogo"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginBottom="0dp"
+            android:id="@+id/ivUserImg"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:background="@null"
+            app:civ_border_width="2dp"
+            app:civ_border_color="#263238" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ivUserImg"
+            android:text="Test Text"
+            android:textSize="20sp"
+            android:textColor="#555555"
+            android:gravity="center"
+            android:id="@+id/tvUserName"
+            android:background="@null" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/rlmenuapproval"
+                android:clickable="true"
+                android:layout_marginBottom="10dp">
+                <ImageView
+                    android:src="@drawable/approval"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:id="@+id/ivmenuapproval"
+                    android:layout_marginLeft="20dp" />
+                <TextView
+                    android:text="Approvals"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_centerHorizontal="true"
+                    android:textColor="#000"
+                    android:gravity="center_vertical"
+                    android:layout_toRightOf="@id/ivmenuapproval"
+                    android:layout_marginLeft="20dp" />
+                <View
+                    android:background="#999"
+                    android:layout_height="1dp"
+                    android:layout_width="wrap_content"
+                    android:layout_below="@id/ivmenuapproval"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/rlmenumytask"
+                android:layout_below="@id/rlmenuapproval"
+                android:clickable="true">
+                <ImageView
+                    android:src="@drawable/mytask"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:id="@+id/ivmenumytask"
+                    android:layout_marginLeft="20dp" />
+                <TextView
+                    android:text="My Task"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_centerHorizontal="true"
+                    android:textColor="#000"
+                    android:gravity="center_vertical"
+                    android:layout_toRightOf="@id/ivmenumytask"
+                    android:layout_marginLeft="20dp" />
+            </RelativeLayout>
+        </RelativeLayout>
+        <Button
+            android:layout_alignParentBottom="true"
+            android:id="@+id/btnLogout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Log out"
+            android:background="#43a047"
+            android:textSize="20sp" />
+    </RelativeLayout>
+</android.support.v4.widget.DrawerLayout>

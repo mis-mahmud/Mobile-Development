@@ -49,7 +49,7 @@ namespace BitopiApprovalSystem
             //InitializeEvent();
             new Thread(new ThreadStart(() =>
             {
-                if (new AccountRepository().GetVersion() > bitopiApplication.CurrentVersion)
+                if (new AccountRepository().GetVersion().Result > bitopiApplication.CurrentVersion)
                 {
                     RunOnUiThread(() =>
                     {

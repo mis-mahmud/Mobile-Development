@@ -83,7 +83,7 @@ namespace BitopiApprovalSystem.BitopiPushNotification
                             notiIntent = new Intent(this, typeof(BitopiActivity));
                         }
 
-                        int UpdateVersion = new AccountRepository().GetVersion();
+                        int UpdateVersion = new AccountRepository().GetVersion().Result;
                         int lastUpdateVersion = DBAccess.Database.LastVersion();
                         if(lastUpdateVersion==0)
                         {

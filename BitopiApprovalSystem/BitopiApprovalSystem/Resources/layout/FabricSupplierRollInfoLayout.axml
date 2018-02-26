@@ -4,82 +4,104 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <RelativeLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:gravity="center">
         <RelativeLayout
-            android:orientation="vertical"
+            android:id="@+id/rlSP"
+            android:layout_below="@+id/spColor"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#eeeeee"
-            android:clipChildren="false"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp">
-            <refractored.controls.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_marginBottom="0dp"
-                android:id="@+id/ivPAUserImg"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="30dp"
-                android:background="@null"
-                app:civ_border_width="2dp"
-                app:civ_border_color="#263238"
-                android:layout_centerVertical="false" />
-            <RelativeLayout
-                android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginBottom="5dp">
+            <Spinner
+                android:layout_width="180dp"
                 android:layout_height="wrap_content"
-                android:background="@drawable/rounded_textview_bgcolor"
-                android:layout_below="@id/ivPAUserImg"
-                android:id="@+id/rlCriteria">
-                <Spinner
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/spProcess"
-                    android:prompt="@string/prompt_process"
-                    android:background="@drawable/gradient_spinner"
-                    android:padding="0dp" />
-                <Spinner
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/spLocation"
-                    android:layout_below="@+id/spProcess"
-                    android:layout_marginTop="10dp"
-                    android:prompt="@string/promp_Location"
-                    android:background="@drawable/gradient_spinner"
-                    android:padding="0dp" />
-                <Spinner
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/spEntryType"
-                    android:layout_below="@+id/spLocation"
-                    android:layout_marginTop="10dp"
-                    android:prompt="@string/promp_Location"
-                    android:background="@drawable/gradient_spinner"
-                    android:padding="0dp" />
-            <!--<Spinner
-                android:layout_width="match_parent"
+                android:id="@+id/spGRN"
+                android:prompt="@string/prompt_process"
+                android:background="@drawable/gradient_spinner"
+                android:padding="0dp" />
+            <Spinner
+                android:layout_width="180dp"
                 android:layout_height="wrap_content"
-                android:id="@+id/spPr"
-                android:layout_below="@+id/spLocation"
-                android:layout_marginLeft="50dp"
-                android:layout_marginRight="50dp"
-                android:layout_marginTop="50dp"
-                android:background="@drawable/gradient_spinner" />-->
-            </RelativeLayout>
-            <Button
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:text="Next"
-                android:layout_below="@+id/rlCriteria"
-                android:background="@drawable/rounded_button_recommend"
-                android:id="@+id/btnNext"
-                android:layout_marginTop="10dp" />
-        <!--<RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/rlLoaderContainer"
-            android:visibility="gone" />-->
+                android:id="@+id/spColor"
+                android:prompt="@string/promp_Location"
+                android:background="@drawable/gradient_spinner"
+                android:padding="0dp"
+                android:layout_toRightOf="@id/spGRN"
+                android:layout_marginLeft="5dp" />
         </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/rlHeader"
+            android:layout_below="@+id/rlSP"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#007ACC"
+            android:padding="2dp">
+            <TextView
+                android:layout_width="70dp"
+                android:layout_height="35dp"
+                android:id="@+id/txtRollId"
+                android:text="Roll No"
+                android:textSize="12sp"
+                android:textColor="#fff"
+                android:gravity="center"
+                android:background="@drawable/rightborder" />
+            <TextView
+                android:layout_toRightOf="@+id/txtRollId"
+                android:layout_width="70dp"
+                android:layout_height="35dp"
+                android:text="Supplier Roll No"
+                android:textColor="#fff"
+                android:textSize="12sp"
+                android:id="@+id/tvSuppRollNo"
+                android:gravity="center"
+                android:background="@drawable/rightborder"
+                android:padding="2dp" />
+            <TextView
+                android:layout_toRightOf="@+id/tvSuppRollNo"
+                android:layout_width="70dp"
+                android:layout_height="35dp"
+                android:text="Own Width"
+                android:textColor="#fff"
+                android:textSize="12sp"
+                android:id="@+id/tvSuppWidth"
+                android:gravity="center"
+                android:background="@drawable/rightborder" />
+            <TextView
+                android:layout_toRightOf="@+id/tvSuppWidth"
+                android:layout_width="70dp"
+                android:layout_height="35dp"
+                android:text="Width BW"
+                android:textColor="#fff"
+                android:textSize="12sp"
+                android:id="@+id/tvSuppLotNo"
+                android:gravity="center"
+                android:background="@drawable/rightborder" />
+            <TextView
+                android:layout_toRightOf="@+id/tvSuppLotNo"
+                android:layout_width="70dp"
+                android:layout_height="35dp"
+                android:text="Length BW"
+                android:textColor="#fff"
+                android:textSize="12sp"
+                android:id="@+id/tvSuppUOM"
+                android:gravity="center" />
+        </RelativeLayout>
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/rlHeader"
+            android:id="@+id/lvSupplierRoll"
+            android:layout_marginBottom="60dp" />
+        <Button
+            android:layout_height="60dp"
+            android:layout_width="match_parent"
+            android:id="@+id/btnSave"
+            android:text="Submit"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/rounded_button_reject" />
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"

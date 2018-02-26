@@ -58,6 +58,29 @@ namespace BitopiApprovalSystem
                 Intent i = new Intent(this, typeof(ApprovalActivity));
                 StartActivity(i);
             };
+            var rlFabric = FindViewById<RelativeLayout>(Resource.Id.rlFabric);
+            rlFabric.Click += (s, e) =>
+            {
+                //Intent i = new Intent(this, typeof(FabricSupplierRollinfo));
+                //StartActivity(i);
+
+                PopupMenu menu = new PopupMenu(this, rlFabric);
+                menu.Inflate(Resource.Menu.PopupFabricRollMenu);
+                menu.MenuItemClick += (s1, arg1) => {
+                    switch (arg1.Item.TitleFormatted.ToString())
+                    {
+                        case "Insert Supplier Info":
+                            Intent i1 = new Intent(this, typeof(FabricSupplierRollinfoInsert));
+                            StartActivity(i1);
+                            break;
+                        case "Update Supplier Info":
+                            Intent i = new Intent(this, typeof(FabricSupplierRollinfo));
+                            StartActivity(i);
+                            break;
+                    }
+                };
+                menu.Show();
+            };
             FindViewById<RelativeLayout>(Resource.Id.rlMyTask).Click += (s, e) =>
             {
                 Intent i = new Intent(this, typeof(MyTaskMenu));

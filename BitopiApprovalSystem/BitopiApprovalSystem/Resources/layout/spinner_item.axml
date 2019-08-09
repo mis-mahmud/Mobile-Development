@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:textSize="15sp"
     android:gravity="center"
-    android:textColor="#D83B01"
+    android:textColor="#111"
     android:id="@+id/tvSpinner"
     android:text="test "
     android:textStyle="bold"

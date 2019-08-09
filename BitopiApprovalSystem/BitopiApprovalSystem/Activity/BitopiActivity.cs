@@ -118,10 +118,12 @@ namespace BitopiApprovalSystem
             };
 
             //base.LoadDrawerView();
+            
         }
         protected override void OnStart()
         {
             base.OnStart();
+            FindViewById<RelativeLayout>(Resource.Id.rlLoading).Visibility = ViewStates.Gone;
         }
         void LoadDrawerView()
         {

@@ -3,13 +3,14 @@
   <style name="MyTheme" parent="CustomActionBarTheme">
   </style>
   <!-- Base theme applied no matter what API -->
-  <style name="CustomActionBarTheme" parent="Theme.AppCompat">
+  <style name="CustomActionBarTheme" parent="Theme.AppCompat.Light">
     <!--<item name="android:background">#3f51b5</item>-->
     <item name="contentInsetStart">0dp</item>
     <item name="contentInsetEnd">0dp</item>
     <item name="android:contentInsetStart">0dp</item>
     <item name="android:contentInsetEnd">0dp</item>
-    
+    <!--<item name="android:textColor">#ffffff</item>
+    <item name="android:textAppearance">@style/MyRedTextAppearance</item>-->
     <item name="android:actionBarStyle">@style/MyActionBar</item>
     <item name="actionBarStyle">@style/MyActionBar</item>
     <item name="android:windowContentOverlay">@color/my_actionbar_shadow</item>
@@ -64,6 +65,10 @@
     <item name="colorAccent">#d3d3d3</item>
     <item name="colorControlNormal">#d3d3d3</item>
     <item name="colorControlActivated">#ffffff</item>
+  </style>
+  <style name="MyRedTextAppearance" parent="@android:style/TextAppearance">
+    <item name="android:textColor">#F00</item>
+    <item name="android:textStyle">bold</item>
   </style>
   <color name="my_actionbar_shadow">#1C5025</color>
   <color name="actionbar_color">#3f51b5</color>

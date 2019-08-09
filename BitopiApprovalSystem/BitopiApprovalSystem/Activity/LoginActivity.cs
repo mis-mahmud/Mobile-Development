@@ -136,13 +136,10 @@ namespace BitopiApprovalSystem
                 //List<DDL> ddl = await new ProductionRepository().GetProductionDDL(user.UserCode);
                 
                 //bitopiApplication.DDLList = ddl;
-                ISharedPreferences pref = Application.Context.GetSharedPreferences ("_bitopi_UserInfo", FileCreationMode.Private);
-                
+                ISharedPreferences pref = Application.Context.GetSharedPreferences ("_bitopi_UserInfo", FileCreationMode.Private);               
                 pref.Edit().PutString("UserName", encryptedUser).Commit();
                 pref.Edit().PutString("Password", encryptedPwd).Commit();
                 pref.Edit().PutString("UserCode", user.UserCode).Commit();
-                
-
                 Intent i = new Intent(this, typeof(BitopiActivity));
                 StartActivity(i);
             }

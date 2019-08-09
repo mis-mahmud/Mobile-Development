@@ -36,8 +36,8 @@ namespace BitopiApprovalSystem
             base.OnCreate(savedInstanceState);
             bitopiApplication = (BitopiApplication)this.ApplicationContext;
 
-
             
+
         }
         protected override void OnStart()
         {

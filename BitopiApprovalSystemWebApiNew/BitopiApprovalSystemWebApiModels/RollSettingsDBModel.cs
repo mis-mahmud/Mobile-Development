@@ -14,7 +14,7 @@ namespace BitopiApprovalSystemWebApiModels
         public string Supplier { get; set; }
         public string GRNDate { get; set; }
         public int SerialNo { get; set; }
-        public int RollSerial { get; set; }
+        public string RollSerial { get; set; }
         public string ColorID { get; set; }
         public string ColorName { get; set; }
         public string RollID { get; set; }
@@ -44,8 +44,12 @@ namespace BitopiApprovalSystemWebApiModels
         public string SupplierLotNo { get; set; }
         public string SupplierRollNo { get; set; }
         public string OwnWidth { get; set; }
-        public string OwnWidthUOM { get; set; }
+        public string WidthUOM { get; set; }
+        public string LengthUOM { get; set; }
         public string UOM { get; set; }
+        public bool HeadCutting { get; set; }
+        public bool? QCPass { get; set; }
+        public decimal OwnLength { get; set; }
     }
     public class UOM
     {

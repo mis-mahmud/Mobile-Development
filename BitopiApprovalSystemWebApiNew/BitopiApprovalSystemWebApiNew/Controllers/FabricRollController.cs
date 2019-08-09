@@ -50,5 +50,13 @@ namespace BitopiApprovalSystemWebApiNew.Controllers
             int result = _db.SetRoll(model);
             return result;
         }
+        [HttpPost]
+        [ActionName("SetScanResult")]
+        public int SetScanResult([FromBody] List<ScanResult> result)
+        {
+            result = result;
+            return 0;
+        }
+       
     }
 }

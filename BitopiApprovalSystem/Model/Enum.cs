@@ -36,4 +36,8 @@ namespace BitopiApprovalSystem.Model
     {
         UNSEEN = 1, SEEN = 2, COMPLETED = 3
     }
+    public enum FabricRollUpdateItem
+    {
+        HeadCut,QC,Inspection
+    }
 }

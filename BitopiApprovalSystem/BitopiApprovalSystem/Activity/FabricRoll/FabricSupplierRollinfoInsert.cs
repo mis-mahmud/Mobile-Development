@@ -21,8 +21,8 @@ namespace BitopiApprovalSystem
     {
 
         Button btnSave;
-        Spinner spGrnID, spColor, spUOM;
-        Switch swLoadLastLocation;
+        Spinner spGrnID, spColor, spWUOM, spLUOM;
+        Switch swHeadCut;
         bool LastLocation;
         FabricRepository repo = new FabricRepository();
         ListView lvSupplierRollInfo;
@@ -39,8 +39,10 @@ namespace BitopiApprovalSystem
         FabricSupplierRollAdapter adapter;
         string selectedGRN, selectedColor, selectedUOM;
         List<RollSettingsDBModel> rollList;
-        TextView txtRollNo;
+        TextView txtRollNo, tcSupWidth;
         EditText etSupRollNo, etOwnWidth, etWidthBW, etLengthBW;
+        bool isHeadCut = false;
+        RollSettingsDBModel roll;
         protected override void OnCreate(Bundle savedInstanceState)
         {
             ISharedPreferences pref = Application.Context.GetSharedPreferences
@@ -62,8 +64,11 @@ namespace BitopiApprovalSystem
 
             ddlUOM = uomList.Select(t => t.Unitname).ToList();
             spGrnID.Adapter = new ArrayAdapter<string>(this, Resource.Layout.spinner_item, ddlGRN.ToArray());
-            spUOM.Adapter = new ArrayAdapter<string>(this, Resource.Layout.spinner_item, ddlUOM.ToArray());
-            spUOM.SetSelection(ddlUOM.FindIndex(t => t == "Inch"));
+            spWUOM.Adapter = new ArrayAdapter<string>(this, Resource.Layout.spinner_item, ddlUOM.ToArray());
+            spWUOM.SetSelection(ddlUOM.FindIndex(t => t == "Inch"));
+
+            spLUOM.Adapter = new ArrayAdapter<string>(this, Resource.Layout.spinner_item, ddlUOM.ToArray());
+            spLUOM.SetSelection(ddlUOM.FindIndex(t => t == "Yard"));
 
         }
         protected override void InitializeControl()
@@ -74,13 +79,19 @@ namespace BitopiApprovalSystem
             btnSave = FindViewById<Button>(Resource.Id.btnSave);
             spGrnID = FindViewById<Spinner>(Resource.Id.spGRN);
             spColor = FindViewById<Spinner>(Resource.Id.spColor);
-            spUOM = FindViewById<Spinner>(Resource.Id.spUOMValue);
+            spWUOM = FindViewById<Spinner>(Resource.Id.spWidthUOMValue);
+            spLUOM = FindViewById<Spinner>(Resource.Id.spLengthUOMValue);
             txtRollNo = FindViewById<TextView>(Resource.Id.txtRollNoValue);
-
+            tcSupWidth = FindViewById<TextView>(Resource.Id.tcSupWidth);
+            swHeadCut = FindViewById<Switch>(Resource.Id.swHeadCut);
             etSupRollNo = FindViewById<EditText>(Resource.Id.etSupRollNo);
             etOwnWidth = FindViewById<EditText>(Resource.Id.etOwnWidth);
             etWidthBW = FindViewById<EditText>(Resource.Id.etWidthBW);
             etLengthBW = FindViewById<EditText>(Resource.Id.etLengthBW);
+            etOwnWidth.TransformationMethod = null;
+            etWidthBW.TransformationMethod = null;
+            etLengthBW.TransformationMethod = null;
+            etSupRollNo.TransformationMethod = null;
             base.InitializeControl();
         }
         protected override void InitializeEvent()
@@ -88,9 +99,63 @@ namespace BitopiApprovalSystem
 
             spGrnID.ItemSelected += SpGrnID_ItemSelected; ;
             spColor.ItemSelected += SpColor_ItemSelected;
-            spUOM.ItemSelected += SpUOM_ItemSelected;
+            spWUOM.ItemSelected += SpUOM_ItemSelected;
+            spLUOM.ItemSelected += SpUOM_ItemSelected;
             btnSave.Click += BtnSave_Click;
+            swHeadCut.CheckedChange += SwHeadCut_CheckedChange;
             base.InitializeEvent();
+        }
+
+        private void SwHeadCut_CheckedChange(object sender, CompoundButton.CheckedChangeEventArgs e)
+        {
+            if(e.IsChecked)
+            {
+                etOwnWidth.Enabled = (true);
+                etOwnWidth.Focusable = (true);
+                //etOwnWidth.InputType = Android.Text.InputTypes.ClassNumber;
+                isHeadCut = true;
+                etOwnWidth.SetBackgroundResource(Resource.Drawable.rounded_textview);
+
+                etOwnWidth.Enabled = (true);
+                etOwnWidth.Focusable = (true);
+                //etOwnWidth.InputType = Android.Text.InputTypes.ClassNumber;
+                isHeadCut = true;
+                etOwnWidth.SetBackgroundResource(Resource.Drawable.rounded_textview);
+
+                etLengthBW.Enabled = (true);
+                etLengthBW.Focusable = (true);
+                
+                etLengthBW.SetBackgroundResource(Resource.Drawable.rounded_textview);
+
+                etWidthBW.Enabled = (true);
+                etWidthBW.Focusable = (true);
+                 
+                etWidthBW.SetBackgroundResource(Resource.Drawable.rounded_textview);
+
+                etWidthBW.Text = roll.SWidthBW;
+                etLengthBW.Text = roll.SLengthBW;
+            }
+            else
+            {
+                etOwnWidth.Enabled = (false);
+                etOwnWidth.Focusable = (false);
+                etOwnWidth.FocusableInTouchMode = true;
+                 
+                isHeadCut = false;
+                etOwnWidth.SetBackgroundResource(Resource.Drawable.rounded_textview_disabled);
+
+                etLengthBW.Enabled = (false);
+                etLengthBW.Focusable = (false);
+                etLengthBW.FocusableInTouchMode = true;
+                etLengthBW.Text = "";
+                etLengthBW.SetBackgroundResource(Resource.Drawable.rounded_textview_disabled);
+
+                etWidthBW.Enabled = (false);
+                etWidthBW.Focusable = (false);
+                etWidthBW.FocusableInTouchMode = true;
+                etWidthBW.Text = "";
+                etWidthBW.SetBackgroundResource(Resource.Drawable.rounded_textview_disabled);
+            }
         }
 
         private void SpUOM_ItemSelected(object sender, AdapterView.ItemSelectedEventArgs e)
@@ -106,14 +171,15 @@ namespace BitopiApprovalSystem
                 OwnWidth = etOwnWidth.Text,
                 WidthBeforeWash = etWidthBW.Text,
                 SLengthBW = etLengthBW.Text,
-                OwnWidthUOM = selectedUOM,
-                RollID = txtRollNo.Tag.ToString()
+                WidthUOM = selectedUOM,
+                RollID = txtRollNo.Tag.ToString(),
+                HeadCutting= isHeadCut
             };
 
             int result = await repo.SetRoll(model);
             if (result > 0)
             {
-                var roll = await repo.GetRollID(selectedGRN, selectedColor);
+                roll = await repo.GetRollID(selectedGRN, selectedColor);
                 txtRollNo.Text = roll.RollSerial.ToString();
                 txtRollNo.Tag = roll.RollID;
 
@@ -135,9 +201,22 @@ namespace BitopiApprovalSystem
             selectedColor = ddlColor[e.Position];
 
 
-            var roll = await repo.GetRollID(selectedGRN, selectedColor);
+            roll = await repo.GetRollID(selectedGRN, selectedColor);
             txtRollNo.Text = roll.RollSerial.ToString();
             txtRollNo.Tag = roll.RollID;
+            etOwnWidth.Text = roll.OwnWidth;
+            tcSupWidth.Text = roll.SupplierWidth.ToString();
+            if (swHeadCut.Checked)
+            {
+                etWidthBW.Text = roll.SWidthBW;
+                etLengthBW.Text = roll.SLengthBW;
+            }
+            else
+            {
+
+                etWidthBW.Text = "";
+                etLengthBW.Text = "";
+            }
         }
 
         private async void SpGrnID_ItemSelected(object sender, AdapterView.ItemSelectedEventArgs e)

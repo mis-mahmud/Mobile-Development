@@ -28,8 +28,6 @@ namespace BitopiApprovalSystem
     public class StartupActivity : BaseActivity
     {
         TextView tvMsg;
-        WebView webView;
-        BitopiApplication bitopiApplication;
         protected  override void OnCreate(Bundle savedInstanceState)
         {
             bitopiApplication = (BitopiApplication)this.ApplicationContext;
@@ -37,17 +35,11 @@ namespace BitopiApprovalSystem
             bitopiApplication.CurrentActivity = "Startup Activity";
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.layout_startup);
+            SupportActionBar.SetDisplayShowCustomEnabled(true);
+            SupportActionBar.SetCustomView(Resource.Layout.custom_actionbar);
             tvMsg = FindViewById<TextView>(Resource.Id.tvMsg);
             tvMsg.Visibility = ViewStates.Gone;
-             webView = (WebView)FindViewById(Resource.Id.wvLoader);
-            webView.SetInitialScale(1);
-            webView.Settings.JavaScriptEnabled = true;
-            webView.Settings.LoadWithOverviewMode = true;
-            webView.Settings.UseWideViewPort = true;
-            webView.Settings.SetLayoutAlgorithm(WebSettings.LayoutAlgorithm.SingleColumn);
-            webView.ScrollBarStyle = ScrollbarStyles.OutsideOverlay;
-            webView.ScrollbarFadingEnabled = false;
-            webView.LoadUrl("file:///android_asset/loading/loader.html");
+            FindViewById<ImageButton>(Resource.Id.btnDrawermenu).Visibility = ViewStates.Gone;
             WifiManager wifiMan = (WifiManager)this.GetSystemService(Context.WifiService);
             WifiInfo wifiInf = wifiMan.ConnectionInfo;
             //BitopiSingelton.Instance.MacAddress= UID.id(this);
@@ -103,7 +95,7 @@ namespace BitopiApprovalSystem
         protected async override void OnStart()
         {
             base.OnStart();
-            webView.Visibility = ViewStates.Gone;
+            
             try
             {
                
@@ -114,7 +106,7 @@ namespace BitopiApprovalSystem
                 catch { }
                 if (!bitopiApplication.IsInternetConnectionAvailable(this))
                 {
-                    webView.Visibility = ViewStates.Gone;
+                     
                     tvMsg.Visibility = ViewStates.Visible;
                     tvMsg.Text = "No Internet Connection Available.";
                     return;

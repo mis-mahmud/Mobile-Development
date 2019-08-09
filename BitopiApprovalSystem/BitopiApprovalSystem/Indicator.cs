@@ -265,7 +265,7 @@ namespace BitopiApprovalSystem.BitopiIndicator
             return drawBounds.ExactCenterY();
         }
     }
-    public class AnimatorUpdateListener : IAnimatorUpdateListener
+    public class AnimatorUpdateListener : Java.Lang.Object,IAnimatorUpdateListener
     {
         float[] translateX;
         int index;

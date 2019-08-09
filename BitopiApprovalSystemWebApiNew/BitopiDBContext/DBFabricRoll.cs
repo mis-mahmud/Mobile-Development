@@ -90,10 +90,18 @@ namespace BitopiDBContext
                         model.OwnWidth = dr["OwnWidth"] != DBNull.Value ? dr["OwnWidth"].ToString() : "";
                         model.SupplierRollNo = dr["SupplierRollNo"] != DBNull.Value ? dr["SupplierRollNo"].ToString() : "";
                         model.WidthBeforeWash = dr["SWidthBW"] != DBNull.Value ? dr["SWidthBW"].ToString() : "";
-                        model.WidthAfterWash = dr["SWidthAW"] != DBNull.Value ? dr["SWidthAW"].ToString() : "";
+                        model.SWidthAW = dr["SWidthAW"] != DBNull.Value ? dr["SWidthAW"].ToString() : "";
+                        model.RollSerial = dr["RollSerial"] != DBNull.Value ? dr["RollSerial"].ToString() : "";
                         model.SLengthBW = dr["SLengthBW"] != DBNull.Value ? dr["SLengthBW"].ToString() : "";
+                        model.SLengthAW = dr["SLengthAW"] != DBNull.Value ? dr["SLengthAW"].ToString() : "";
+
+                        model.SLengthAWPercent = dr["SLengthAWPercent"] != DBNull.Value ? dr["SLengthAWPercent"].ToString() : "";
+                        model.SWidthAWParcent = dr["SWidthAWParcent"] != DBNull.Value ? dr["SWidthAWParcent"].ToString() : "";
+
                         model.RollID = dr["RollID"].ToString();
                         model.SerialNo = Convert.ToInt16(dr["SerialNo"].ToString());
+                        model.OwnLength = dr["OwnLength"] != DBNull.Value ? Convert.ToDecimal(dr["OwnLength"].ToString()) : 0;
+                        model.QCPass = dr["QCPass"] != DBNull.Value ? dr.Field<bool?>("QCPass") : null;
                         _DBModelList.Add(model);
                     }
                 }
@@ -126,9 +134,12 @@ namespace BitopiDBContext
                     foreach (DataRow dr in dt.Rows)
                     {
 
-                        model.RollSerial = dr["RollSerial"] != DBNull.Value ? Convert.ToInt16(dr["RollSerial"].ToString()) : 0;
+                        model.RollSerial = dr["RollSerial"] != DBNull.Value ? dr["RollSerial"].ToString() : "";
                         model.RollID = dr["RollID"] != DBNull.Value ? dr["RollID"].ToString() : "";
-
+                        model.OwnWidth = dr["OwnWidth"] != DBNull.Value ? dr["OwnWidth"].ToString() : "";
+                        model.SupplierWidth = dr["SupplierWidth"] != DBNull.Value ? Convert.ToDecimal(dr["SupplierWidth"].ToString()) : 0;
+                        model.SWidthBW = dr["SWidthBW"] != DBNull.Value ? dr["SWidthBW"].ToString() : "";
+                        model.SLengthBW = dr["SLengthBW"] != DBNull.Value ? dr["SLengthBW"].ToString(): "";
 
                     }
                 }

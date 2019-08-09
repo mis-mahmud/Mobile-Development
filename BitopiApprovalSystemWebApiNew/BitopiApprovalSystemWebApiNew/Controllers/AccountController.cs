@@ -40,8 +40,11 @@ namespace BitopiApprovalSystemWebApiNew.Controllers
             string decryptPwd1 = "";
             if (!String.IsNullOrEmpty(userName) && !String.IsNullOrEmpty(Password))
             {
-                decryptUser1 = encObj.EncryptWord(Cipher.Decrypt(userName));
-                decryptPwd1 = encObj.EncryptWord(Cipher.Decrypt(Password));
+                //decryptUser1 = encObj.EncryptWord(Cipher.Decrypt(userName));
+                //decryptPwd1 = encObj.EncryptWord(Cipher.Decrypt(Password));
+
+                decryptUser1 = encObj.EncryptWord(userName);
+                decryptPwd1 = encObj.EncryptWord(Password);
             }
 
             UserModel model = userdb.GetUser(decryptUser1, decryptPwd1, DeviceID, DeviceToken,

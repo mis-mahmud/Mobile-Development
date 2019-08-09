@@ -38,9 +38,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#007ACC"
+            android:visibility="gone"
             android:padding="2dp">
             <TextView
-                android:layout_width="70dp"
+                android:layout_width="65dp"
                 android:layout_height="35dp"
                 android:id="@+id/txtRollId"
                 android:text="Roll No"
@@ -61,32 +62,12 @@
                 android:padding="2dp" />
             <TextView
                 android:layout_toRightOf="@+id/tvSuppRollNo"
-                android:layout_width="70dp"
+                android:layout_width="match_parent"
                 android:layout_height="35dp"
-                android:text="Own Width"
+                android:text="Action"
                 android:textColor="#fff"
                 android:textSize="12sp"
-                android:id="@+id/tvSuppWidth"
-                android:gravity="center"
-                android:background="@drawable/rightborder" />
-            <TextView
-                android:layout_toRightOf="@+id/tvSuppWidth"
-                android:layout_width="70dp"
-                android:layout_height="35dp"
-                android:text="Width BW"
-                android:textColor="#fff"
-                android:textSize="12sp"
-                android:id="@+id/tvSuppLotNo"
-                android:gravity="center"
-                android:background="@drawable/rightborder" />
-            <TextView
-                android:layout_toRightOf="@+id/tvSuppLotNo"
-                android:layout_width="70dp"
-                android:layout_height="35dp"
-                android:text="Length BW"
-                android:textColor="#fff"
-                android:textSize="12sp"
-                android:id="@+id/tvSuppUOM"
+                android:id="@+id/tvAction"
                 android:gravity="center" />
         </RelativeLayout>
         <ListView
@@ -94,14 +75,409 @@
             android:layout_height="match_parent"
             android:layout_below="@+id/rlHeader"
             android:id="@+id/lvSupplierRoll"
-            android:layout_marginBottom="60dp" />
-        <Button
-            android:layout_height="60dp"
+            android:layout_marginBottom="6dp" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/rlPopup"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:animateLayoutChanges="true"
+        android:addStatesFromChildren="false"
+        android:clickable="true"
+        android:visibility="gone"
+        android:background="#a0000000"
+        android:layout_centerInParent="true">
+        <RelativeLayout
+            android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:id="@+id/btnSave"
-            android:text="Submit"
-            android:layout_alignParentBottom="true"
-            android:background="@drawable/rounded_button_reject" />
+            android:background="@drawable/rounded_textview_disabled"
+            android:layout_margin="10dp"
+            android:padding="10dp"
+            android:layout_centerInParent="true">
+            <RelativeLayout
+                android:layout_height="40dp"
+                android:layout_width="wrap_content"
+                android:id="@+id/rlRollNo"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp">
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txtRollNo"
+                    android:text="Roll No"
+                    android:layout_marginRight="5dp"
+                    android:textColor="#111"
+                    android:padding="7dp"
+                    android:textSize="11sp" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:id="@+id/txtRollNoValue"
+                    android:layout_toRightOf="@+id/txtRollNo"
+                    android:textColor="#111"
+                    android:gravity="center"
+                    android:background="@drawable/rounded_textview_disabled"
+                    android:padding="5dp"
+                    android:textSize="11sp" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_height="40dp"
+                android:layout_width="wrap_content"
+                android:id="@+id/rlSupRollNo"
+                android:layout_below="@+id/rlRollNo"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:layout_marginTop="5dp">
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txtSupRollNo"
+                    android:text="Supplier Roll No"
+                    android:layout_marginRight="5dp"
+                    android:textColor="#111"
+                    android:padding="7dp"
+                    android:textSize="11sp" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:id="@+id/etSupRollNo"
+                    android:gravity="center"
+                    android:layout_toRightOf="@+id/txtSupRollNo"
+                    android:background="@drawable/rounded_textview_disabled"
+                    android:padding="5dp"
+                    android:textColor="#111"
+                    android:inputType="number"
+                    android:textSize="11sp" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:id="@+id/rlHeadCut"
+                android:visibility="invisible"
+                android:layout_below="@+id/rlSupRollNo">
+                <RelativeLayout
+                    android:layout_height="40dp"
+                    android:layout_width="wrap_content"
+                    android:id="@+id/rlWidth"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:layout_marginTop="5dp">
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <TextView
+                            android:layout_width="70dp"
+                            android:layout_height="match_parent"
+                            android:id="@+id/txtWidth"
+                            android:text="Own Width"
+                            android:layout_marginRight="5dp"
+                            android:textColor="#111"
+                            android:padding="7dp"
+                            android:textSize="12sp"
+                            android:paddingBottom="0dp" />
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:id="@+id/etOwnWidth"
+                            android:layout_toRightOf="@+id/txtWidth"
+                            android:background="@drawable/rounded_textview"
+                            android:padding="5dp"
+                            android:textColor="#111"
+                            android:inputType="numberDecimal" />
+                    </RelativeLayout>
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_height="40dp"
+                    android:layout_width="wrap_content"
+                    android:id="@+id/rlWidthBW"
+                    android:layout_below="@+id/rlWidth"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:layout_marginTop="5dp">
+                    <TextView
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/txtWidthBW"
+                        android:text="Shrinkage Width BW"
+                        android:layout_marginRight="5dp"
+                        android:textColor="#111"
+                        android:padding="7dp"
+                        android:textSize="11sp" />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:id="@+id/etWidthBW"
+                        android:layout_toRightOf="@+id/txtWidthBW"
+                        android:background="@drawable/rounded_textview"
+                        android:padding="5dp"
+                        android:textColor="#111"
+                        android:inputType="numberDecimal" />
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_height="40dp"
+                    android:layout_width="wrap_content"
+                    android:id="@+id/rlWidthAW"
+                    android:layout_below="@+id/rlWidthBW"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:layout_marginTop="5dp">
+                    <TextView
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/txtWidthAW"
+                        android:text="Shrinkage Length BW"
+                        android:layout_marginRight="5dp"
+                        android:textColor="#111"
+                        android:padding="7dp"
+                        android:textSize="11sp"
+                        android:paddingBottom="0dp" />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:id="@+id/etLengthBW"
+                        android:layout_toRightOf="@+id/txtWidthAW"
+                        android:background="@drawable/rounded_textview"
+                        android:padding="5dp"
+                        android:textColor="#111"
+                        android:inputType="numberDecimal" />
+                </RelativeLayout>
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:id="@+id/rlQuality"
+                android:visibility="invisible"
+                android:layout_below="@+id/rlSupRollNo">
+                <RelativeLayout
+                    android:layout_height="40dp"
+                    android:layout_width="wrap_content"
+                    android:id="@+id/rlWidthBW"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:layout_marginTop="5dp">
+                    <TextView
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/txtWidthBW"
+                        android:text="Shrinkage Width BW"
+                        android:textColor="#111"
+                        android:padding="7dp"
+                        android:textSize="11sp"
+                        android:layout_marginRight="5dp" />
+                    <EditText
+                        android:layout_width="100dp"
+                        android:layout_height="40dp"
+                        android:id="@+id/etWidthBW"
+                        android:layout_toRightOf="@+id/txtWidthBW"
+                        android:background="@drawable/rounded_textview"
+                        android:padding="5dp"
+                        android:textColor="#111"
+                        android:inputType="numberDecimal" />
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_height="40dp"
+                    android:layout_width="wrap_content"
+                    android:id="@+id/rlWidthAW"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_toRightOf="@+id/rlWidthBW">
+                    <TextView
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/txtWidthAW"
+                        android:text="Shrinkage Width AW"
+                        android:textColor="#111"
+                        android:padding="7dp"
+                        android:textSize="11sp" />
+                    <EditText
+                        android:layout_width="100dp"
+                        android:layout_height="40dp"
+                        android:id="@+id/etWidthAW"
+                        android:layout_toRightOf="@+id/txtWidthAW"
+                        android:background="@drawable/rounded_textview"
+                        android:padding="5dp"
+                        android:textColor="#111"
+                        android:inputType="numberDecimal" />
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_height="40dp"
+                    android:layout_width="wrap_content"
+                    android:id="@+id/rlLengthBW"
+                    android:layout_below="@+id/rlWidthBW"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:layout_marginTop="5dp">
+                    <TextView
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/txtLengthBW"
+                        android:text="Shrinkage Length BW"
+                        android:layout_marginRight="5dp"
+                        android:textColor="#111"
+                        android:padding="7dp"
+                        android:textSize="11sp" />
+                    <EditText
+                        android:layout_width="100dp"
+                        android:layout_height="40dp"
+                        android:id="@+id/etLengthBW"
+                        android:layout_toRightOf="@+id/txtLengthBW"
+                        android:background="@drawable/rounded_textview"
+                        android:padding="5dp"
+                        android:textColor="#111"
+                        android:inputType="numberDecimal" />
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:id="@+id/rlLengthAW"
+                    android:layout_below="@+id/rlWidthBW"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_toRightOf="@+id/rlLengthBW">
+                    <TextView
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/txtLengthAW"
+                        android:text="Shrinkage Length AW"
+                        android:textColor="#111"
+                        android:padding="7dp"
+                        android:textSize="11sp" />
+                    <EditText
+                        android:layout_width="100dp"
+                        android:layout_height="40dp"
+                        android:id="@+id/etLengthAW"
+                        android:layout_toRightOf="@+id/txtLengthAW"
+                        android:background="@drawable/rounded_textview"
+                        android:padding="5dp"
+                        android:textColor="#111"
+                        android:inputType="numberDecimal" />
+                </RelativeLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rlLengthAW"
+                    android:id="@+id/tvWidthPercent"
+                    android:gravity="center"
+                    android:textSize="11sp"
+                    android:padding="5dp"
+                    android:textColor="#111"
+                    android:fontFamily="sans-serif-thin" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvWidthPercent"
+                    android:id="@+id/tvLengthPercent"
+                    android:gravity="center"
+                    android:textSize="11sp"
+                    android:padding="5dp"
+                    android:textColor="#111"
+                    android:fontFamily="sans-serif-thin" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:id="@+id/rlInspection"
+                android:visibility="invisible"
+                android:layout_below="@+id/rlSupRollNo">
+                <RelativeLayout
+                    android:layout_height="40dp"
+                    android:layout_width="wrap_content"
+                    android:id="@+id/rlOwnLength"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:layout_marginTop="5dp">
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <TextView
+                            android:layout_width="70dp"
+                            android:layout_height="match_parent"
+                            android:id="@+id/txtOwnLength"
+                            android:text="Own Length"
+                            android:layout_marginRight="5dp"
+                            android:textColor="#111"
+                            android:padding="7dp"
+                            android:textSize="11sp" />
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:id="@+id/etOwnLenght"
+                            android:layout_toRightOf="@+id/txtOwnLength"
+                            android:background="@drawable/rounded_textview"
+                            android:padding="5dp"
+                            android:textColor="#111"
+                            android:inputType="numberDecimal"
+                            android:textSize="11sp" />
+                    </RelativeLayout>
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_height="40dp"
+                    android:layout_width="wrap_content"
+                    android:id="@+id/rlPassFail"
+                    android:layout_below="@+id/rlOwnLength"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:layout_marginTop="5dp">
+                    <TextView
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/txtPassFail"
+                        android:text="Pass/Fail"
+                        android:layout_marginRight="5dp"
+                        android:textColor="#111"
+                        android:padding="7dp"
+                        android:textSize="11sp" />
+                    <Switch
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/swPassFail"
+                        android:layout_toRightOf="@+id/txtPassFail"
+                        android:textOff="Fail"
+                        android:textOn="Pass"
+                        android:showText="true"
+                        android:thumbTextPadding="2dp"
+                        android:thumbTint="#ff398e3d"
+                        android:trackTint="#ff3b913f"
+                        android:checked="true" />
+                </RelativeLayout>
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rlHeadCut"
+                android:layout_marginTop="10dp">
+                <View
+                    android:id="@+id/strut"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_centerHorizontal="true" />
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignRight="@id/strut"
+                    android:id="@+id/btnSave"
+                    android:layout_alignParentLeft="true"
+                    android:text="Save &amp; Next"
+                    android:textAllCaps="true"
+                    android:background="@drawable/rounded_button_recommend"
+                    android:layout_marginRight="5dp"
+                    android:padding="0dp"
+                    android:textColor="#fff" />
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/btnCancelHeadPopup"
+                    android:layout_alignLeft="@id/strut"
+                    android:layout_alignParentRight="true"
+                    android:text="Cancel"
+                    android:background="@drawable/rounded_button_reject"
+                    android:padding="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:textColor="#fff" />
+            </RelativeLayout>
+        </RelativeLayout>
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
